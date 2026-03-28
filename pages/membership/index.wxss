@@ -57,7 +57,7 @@
   position: fixed;
   left: 24rpx;
   right: 24rpx;
-  bottom: calc(-80rpx + env(safe-area-inset-bottom));
+  bottom: 0;
   z-index: 20;
 }
 
@@ -65,7 +65,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 18rpx 14rpx 14rpx;
+  padding: 18rpx 14rpx 0;
+  padding-bottom: calc(18rpx + env(safe-area-inset-bottom));
   background:
     linear-gradient(180deg, rgba(96, 59, 20, 0.18), rgba(0, 0, 0, 0)),
     #000000;

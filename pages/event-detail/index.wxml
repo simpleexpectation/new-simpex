@@ -4,7 +4,6 @@
   <view class="detail-hero detail-hero--0" style="padding-top: {{statusBarHeight + 44}}px;">
     <view class="detail-hero__mist detail-hero__mist--a"></view>
     <view class="detail-hero__mist detail-hero__mist--b"></view>
-    <view class="detail-hero__back" bindtap="goBack">← 返回</view>
     <view class="detail-hero__body">
       <view class="pill detail-hero__pill">官方核心局</view>
       <text class="detail-hero__title">{{event.title}}</text>

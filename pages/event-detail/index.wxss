@@ -1,6 +1,6 @@
 /* page-shell 底部留出 footer 空间 */
 .event-detail-page {
-  padding-bottom: calc(200rpx + env(safe-area-inset-bottom)) !important;
+  padding-bottom: calc(160rpx + env(safe-area-inset-bottom));
 }
 
 /* ── 渐变 Hero ── */
@@ -177,7 +177,7 @@
   position: fixed;
   left: 24rpx;
   right: 24rpx;
-  bottom: calc(-80rpx + env(safe-area-inset-bottom));
+  bottom: 0;
   z-index: 20;
 }
 
@@ -185,7 +185,8 @@
   display: flex;
   align-items: center;
   gap: 14rpx;
-  padding: 24rpx 14rpx 40rpx;
+  padding: 20rpx 14rpx 0;
+  padding-bottom: calc(20rpx + env(safe-area-inset-bottom));
   background:
     linear-gradient(180deg, rgba(96, 59, 20, 0.18), rgba(0, 0, 0, 0)),
     #000000;

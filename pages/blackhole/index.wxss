@@ -1,28 +1,24 @@
+/* ── 页面容器：纯 OLED 黑 ── */
 .blackhole-page {
   position: relative;
   overflow: hidden;
-  min-height: 100vh;
-  padding: 0 32rpx calc(160rpx + env(safe-area-inset-bottom));
-  box-sizing: border-box;
-  background:
-    radial-gradient(circle at 50% 38%, rgba(111, 237, 161, 0.16), transparent 20%),
-    linear-gradient(180deg, #2f6e54, #3b7c5e 32%, #3d775f 100%);
+  height: 100vh;
+  background: #000000;
   opacity: 1;
   transform: translateY(0);
   transition: opacity 220ms ease, transform 220ms ease;
 }
 
+/* ── 顶栏 ── */
 .blackhole-top {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding-top: calc(88rpx + env(safe-area-inset-top));
-}
-
-.blackhole-top__button,
-.blackhole-top__title {
-  color: rgba(255, 255, 255, 0.76);
-  font-size: 28rpx;
+  padding-left: 32rpx;
+  padding-right: 32rpx;
+  position: relative;
+  z-index: 10;
 }
 
 .blackhole-top__button {
@@ -32,96 +28,168 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 32rpx;
+  line-height: 1;
 }
 
 .blackhole-top__title {
-  font-weight: 600;
+  font-size: 28rpx;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.38);
+  letter-spacing: 3rpx;
 }
 
+/* ── 场域 ── */
 .field {
-  position: relative;
-  height: 980rpx;
-  margin-top: 32rpx;
-}
-
-.field__mist {
   position: absolute;
-  border-radius: 240rpx;
-  filter: blur(26rpx);
-  animation: pulseGlow 5s ease-in-out infinite;
+  inset: 0;
 }
 
-.field__mist--green {
-  left: 120rpx;
-  top: 360rpx;
-  width: 180rpx;
-  height: 300rpx;
-  background: rgba(120, 255, 147, 0.72);
+/* 极暗暖色底部晕光，给空间一点深度 */
+.field__glow {
+  position: absolute;
+  bottom: -80rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600rpx;
+  height: 400rpx;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(212, 196, 168, 0.06) 0%, transparent 70%);
+  pointer-events: none;
 }
 
-.field__mist--blue {
-  left: 150rpx;
-  right: 150rpx;
-  top: 140rpx;
-  height: 600rpx;
-  background: rgba(105, 181, 255, 0.78);
-  border-radius: 180rpx;
-  animation-delay: -1.6s;
-}
-
+/* ── 浮动气泡 ── */
 .field__orb {
   position: absolute;
   transform: translate(-50%, -50%);
-  opacity: 0.76;
+  animation: floatOrb 7s ease-in-out infinite;
+  opacity: 0.82;
+  transition: opacity 200ms ease;
 }
 
-.bottom-ring {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16rpx;
-  margin-top: -60rpx;
-  color: rgba(255, 255, 255, 0.72);
+.field__orb--selected {
+  opacity: 1;
 }
 
-.bottom-ring__inner {
-  width: 116rpx;
-  height: 116rpx;
-  border: 8rpx solid rgba(255, 255, 255, 0.54);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 34rpx;
+@keyframes floatOrb {
+  0%, 100% { transform: translate(-50%, calc(-50% + 0px)); }
+  50%       { transform: translate(-50%, calc(-50% - 22px)); }
 }
 
-.bottom-ring__label {
-  font-size: 22rpx;
-}
-
-.side-actions {
+/* ── 底部提示文字 ── */
+.field__hint {
   position: absolute;
-  right: 24rpx;
-  bottom: calc(220rpx + env(safe-area-inset-bottom));
+  bottom: calc(80rpx + env(safe-area-inset-bottom));
+  left: 0;
+  right: 0;
   display: flex;
-  flex-direction: column;
-  gap: 18rpx;
+  justify-content: center;
+  pointer-events: none;
+  transition: opacity 300ms ease;
 }
 
-.side-actions__item {
-  min-width: 92rpx;
-  min-height: 92rpx;
-  padding: 0 16rpx;
-  border-radius: 46rpx;
+.field__hint--hidden {
+  opacity: 0;
+}
+
+.field__hint-text {
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.2);
+  letter-spacing: 2rpx;
+}
+
+/* ── 名片弹层 ── */
+.orb-card {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: flex-end;
+  background: rgba(0, 0, 0, 0.5);
+  animation: cardFadeIn 0.2s ease;
+}
+
+.orb-card__sheet {
+  width: 100%;
+  background: #0d0d0d;
+  border-top: 1rpx solid rgba(255, 255, 255, 0.06);
+  border-radius: 48rpx 48rpx 0 0;
+  padding: 20rpx 36rpx calc(40rpx + env(safe-area-inset-bottom));
+  animation: cardSlideUp 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.orb-card__handle {
+  width: 64rpx;
+  height: 5rpx;
+  border-radius: 3rpx;
+  background: rgba(255, 255, 255, 0.12);
+  margin: 0 auto 40rpx;
+}
+
+.orb-card__info {
+  margin-bottom: 40rpx;
+}
+
+.orb-card__name {
+  display: block;
+  font-size: 52rpx;
+  font-weight: 700;
+  color: #f3f1e7;
+  letter-spacing: -1rpx;
+  margin-bottom: 12rpx;
+}
+
+.orb-card__role {
+  display: block;
+  font-size: 26rpx;
+  color: rgba(243, 241, 231, 0.48);
+  line-height: 1.5;
+}
+
+.orb-card__actions {
+  display: flex;
+  gap: 16rpx;
+}
+
+.orb-card__nudge {
+  flex: 1;
+  height: 92rpx;
+  border-radius: 999rpx;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.14);
-  color: rgba(255, 255, 255, 0.72);
-  font-size: 24rpx;
+  gap: 10rpx;
+  border: 1rpx solid rgba(255, 255, 255, 0.14);
+  color: rgba(243, 241, 231, 0.72);
+  font-size: 26rpx;
 }
 
-.side-actions__item--strong {
-  min-height: 108rpx;
+.orb-card__nudge-wave {
+  font-size: 22rpx;
+  opacity: 0.7;
+}
+
+.orb-card__view {
+  flex: 1;
+  height: 92rpx;
+  border-radius: 999rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f1eddd, #d8cfb5);
+  color: #111111;
+  font-size: 26rpx;
+  font-weight: 600;
+}
+
+@keyframes cardFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes cardSlideUp {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
 }

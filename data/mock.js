@@ -62,11 +62,11 @@ const venues = [
 ]
 
 const bubbles = [
-  { id: 'bubble-1', name: '青原', role: '研究哲学的程序员', x: 22, y: 24, size: 120 },
-  { id: 'bubble-2', name: 'Momo', role: '做城市策展的人', x: 68, y: 18, size: 92 },
-  { id: 'bubble-3', name: 'Lynn', role: '在练习更松弛地创作', x: 56, y: 46, size: 138 },
-  { id: 'bubble-4', name: '小越', role: '产品设计师，最近在重建节奏', x: 20, y: 58, size: 106 },
-  { id: 'bubble-5', name: 'Aki', role: '拍纪录片，也写诗', x: 78, y: 64, size: 116 }
+  { id: 'bubble-1', name: '青原', initial: '青', role: '研究哲学的程序员', x: 22, y: 24, size: 120, floatDelay: '0' },
+  { id: 'bubble-2', name: 'Momo', initial: 'M', role: '做城市策展的人', x: 68, y: 18, size: 92, floatDelay: '-1.4' },
+  { id: 'bubble-3', name: 'Lynn', initial: 'L', role: '在练习更松弛地创作', x: 56, y: 46, size: 138, floatDelay: '-2.8' },
+  { id: 'bubble-4', name: '小越', initial: '小', role: '产品设计师，最近在重建节奏', x: 20, y: 58, size: 106, floatDelay: '-0.7' },
+  { id: 'bubble-5', name: 'Aki', initial: 'A', role: '拍纪录片，也写诗', x: 78, y: 64, size: 116, floatDelay: '-3.5' }
 ]
 
 const topics = [

@@ -1,32 +1,52 @@
 <view class="blackhole-page {{pageReady ? 'page-ready' : ''}} {{pageLeaving ? 'page-leaving' : ''}}">
+
+  <!-- ── 顶栏 ── -->
   <view class="blackhole-top">
-    <text class="blackhole-top__button">×</text>
+    <view class="blackhole-top__button" bindtap="endSession">×</view>
     <text class="blackhole-top__title">在场</text>
-    <text class="blackhole-top__button">···</text>
+    <view class="blackhole-top__button" style="opacity: 0;">×</view>
   </view>
 
+  <!-- ── 场域 ── -->
   <view class="field">
-    <view class="field__mist field__mist--green"></view>
-    <view class="field__mist field__mist--blue"></view>
+    <!-- 极暗底部晕光 -->
+    <view class="field__glow"></view>
+
+    <!-- 浮动气泡 -->
     <view
       wx:for="{{bubbles}}"
       wx:key="id"
-      class="field__orb"
-      style="left: {{item.x}}%; top: {{item.y}}%;"
+      class="field__orb {{selectedBubble.id === item.id ? 'field__orb--selected' : ''}}"
+      style="left: {{item.x}}%; top: {{item.y}}%; animation-delay: {{item.floatDelay}}s;"
       data-id="{{item.id}}"
       bindtap="selectBubble"
+      bindlongpress="nudgeBubble"
     >
-      <glow-orb size="{{item.size}}" label="" hint="" />
+      <glow-orb size="{{item.size}}" label="{{item.initial}}" hint="" />
     </view>
   </view>
 
-  <view class="bottom-ring" bindtap="nudge">
-    <view class="bottom-ring__inner">〰</view>
-    <text class="bottom-ring__label">{{selectedBubble.name}} · 轻触共鸣</text>
+  <!-- ── 底部提示（无选中时） ── -->
+  <view class="field__hint {{showCard ? 'field__hint--hidden' : ''}}">
+    <text class="field__hint-text">轻触气泡，看见彼此</text>
   </view>
 
-  <view class="side-actions">
-    <view class="side-actions__item" bindtap="viewCard">翻名片</view>
-    <view class="side-actions__item side-actions__item--strong" bindtap="endSession">结束在场</view>
+</view>
+
+<!-- ── 名片弹层 ── -->
+<view wx:if="{{showCard}}" class="orb-card" bindtap="closeCard">
+  <view class="orb-card__sheet" catchtap="">
+    <view class="orb-card__handle"></view>
+    <view class="orb-card__info">
+      <text class="orb-card__name">{{selectedBubble.name}}</text>
+      <text class="orb-card__role">{{selectedBubble.role}}</text>
+    </view>
+    <view class="orb-card__actions">
+      <view class="orb-card__nudge" bindtap="nudge">
+        <text class="orb-card__nudge-wave">〰</text>
+        <text>轻触共鸣</text>
+      </view>
+      <view class="orb-card__view" bindtap="viewCard">查看名片</view>
+    </view>
   </view>
 </view>
