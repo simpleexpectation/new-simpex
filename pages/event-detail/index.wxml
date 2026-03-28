@@ -30,7 +30,33 @@
   </view>
 
   <view class="actions">
-    <view class="cta-button cta-button--light">实名预约</view>
+    <view class="cta-button cta-button--light" bindtap="openRsvpModal">实名预约</view>
     <view class="cta-button cta-button--ghost" bindtap="enterBlackhole">查看现场模式</view>
+  </view>
+</view>
+
+<!-- 预约确认弹窗 -->
+<view wx:if="{{showRsvpModal}}" class="rsvp-mask" bindtap="closeRsvpModal">
+  <view class="rsvp-sheet" catchtap="">
+
+    <view class="rsvp-sheet__handle"></view>
+
+    <text class="rsvp-sheet__eyebrow">确认实名预约</text>
+    <text class="rsvp-sheet__event">{{event.title}}</text>
+
+    <!-- 未签到次数警告 -->
+    <view wx:if="{{noShowCount >= 2}}" class="rsvp-warning">
+      <view class="rsvp-warning__bar"></view>
+      <view class="rsvp-warning__body">
+        <text class="rsvp-warning__headline">月票资格风险提示</text>
+        <text class="rsvp-warning__copy">本月已有 {{noShowCount}} 次预约活动未签到。若本月内超过两次未签到，月票资格将被自动取消。</text>
+      </view>
+    </view>
+
+    <view class="rsvp-sheet__actions">
+      <view class="cta-button cta-button--ghost" bindtap="closeRsvpModal">取消</view>
+      <view class="cta-button cta-button--light" bindtap="confirmRsvp">确认预约</view>
+    </view>
+
   </view>
 </view>

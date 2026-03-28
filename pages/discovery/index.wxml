@@ -2,12 +2,45 @@
   <view class="discovery-page__top-mask"></view>
   <nav-shell eyebrow="Simpex" title="发现" />
 
-  <view class="calendar-row">
-    <view wx:for="{{dates}}" wx:key="day" class="calendar-row__item">
-      <text class="calendar-row__week">{{item.week}}</text>
-      <view class="calendar-row__dot {{item.active ? 'calendar-row__dot--active' : ''}} {{item.warm ? 'calendar-row__dot--warm' : ''}}">
-        <text>{{item.day}}</text>
+  <view class="calendar-wrap {{calendarExpanded ? 'calendar-wrap--expanded' : ''}}"
+        bindtouchstart="onCalendarTouchStart"
+        bindtouchend="onCalendarTouchEnd">
+
+    <!-- 本周横排（收起态） -->
+    <view class="calendar-row">
+      <view wx:for="{{weekDates}}" wx:key="key" class="calendar-row__item">
+        <text class="calendar-row__week">{{item.week}}</text>
+        <view class="calendar-row__dot {{item.active ? 'calendar-row__dot--active' : ''}} {{item.warm ? 'calendar-row__dot--warm' : ''}}">
+          <text>{{item.day}}</text>
+        </view>
+        <view class="calendar-row__event-dot {{item.hasEvent ? '' : 'calendar-row__event-dot--hidden'}}"></view>
       </view>
+    </view>
+
+    <!-- 整月网格（展开态） -->
+    <view class="calendar-month">
+      <view class="calendar-month__top">
+        <text class="calendar-month__label">{{monthCalendar.monthLabel}}</text>
+      </view>
+      <view class="calendar-month__header">
+        <text wx:for="{{monthCalendar.header}}" wx:key="index" class="calendar-month__wday">{{item}}</text>
+      </view>
+      <block wx:for="{{monthCalendar.weeks}}" wx:key="index">
+        <view class="calendar-month__week">
+          <view wx:for="{{item}}" wx:for-item="cell" wx:key="key" class="calendar-month__cell">
+            <view wx:if="{{!cell.empty}}"
+                  class="calendar-row__dot calendar-month__day-dot {{cell.active ? 'calendar-row__dot--active' : ''}} {{cell.warm ? 'calendar-row__dot--warm' : ''}}">
+              <text>{{cell.day}}</text>
+            </view>
+            <view wx:else class="calendar-month__day-empty"></view>
+          </view>
+        </view>
+      </block>
+    </view>
+
+    <!-- 展开/收起手柄 -->
+    <view class="calendar-toggle" bindtap="toggleCalendar">
+      <view class="calendar-toggle__chevron {{calendarExpanded ? 'calendar-toggle__chevron--up' : ''}}"></view>
     </view>
   </view>
 

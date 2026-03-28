@@ -12,6 +12,7 @@ const officialEvents = [
     id: 'event-night-0322',
     title: '设计焦虑与不确定感的对话',
     time: '03/22 周日 19:30',
+    dateKey: '03-22',
     venue: '泊光集',
     seats: '余位 7'
   },
@@ -19,6 +20,7 @@ const officialEvents = [
     id: 'event-morning-0324',
     title: '探索活动推荐创意',
     time: '03/24 周二 10:00',
+    dateKey: '03-24',
     venue: '旷野公社',
     seats: '余位 12'
   },
@@ -26,6 +28,7 @@ const officialEvents = [
     id: 'event-party-0328',
     title: '跨领域夜谈：城市里的人情味',
     time: '03/28 周六 20:00',
+    dateKey: '03-28',
     venue: '猫客厅',
     seats: '余位 5'
   }
