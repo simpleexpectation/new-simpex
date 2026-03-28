@@ -1,0 +1,61 @@
+.venue-hero,
+.story {
+  margin-top: 20rpx;
+  border-radius: 40rpx;
+  padding: 30rpx 28rpx;
+}
+
+.venue-hero__mood {
+  display: block;
+  color: rgba(243, 241, 231, 0.52);
+  font-size: 22rpx;
+}
+
+.venue-hero__title {
+  display: block;
+  margin-top: 18rpx;
+  color: #f3f1e7;
+  font-size: 42rpx;
+  line-height: 1.28;
+}
+
+.venue-hero__stats {
+  display: flex;
+  gap: 18rpx;
+  margin-top: 30rpx;
+}
+
+.venue-hero__stat {
+  flex: 1;
+  padding: 24rpx;
+  border-radius: 28rpx;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.venue-hero__label {
+  display: block;
+  color: rgba(243, 241, 231, 0.44);
+  font-size: 22rpx;
+}
+
+.venue-hero__value {
+  display: block;
+  margin-top: 14rpx;
+  color: #f3f1e7;
+  font-size: 28rpx;
+}
+
+.story__title {
+  display: block;
+  color: #f3f1e7;
+  font-size: 28rpx;
+  font-weight: 600;
+}
+
+.story__copy {
+  display: block;
+  margin-top: 16rpx;
+  color: rgba(243, 241, 231, 0.62);
+  font-size: 26rpx;
+  line-height: 1.7;
+}

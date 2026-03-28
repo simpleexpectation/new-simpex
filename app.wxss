@@ -1,0 +1,112 @@
+@import "styles/theme.wxss";
+
+page {
+  background: var(--bg);
+  color: var(--text-primary);
+  font-family: "SF Pro Display", "PingFang SC", sans-serif;
+}
+
+.page-shell {
+  min-height: 100vh;
+  padding: 0 32rpx calc(160rpx + env(safe-area-inset-bottom));
+  box-sizing: border-box;
+  background: #000000;
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 220ms ease, transform 220ms ease;
+}
+
+.glass-panel {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1rpx solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 20rpx 60rpx rgba(0, 0, 0, 0.18);
+  backdrop-filter: blur(28rpx);
+}
+
+.section-title {
+  font-size: 64rpx;
+  line-height: 0.98;
+  letter-spacing: -2rpx;
+  font-weight: 600;
+}
+
+.section-copy {
+  margin-top: 14rpx;
+  color: var(--text-secondary);
+  font-size: 26rpx;
+  line-height: 1.6;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 10rpx 20rpx;
+  border-radius: 999rpx;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-secondary);
+  font-size: 22rpx;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20rpx;
+}
+
+.cta-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 90rpx;
+  border-radius: 999rpx;
+  font-size: 28rpx;
+  font-weight: 600;
+}
+
+.cta-button--light {
+  background: linear-gradient(135deg, #f1eddd, #d8cfb5);
+  color: #111111;
+}
+
+.cta-button--ghost {
+  border: 1rpx solid rgba(255, 255, 255, 0.14);
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.floating-blur {
+  position: absolute;
+  filter: blur(26rpx);
+  opacity: 0.9;
+  animation: drift 7s ease-in-out infinite;
+}
+
+.page-ready {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.page-leaving {
+  opacity: 0;
+  transform: translateY(22rpx);
+}
+
+@keyframes drift {
+  0%,
+  100% {
+    transform: translateY(0rpx) scale(1);
+  }
+  50% {
+    transform: translateY(-10rpx) scale(1.03);
+  }
+}
+
+@keyframes pulseGlow {
+  0%,
+  100% {
+    opacity: 0.82;
+  }
+  50% {
+    opacity: 1;
+  }
+}

@@ -1,0 +1,30 @@
+.nav-shell {
+  position: sticky;
+  top: 0;
+  z-index: 9;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.96), rgba(0, 0, 0, 0));
+}
+
+.nav-shell__inner {
+  padding: 24rpx 0 18rpx;
+}
+
+.nav-shell__inner--compact {
+  padding-bottom: 10rpx;
+}
+
+.nav-shell__eyebrow {
+  display: block;
+  margin-bottom: 10rpx;
+  color: rgba(243, 241, 231, 0.42);
+  font-size: 22rpx;
+}
+
+.nav-shell__title {
+  display: block;
+  font-size: 78rpx;
+  line-height: 0.95;
+  letter-spacing: -2rpx;
+  color: #f3f1e7;
+  font-weight: 600;
+}

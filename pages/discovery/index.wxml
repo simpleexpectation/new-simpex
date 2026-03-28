@@ -1,0 +1,39 @@
+<view class="page-shell discovery-page {{pageReady ? 'page-ready' : ''}} {{pageLeaving ? 'page-leaving' : ''}}">
+  <view class="discovery-page__top-mask"></view>
+  <nav-shell eyebrow="Simpex" title="发现" />
+
+  <view class="calendar-row">
+    <view wx:for="{{dates}}" wx:key="day" class="calendar-row__item">
+      <text class="calendar-row__week">{{item.week}}</text>
+      <view class="calendar-row__dot {{item.active ? 'calendar-row__dot--active' : ''}} {{item.warm ? 'calendar-row__dot--warm' : ''}}">
+        <text>{{item.day}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="activity-list">
+    <view
+      wx:for="{{officialEvents}}"
+      wx:key="id"
+      class="activity-card activity-card--{{index % 3}}"
+      data-id="{{item.id}}"
+      bindtap="goEventDetail"
+    >
+      <view class="activity-card__mist activity-card__mist--a"></view>
+      <view class="activity-card__mist activity-card__mist--b"></view>
+      <view class="activity-card__header">
+        <view class="pill">官方核心局</view>
+        <text class="activity-card__seat">{{item.seats}}</text>
+      </view>
+      <view class="activity-card__body">
+        <text class="activity-card__title">{{item.title}}</text>
+        <text class="activity-card__meta">{{item.time}}</text>
+        <text class="activity-card__meta">{{item.venue}}</text>
+      </view>
+      <view class="activity-card__footer">
+        <text>查看详情</text>
+        <text>→</text>
+      </view>
+    </view>
+  </view>
+</view>

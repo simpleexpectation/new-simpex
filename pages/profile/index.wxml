@@ -1,0 +1,40 @@
+<view class="page-shell {{pageReady ? 'page-ready' : ''}} {{pageLeaving ? 'page-leaving' : ''}}">
+  <nav-shell title="我的" />
+
+  <view class="segment">
+    <view class="segment__thumb"></view>
+    <text class="segment__label segment__label--active">会员</text>
+    <text class="segment__label">名片</text>
+  </view>
+
+  <view class="mode-grid">
+    <view class="mode-card mode-card--light">
+      <text class="mode-card__label">{{stats[0].label}}</text>
+      <text class="mode-card__value">{{stats[0].value}}</text>
+      <text class="mode-card__hint">{{stats[0].hint}}</text>
+    </view>
+    <view class="mode-card mode-card--light">
+      <text class="mode-card__label">{{stats[1].label}}</text>
+      <text class="mode-card__value">{{stats[1].value}}</text>
+      <text class="mode-card__hint">{{stats[1].hint}}</text>
+    </view>
+    <view class="mode-card mode-card--light">
+      <text class="mode-card__label">{{stats[2].label}}</text>
+      <text class="mode-card__value">{{stats[2].value}}</text>
+      <text class="mode-card__hint">{{stats[2].hint}}</text>
+    </view>
+    <view class="mode-card mode-card--light">
+      <text class="mode-card__label">本周频次</text>
+      <view class="week-bars">
+        <view class="week-bars__track"></view>
+        <view class="week-bars__active week-bars__active--a"></view>
+        <view class="week-bars__active week-bars__active--b"></view>
+      </view>
+    </view>
+  </view>
+
+  <view class="membership-entry" bindtap="openMembership">
+    <view class="pill">会员权益</view>
+    <text class="membership-entry__copy">{{membership.plan}} · 点击查看权益详情</text>
+  </view>
+</view>

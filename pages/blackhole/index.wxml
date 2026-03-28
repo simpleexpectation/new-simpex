@@ -1,0 +1,32 @@
+<view class="blackhole-page {{pageReady ? 'page-ready' : ''}} {{pageLeaving ? 'page-leaving' : ''}}">
+  <view class="blackhole-top">
+    <text class="blackhole-top__button">×</text>
+    <text class="blackhole-top__title">在场</text>
+    <text class="blackhole-top__button">···</text>
+  </view>
+
+  <view class="field">
+    <view class="field__mist field__mist--green"></view>
+    <view class="field__mist field__mist--blue"></view>
+    <view
+      wx:for="{{bubbles}}"
+      wx:key="id"
+      class="field__orb"
+      style="left: {{item.x}}%; top: {{item.y}}%;"
+      data-id="{{item.id}}"
+      bindtap="selectBubble"
+    >
+      <glow-orb size="{{item.size}}" label="" hint="" />
+    </view>
+  </view>
+
+  <view class="bottom-ring" bindtap="nudge">
+    <view class="bottom-ring__inner">〰</view>
+    <text class="bottom-ring__label">{{selectedBubble.name}} · 轻触共鸣</text>
+  </view>
+
+  <view class="side-actions">
+    <view class="side-actions__item" bindtap="viewCard">翻名片</view>
+    <view class="side-actions__item side-actions__item--strong" bindtap="endSession">结束在场</view>
+  </view>
+</view>

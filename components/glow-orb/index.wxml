@@ -1,0 +1,4 @@
+<view class="orb" style="width: {{size}}rpx; height: {{size}}rpx;" bindtap="handleTap">
+  <text wx:if="{{label}}" class="orb__label">{{label}}</text>
+  <text wx:if="{{hint}}" class="orb__hint">{{hint}}</text>
+</view>

@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "nav-shell": "/components/nav-shell/index",
+    "glow-orb": "/components/glow-orb/index"
+  }
+}

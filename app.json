@@ -1,0 +1,44 @@
+{
+  "pages": [
+    "pages/discovery/index",
+    "pages/event-detail/index",
+    "pages/venue-detail/index",
+    "pages/membership/index",
+    "pages/blackhole/index",
+    "pages/card/index",
+    "pages/profile/index"
+  ],
+  "window": {
+    "navigationStyle": "custom",
+    "backgroundColor": "#050505",
+    "backgroundTextStyle": "light"
+  },
+  "lazyCodeLoading": "requiredComponents",
+  "tabBar": {
+    "custom": true,
+    "color": "#6C6C70",
+    "selectedColor": "#F2F1EA",
+    "backgroundColor": "#050505",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/discovery/index",
+        "text": "发现"
+      },
+      {
+        "pagePath": "pages/card/index",
+        "text": "空间"
+      },
+      {
+        "pagePath": "pages/blackhole/index",
+        "text": "在场"
+      },
+      {
+        "pagePath": "pages/profile/index",
+        "text": "我的"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

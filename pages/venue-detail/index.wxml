@@ -1,0 +1,23 @@
+<view class="page-shell {{pageReady ? 'page-ready' : ''}} {{pageLeaving ? 'page-leaving' : ''}}">
+  <nav-shell eyebrow="特权空间" title="{{venue.name}}" compact="{{true}}" />
+
+  <view class="venue-hero glass-panel">
+    <text class="venue-hero__mood">{{venue.mood}}</text>
+    <text class="venue-hero__title">当你抵达这里，系统只做两件事：确认你在场，和把打扰降到最低。</text>
+    <view class="venue-hero__stats">
+      <view class="venue-hero__stat">
+        <text class="venue-hero__label">今日权益</text>
+        <text class="venue-hero__value">{{venue.discount}}</text>
+      </view>
+      <view class="venue-hero__stat">
+        <text class="venue-hero__label">在店感知</text>
+        <text class="venue-hero__value">{{venue.presence}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="story glass-panel">
+    <text class="story__title">空间节奏</text>
+    <text class="story__copy">更像一个安静入口，而不是商家页面。场地卡碰一碰后，自动识别 `venue_id`，根据当前时段与权限决定是否展示活动入口、折扣或黑洞模式。</text>
+  </view>
+</view>

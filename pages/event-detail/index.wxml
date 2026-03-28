@@ -1,0 +1,36 @@
+<view class="page-shell {{pageReady ? 'page-ready' : ''}} {{pageLeaving ? 'page-leaving' : ''}}">
+  <nav-shell eyebrow="官方核心局" title="活动" compact="{{true}}" />
+
+  <view class="event-hero glass-panel">
+    <text class="event-hero__eyebrow">{{event.status}}</text>
+    <text class="section-title">{{event.title}}</text>
+    <text class="section-copy">{{event.description}}</text>
+    <view class="event-hero__meta">
+      <text>时间：今晚 19:30 - 21:30</text>
+      <text>地点：泊光集 · 杭州天目里附近</text>
+      <text>引导人：Iris / 产品叙事研究</text>
+      <text>席位：20 人内，当前已报名 13 人</text>
+    </view>
+  </view>
+
+  <view class="detail-section">
+    <text class="detail-section__title">到场之后</text>
+    <text class="detail-section__copy">碰一碰进场，界面会退到黑洞模式。你只会看到同场的人、他们的极简名片，以及轻触共鸣入口。</text>
+  </view>
+
+  <view class="card-grid">
+    <view class="mini-panel glass-panel">
+      <text class="mini-panel__label">报名权益</text>
+      <text class="mini-panel__value">399 票可参加单领域全部场次</text>
+    </view>
+    <view class="mini-panel glass-panel">
+      <text class="mini-panel__label">核销方式</text>
+      <text class="mini-panel__value">NFC 场地卡 + 二维码兜底</text>
+    </view>
+  </view>
+
+  <view class="actions">
+    <view class="cta-button cta-button--light">实名预约</view>
+    <view class="cta-button cta-button--ghost" bindtap="enterBlackhole">查看现场模式</view>
+  </view>
+</view>

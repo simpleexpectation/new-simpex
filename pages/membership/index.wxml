@@ -1,0 +1,29 @@
+<view class="page-shell {{pageReady ? 'page-ready' : ''}} {{pageLeaving ? 'page-leaving' : ''}}">
+  <nav-shell title="会员权益">
+    <view class="membership-topbar">
+      <view class="membership-topbar__back" bindtap="goBack">返回</view>
+    </view>
+  </nav-shell>
+
+  <view class="membership-hero">
+    <text class="membership-hero__plan">{{membership.plan}}</text>
+    <text class="membership-hero__renewal">有效期至 {{membership.renewal}}</text>
+  </view>
+
+  <view class="membership-list">
+    <view wx:for="{{membership.perks}}" wx:key="*this" class="membership-item">
+      <text>{{item}}</text>
+    </view>
+  </view>
+
+  <view class="membership-footer">
+    <view class="membership-footer__rail">
+      <view class="membership-footer__item membership-footer__item--active" bindtap="goBack">
+        <text class="membership-footer__text">返回</text>
+      </view>
+      <view class="membership-footer__item" bindtap="goProfile">
+        <text class="membership-footer__text">我的</text>
+      </view>
+    </view>
+  </view>
+</view>

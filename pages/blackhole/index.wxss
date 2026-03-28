@@ -1,0 +1,127 @@
+.blackhole-page {
+  position: relative;
+  overflow: hidden;
+  min-height: 100vh;
+  padding: 0 32rpx calc(160rpx + env(safe-area-inset-bottom));
+  box-sizing: border-box;
+  background:
+    radial-gradient(circle at 50% 38%, rgba(111, 237, 161, 0.16), transparent 20%),
+    linear-gradient(180deg, #2f6e54, #3b7c5e 32%, #3d775f 100%);
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 220ms ease, transform 220ms ease;
+}
+
+.blackhole-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: calc(88rpx + env(safe-area-inset-top));
+}
+
+.blackhole-top__button,
+.blackhole-top__title {
+  color: rgba(255, 255, 255, 0.76);
+  font-size: 28rpx;
+}
+
+.blackhole-top__button {
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.blackhole-top__title {
+  font-weight: 600;
+}
+
+.field {
+  position: relative;
+  height: 980rpx;
+  margin-top: 32rpx;
+}
+
+.field__mist {
+  position: absolute;
+  border-radius: 240rpx;
+  filter: blur(26rpx);
+  animation: pulseGlow 5s ease-in-out infinite;
+}
+
+.field__mist--green {
+  left: 120rpx;
+  top: 360rpx;
+  width: 180rpx;
+  height: 300rpx;
+  background: rgba(120, 255, 147, 0.72);
+}
+
+.field__mist--blue {
+  left: 150rpx;
+  right: 150rpx;
+  top: 140rpx;
+  height: 600rpx;
+  background: rgba(105, 181, 255, 0.78);
+  border-radius: 180rpx;
+  animation-delay: -1.6s;
+}
+
+.field__orb {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  opacity: 0.76;
+}
+
+.bottom-ring {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16rpx;
+  margin-top: -60rpx;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.bottom-ring__inner {
+  width: 116rpx;
+  height: 116rpx;
+  border: 8rpx solid rgba(255, 255, 255, 0.54);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 34rpx;
+}
+
+.bottom-ring__label {
+  font-size: 22rpx;
+}
+
+.side-actions {
+  position: absolute;
+  right: 24rpx;
+  bottom: calc(220rpx + env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  gap: 18rpx;
+}
+
+.side-actions__item {
+  min-width: 92rpx;
+  min-height: 92rpx;
+  padding: 0 16rpx;
+  border-radius: 46rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.14);
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 24rpx;
+}
+
+.side-actions__item--strong {
+  min-height: 108rpx;
+}
