@@ -1,5 +1,4 @@
 <view wx:if="{{!hidden}}" class="tab-bar">
-  <view class="tab-bar__plus">+</view>
   <view class="tab-bar__rail">
     <view
       wx:for="{{tabs}}"

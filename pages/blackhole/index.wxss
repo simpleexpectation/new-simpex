@@ -1,53 +1,24 @@
-/* ── 页面容器：纯 OLED 黑 ── */
+/* ── 页面容器 ── */
 .blackhole-page {
   position: relative;
   overflow: hidden;
   height: 100vh;
   background: #000000;
-  opacity: 1;
-  transform: translateY(0);
   transition: opacity 220ms ease, transform 220ms ease;
-}
-
-/* ── 顶栏 ── */
-.blackhole-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-top: calc(88rpx + env(safe-area-inset-top));
-  padding-left: 32rpx;
-  padding-right: 32rpx;
-  position: relative;
-  z-index: 10;
-}
-
-.blackhole-top__button {
-  width: 56rpx;
-  height: 56rpx;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(255, 255, 255, 0.06);
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 32rpx;
-  line-height: 1;
-}
-
-.blackhole-top__title {
-  font-size: 28rpx;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.38);
-  letter-spacing: 3rpx;
 }
 
 /* ── 场域 ── */
 .field {
   position: absolute;
   inset: 0;
+  transition: opacity 0.5s ease;
 }
 
-/* 极暗暖色底部晕光，给空间一点深度 */
+.field--off {
+  opacity: 0.08;
+  pointer-events: none;
+}
+
 .field__glow {
   position: absolute;
   bottom: -80rpx;
@@ -56,7 +27,7 @@
   width: 600rpx;
   height: 400rpx;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(212, 196, 168, 0.06) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(241, 237, 221, 0.05) 0%, transparent 70%);
   pointer-events: none;
 }
 
@@ -78,26 +49,87 @@
   50%       { transform: translate(-50%, calc(-50% - 22px)); }
 }
 
-/* ── 底部提示文字 ── */
-.field__hint {
+/* ── 底部开关区 ── */
+.switch-area {
   position: absolute;
   bottom: calc(80rpx + env(safe-area-inset-bottom));
   left: 0;
   right: 0;
   display: flex;
-  justify-content: center;
-  pointer-events: none;
-  transition: opacity 300ms ease;
+  flex-direction: column;
+  align-items: center;
+  gap: 28rpx;
 }
 
-.field__hint--hidden {
-  opacity: 0;
+.switch-wrap {
+  padding: 20rpx;
 }
 
-.field__hint-text {
+/* 拨动开关 */
+.switch {
+  position: relative;
+  width: 260rpx;
+  height: 130rpx;
+  border-radius: 999rpx;
+  transition: background 0.35s ease;
+}
+
+.switch--on {
+  background: linear-gradient(135deg, #f1eddd, #d4c9a8);
+  box-shadow: 0 0 40rpx rgba(241, 237, 221, 0.15);
+}
+
+.switch--off {
+  background: rgba(255, 255, 255, 0.07);
+  box-shadow: none;
+}
+
+/* 圆形滑块 */
+.switch__knob {
+  position: absolute;
+  top: 13rpx;
+  width: 104rpx;
+  height: 104rpx;
+  border-radius: 50%;
+  transition: left 0.35s cubic-bezier(0.4, 0, 0.2, 1), background 0.35s ease;
+}
+
+.switch--on .switch__knob {
+  left: calc(260rpx - 104rpx - 13rpx);
+  background: #1a1814;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.5);
+}
+
+.switch--off .switch__knob {
+  left: 13rpx;
+  background: rgba(255, 255, 255, 0.22);
+  box-shadow: none;
+}
+
+/* 文字 */
+.switch-label {
+  font-size: 30rpx;
+  font-weight: 500;
+  letter-spacing: 3rpx;
+  color: rgba(243, 241, 231, 0.85);
+  transition: opacity 0.35s ease;
+}
+
+.switch-sub {
+  font-size: 22rpx;
+  color: rgba(243, 241, 231, 0.3);
+  letter-spacing: 1rpx;
+  min-height: 30rpx;
+}
+
+.switch-exit {
+  margin-top: 8rpx;
+  padding: 16rpx 48rpx;
+  border-radius: 999rpx;
+  border: 1rpx solid rgba(255, 255, 255, 0.12);
   font-size: 24rpx;
-  color: rgba(255, 255, 255, 0.2);
-  letter-spacing: 2rpx;
+  color: rgba(243, 241, 231, 0.4);
+  letter-spacing: 1rpx;
 }
 
 /* ── 名片弹层 ── */

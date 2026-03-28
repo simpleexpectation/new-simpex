@@ -1,18 +1,8 @@
 <view class="blackhole-page {{pageReady ? 'page-ready' : ''}} {{pageLeaving ? 'page-leaving' : ''}}">
 
-  <!-- ── 顶栏 ── -->
-  <view class="blackhole-top">
-    <view class="blackhole-top__button" bindtap="endSession">×</view>
-    <text class="blackhole-top__title">在场</text>
-    <view class="blackhole-top__button" style="opacity: 0;">×</view>
-  </view>
-
-  <!-- ── 场域 ── -->
-  <view class="field">
-    <!-- 极暗底部晕光 -->
+  <!-- ── 场域气泡 ── -->
+  <view class="field {{connected ? '' : 'field--off'}}">
     <view class="field__glow"></view>
-
-    <!-- 浮动气泡 -->
     <view
       wx:for="{{bubbles}}"
       wx:key="id"
@@ -26,9 +16,16 @@
     </view>
   </view>
 
-  <!-- ── 底部提示（无选中时） ── -->
-  <view class="field__hint {{showCard ? 'field__hint--hidden' : ''}}">
-    <text class="field__hint-text">轻触气泡，看见彼此</text>
+  <!-- ── 底部开关区 ── -->
+  <view class="switch-area">
+    <view class="switch-wrap" bindtap="toggleConnect">
+      <view class="switch {{connected ? 'switch--on' : 'switch--off'}}">
+        <view class="switch__knob"></view>
+      </view>
+    </view>
+    <text class="switch-label">{{connected ? '在场' : '已暂停'}}</text>
+    <text class="switch-sub">{{connected ? bubbles.length + ' 人同在此刻' : '再次拨动即可重新加入'}}</text>
+    <view wx:if="{{!connected}}" class="switch-exit" bindtap="endSession">退出活动</view>
   </view>
 
 </view>

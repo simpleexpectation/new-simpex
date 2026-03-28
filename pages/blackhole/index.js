@@ -5,6 +5,7 @@ Page({
     bubbles,
     selectedBubble: null,
     showCard: false,
+    connected: true,
     pageReady: false,
     pageLeaving: false
   },
@@ -12,6 +13,11 @@ Page({
     this.hideTabBar()
     this.setData({ pageLeaving: false, pageReady: false, showCard: false, selectedBubble: null })
     setTimeout(() => { this.setData({ pageReady: true }) }, 20)
+  },
+  toggleConnect() {
+    const connected = !this.data.connected
+    this.setData({ connected, showCard: false })
+    wx.vibrateShort({ type: connected ? 'heavy' : 'light' })
   },
   hideTabBar() {
     const tabBar = this.getTabBar && this.getTabBar()
