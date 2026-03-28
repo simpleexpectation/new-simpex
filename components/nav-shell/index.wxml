@@ -1,7 +1,7 @@
 <view class="nav-shell" style="padding-top: {{topInset}}px;">
   <view class="nav-shell__inner {{compact ? 'nav-shell__inner--compact' : ''}}">
     <text wx:if="{{eyebrow}}" class="nav-shell__eyebrow">{{eyebrow}}</text>
-    <text class="nav-shell__title">{{title}}</text>
+    <text wx:if="{{title}}" class="nav-shell__title">{{title}}</text>
     <slot />
   </view>
 </view>

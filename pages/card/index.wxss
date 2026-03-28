@@ -1,19 +1,209 @@
 .space-page {
   position: relative;
-  overflow: hidden;
 }
 
-.space-page__bottom-mask {
+.space-page__top-mask {
   position: fixed;
-  left: 20rpx;
-  right: 20rpx;
-  bottom: calc(-364rpx - env(safe-area-inset-bottom));
-  height: 420rpx;
-  background: #000000;
   z-index: 8;
   pointer-events: none;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 220rpx;
+  background: linear-gradient(180deg, #000000 54%, rgba(0, 0, 0, 0));
 }
 
+/* ── Tab 切换器 ── */
+.tab-switch {
+  display: flex;
+  gap: 32rpx;
+  align-items: baseline;
+  padding-top: 8rpx;
+}
+
+.tab-switch__item {
+  font-size: 78rpx;
+  line-height: 0.95;
+  letter-spacing: -2rpx;
+  font-weight: 600;
+  color: rgba(243, 241, 231, 0.24);
+  transition: color 0.18s ease;
+}
+
+.tab-switch__item--active {
+  color: #f3f1e7;
+}
+
+/* ── 话题卡片（同活动卡片风格）── */
+.topic-list {
+  display: flex;
+  flex-direction: column;
+  gap: 28rpx;
+  margin-top: 32rpx;
+  padding-bottom: 40rpx;
+}
+
+.topic-card {
+  position: relative;
+  overflow: hidden;
+  min-height: 520rpx;
+  padding: 26rpx 28rpx 30rpx;
+  border-radius: 52rpx;
+  display: flex;
+  flex-direction: column;
+}
+
+.topic-card--0 {
+  background: linear-gradient(180deg, #738087, #c8beb7 76%, #c19a76 100%);
+}
+
+.topic-card--1 {
+  background: linear-gradient(180deg, #dedcef, #efe9e2 72%, #ff8a00 100%);
+}
+
+.topic-card--2 {
+  background: linear-gradient(180deg, #3f7657, #4f8c69 56%, #8ee6a0 100%);
+}
+
+.topic-card__mist {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(32rpx);
+  animation: drift 8s ease-in-out infinite;
+}
+
+.topic-card__mist--a {
+  top: -30rpx;
+  right: 30rpx;
+  width: 280rpx;
+  height: 220rpx;
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.topic-card__mist--b {
+  left: 40rpx;
+  bottom: 30rpx;
+  width: 300rpx;
+  height: 200rpx;
+  background: rgba(255, 195, 157, 0.24);
+  animation-delay: -2.2s;
+}
+
+.topic-card__header,
+.topic-card__body,
+.topic-card__footer {
+  position: relative;
+  z-index: 2;
+}
+
+.topic-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.topic-card__status {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+}
+
+.topic-card__dot {
+  width: 12rpx;
+  height: 12rpx;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.topic-card__dot--live {
+  background: #ffffff;
+  box-shadow: 0 0 6rpx rgba(255, 255, 255, 0.8);
+}
+
+.topic-card__dot--upcoming {
+  background: rgba(255, 255, 255, 0.45);
+}
+
+.topic-card__status-label {
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 22rpx;
+}
+
+.topic-card__seat {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 24rpx;
+}
+
+.topic-card__body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  margin-top: 28rpx;
+}
+
+.topic-card__title {
+  color: #ffffff;
+  font-size: 52rpx;
+  line-height: 1.08;
+  letter-spacing: -1.5rpx;
+  font-weight: 600;
+  margin-bottom: 16rpx;
+}
+
+.topic-card__meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  margin-bottom: 16rpx;
+}
+
+.topic-card__initiator {
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 26rpx;
+  font-weight: 600;
+}
+
+.topic-card__meta {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 24rpx;
+}
+
+.topic-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10rpx;
+}
+
+.topic-card__pill {
+  background: rgba(255, 255, 255, 0.18);
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 22rpx;
+  padding: 8rpx 18rpx;
+}
+
+.topic-card__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 24rpx;
+}
+
+.topic-card__rules {
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 22rpx;
+}
+
+.topic-join-btn {
+  padding: 14rpx 30rpx;
+  border-radius: 999rpx;
+  background: rgba(255, 255, 255, 0.9);
+  color: #111111;
+  font-size: 24rpx;
+  font-weight: 600;
+}
+
+/* ── 空间列表 ── */
 .explore-intro {
   margin-top: 24rpx;
 }
@@ -21,7 +211,6 @@
 .explore-intro__copy {
   display: block;
   width: 520rpx;
-  margin-top: 0;
   color: rgba(243, 241, 231, 0.56);
   font-size: 24rpx;
   line-height: 1.5;

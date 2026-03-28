@@ -3,20 +3,25 @@ const { featuredEvent } = require('../../data/mock')
 Page({
   data: {
     event: featuredEvent,
-    // 本月未签到次数（模拟数据，接真实 API 后替换）
     noShowCount: 2,
     showRsvpModal: false,
+    statusBarHeight: 0,
     pageReady: false,
     pageLeaving: false
+  },
+  onLoad() {
+    const info = wx.getWindowInfo ? wx.getWindowInfo() : wx.getSystemInfoSync()
+    this.setData({ statusBarHeight: info.statusBarHeight || 0 })
   },
   onShow() {
     this.enterPage()
   },
   enterPage() {
     this.setData({ pageLeaving: false, pageReady: false })
-    setTimeout(() => {
-      this.setData({ pageReady: true })
-    }, 20)
+    setTimeout(() => { this.setData({ pageReady: true }) }, 20)
+  },
+  goBack() {
+    wx.navigateBack()
   },
   openRsvpModal() {
     this.setData({ showRsvpModal: true })

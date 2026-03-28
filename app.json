@@ -2,6 +2,7 @@
   "pages": [
     "pages/discovery/index",
     "pages/event-detail/index",
+    "pages/topic-detail/index",
     "pages/venue-detail/index",
     "pages/membership/index",
     "pages/blackhole/index",

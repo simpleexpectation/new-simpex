@@ -63,6 +63,63 @@ export const bubbles = [
   { id: 'bubble-5', name: 'Aki', role: '拍纪录片，也写诗', x: 78, y: 64, size: 116 }
 ]
 
+export const topics = [
+  {
+    id: 'topic-1',
+    status: 'live',
+    statusLabel: '正在发生',
+    title: '"离职之后，你是怎么重新找到节奏的？"',
+    initiator: '阿强',
+    time: '22:30 · 今晚',
+    location: '文二路某咖啡馆',
+    tags: ['Gap Year', '职场'],
+    current: 4,
+    total: 6,
+    rules: '< 6人 · 时长 > 2小时 · 用户自发',
+    participants: [
+      { id: 'bubble-1', name: '青原', role: '研究哲学的程序员', initial: '青' },
+      { id: 'bubble-4', name: '小越', role: '产品设计师', initial: '越' },
+      { id: 'bubble-2', name: 'Momo', role: '做城市策展的人', initial: 'M' },
+      { id: 'bubble-5', name: 'Aki', role: '拍纪录片，也写诗', initial: 'A' }
+    ]
+  },
+  {
+    id: 'topic-2',
+    status: 'upcoming',
+    statusLabel: '明天发生',
+    title: '"AI 会不会让创意工作者失业？我不这么认为"',
+    initiator: '七哥',
+    time: '20:00 · 明天',
+    location: '某 Co-working Space',
+    tags: ['AI', '创意', '辩论'],
+    current: 3,
+    total: 6,
+    rules: '< 6人 · 时长 > 2小时 · 用户自发',
+    participants: [
+      { id: 'bubble-3', name: 'Lynn', role: '在练习更松弛地创作', initial: 'L' },
+      { id: 'bubble-2', name: 'Momo', role: '做城市策展的人', initial: 'M' },
+      { id: 'bubble-5', name: 'Aki', role: '拍纪录片，也写诗', initial: 'A' }
+    ]
+  },
+  {
+    id: 'topic-3',
+    status: 'live',
+    statusLabel: '正在发生',
+    title: '"当代城市里，什么是真正的孤独？"',
+    initiator: '子木',
+    time: '23:00 · 今晚',
+    location: '西湖边某处',
+    tags: ['城市', '孤独', '深度'],
+    current: 2,
+    total: 6,
+    rules: '< 6人 · 时长 > 2小时 · 用户自发',
+    participants: [
+      { id: 'bubble-1', name: '青原', role: '研究哲学的程序员', initial: '青' },
+      { id: 'bubble-4', name: '小越', role: '产品设计师', initial: '越' }
+    ]
+  }
+]
+
 export const memberMoments = [
   {
     title: '在泊光集聊完之后，我终于决定停掉一个无效合作。',

@@ -1,33 +1,88 @@
 <view class="page-shell space-page {{pageReady ? 'page-ready' : ''}} {{pageLeaving ? 'page-leaving' : ''}}">
-  <view class="space-page__bottom-mask"></view>
-  <nav-shell title="空间" />
+  <view class="space-page__top-mask"></view>
 
-  <view class="explore-intro">
-    <text class="explore-intro__copy">一些适合真实相遇的地点。每个空间都有自己的节奏、氛围和会员权益。</text>
-  </view>
+  <nav-shell>
+    <view class="tab-switch">
+      <text
+        class="tab-switch__item {{activeTab === 'topics' ? 'tab-switch__item--active' : ''}}"
+        bindtap="switchTab"
+        data-tab="topics"
+      >话题</text>
+      <text
+        class="tab-switch__item {{activeTab === 'venues' ? 'tab-switch__item--active' : ''}}"
+        bindtap="switchTab"
+        data-tab="venues"
+      >空间</text>
+    </view>
+  </nav-shell>
 
-  <scroll-view class="poster-scroll" scroll-x="true" show-scrollbar="false">
-    <view class="poster-track">
-      <view class="poster-card" data-id="{{venues[0].id}}" bindtap="goVenueDetail">
-        <text class="poster-card__meta">{{venues[0].discount}}</text>
-        <text class="poster-card__title">{{venues[0].name}}</text>
-        <text class="poster-card__sub">{{venues[0].mood}}</text>
-        <view class="poster-card__art poster-card__art--earth"></view>
+  <!-- ── 话题列表 ── -->
+  <view wx:if="{{activeTab === 'topics'}}" class="topic-list">
+    <view
+      wx:for="{{topics}}"
+      wx:key="id"
+      class="topic-card topic-card--{{index % 3}}"
+      data-id="{{item.id}}"
+      bindtap="goTopicDetail"
+    >
+      <view class="topic-card__mist topic-card__mist--a"></view>
+      <view class="topic-card__mist topic-card__mist--b"></view>
+
+      <view class="topic-card__header">
+        <view class="topic-card__status">
+          <view class="topic-card__dot topic-card__dot--{{item.status}}"></view>
+          <text class="topic-card__status-label">{{item.statusLabel}}{{item.status === 'live' ? ' · LIVE' : ''}}</text>
+        </view>
+        <text class="topic-card__seat">{{item.current}}/{{item.total}} 余 {{item.total - item.current}} 位</text>
       </view>
-      <view class="poster-card" data-id="{{venues[1].id}}" bindtap="goVenueDetail">
-        <text class="poster-card__meta">{{venues[1].discount}}</text>
-        <text class="poster-card__title">{{venues[1].name}}</text>
-        <text class="poster-card__sub">{{venues[1].mood}}</text>
-        <view class="poster-card__art poster-card__art--sky"></view>
+
+      <view class="topic-card__body">
+        <text class="topic-card__title">{{item.title}}</text>
+        <view class="topic-card__meta-row">
+          <text class="topic-card__initiator">{{item.initiator}}</text>
+          <text class="topic-card__meta"> 发起 · {{item.time}} · {{item.location}}</text>
+        </view>
+        <view class="topic-card__tags">
+          <view wx:for="{{item.tags}}" wx:key="index" wx:for-item="tag" class="pill topic-card__pill">{{tag}}</view>
+        </view>
+      </view>
+
+      <view class="topic-card__footer">
+        <text class="topic-card__rules">{{item.rules}}</text>
+        <view class="topic-join-btn" catchtap="joinTopic" data-id="{{item.id}}">申请加入 →</view>
       </view>
     </view>
-  </scroll-view>
+  </view>
 
-  <view class="moment-sheet">
-    <text class="moment-sheet__tag">精选地点</text>
-    <view class="moment-sheet__art"></view>
-    <text class="moment-sheet__date">{{venues[2].presence}}</text>
-    <text class="moment-sheet__title">{{venues[2].name}}</text>
-    <text class="moment-sheet__copy">{{venues[2].mood}}。{{venues[2].discount}}，适合做轻松破冰和多人漫谈。</text>
+  <!-- ── 空间列表 ── -->
+  <view wx:if="{{activeTab === 'venues'}}">
+    <view class="explore-intro">
+      <text class="explore-intro__copy">一些适合真实相遇的地点。每个空间都有自己的节奏、氛围和会员权益。</text>
+    </view>
+
+    <scroll-view class="poster-scroll" scroll-x="true" show-scrollbar="false">
+      <view class="poster-track">
+        <view class="poster-card" data-id="{{venues[0].id}}" bindtap="goVenueDetail">
+          <text class="poster-card__meta">{{venues[0].discount}}</text>
+          <text class="poster-card__title">{{venues[0].name}}</text>
+          <text class="poster-card__sub">{{venues[0].mood}}</text>
+          <view class="poster-card__art poster-card__art--earth"></view>
+        </view>
+        <view class="poster-card" data-id="{{venues[1].id}}" bindtap="goVenueDetail">
+          <text class="poster-card__meta">{{venues[1].discount}}</text>
+          <text class="poster-card__title">{{venues[1].name}}</text>
+          <text class="poster-card__sub">{{venues[1].mood}}</text>
+          <view class="poster-card__art poster-card__art--sky"></view>
+        </view>
+      </view>
+    </scroll-view>
+
+    <view class="moment-sheet" data-id="{{venues[2].id}}" bindtap="goVenueDetail">
+      <text class="moment-sheet__tag">精选地点</text>
+      <view class="moment-sheet__art"></view>
+      <text class="moment-sheet__date">{{venues[2].presence}}</text>
+      <text class="moment-sheet__title">{{venues[2].name}}</text>
+      <text class="moment-sheet__copy">{{venues[2].mood}}。{{venues[2].discount}}，适合做轻松破冰和多人漫谈。</text>
+    </view>
   </view>
 </view>

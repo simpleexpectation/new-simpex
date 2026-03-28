@@ -1,8 +1,10 @@
-const { venues } = require('../../data/mock')
+const { venues, topics } = require('../../data/mock')
 
 Page({
   data: {
     venues,
+    topics,
+    activeTab: 'topics',
     pageReady: false,
     pageLeaving: false
   },
@@ -21,6 +23,20 @@ Page({
     if (tabBar && tabBar.sync) {
       tabBar.sync('/pages/card/index', false)
     }
+  },
+  switchTab(e) {
+    const { tab } = e.currentTarget.dataset
+    this.setData({ activeTab: tab })
+  },
+  goTopicDetail(e) {
+    const { id } = e.currentTarget.dataset
+    this.setData({ pageLeaving: true })
+    setTimeout(() => {
+      wx.navigateTo({ url: `/pages/topic-detail/index?id=${id}` })
+    }, 180)
+  },
+  joinTopic() {
+    // catchtap 阻止冒泡，此处占位
   },
   goVenueDetail(e) {
     const { id } = e.currentTarget.dataset

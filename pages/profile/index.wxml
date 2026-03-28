@@ -1,40 +1,71 @@
-<view class="page-shell {{pageReady ? 'page-ready' : ''}} {{pageLeaving ? 'page-leaving' : ''}}">
-  <nav-shell title="我的" />
+<view class="page-shell profile-page {{pageReady ? 'page-ready' : ''}} {{pageLeaving ? 'page-leaving' : ''}}">
 
-  <view class="segment">
-    <view class="segment__thumb"></view>
-    <text class="segment__label segment__label--active">会员</text>
-    <text class="segment__label">名片</text>
+  <nav-shell eyebrow="Simpex" title="我的" />
+
+  <!-- ── 头像 ── -->
+  <view class="profile-avatar">
+    <text class="profile-avatar__initial">{{user.initial}}</text>
   </view>
 
-  <view class="mode-grid">
-    <view class="mode-card mode-card--light">
-      <text class="mode-card__label">{{stats[0].label}}</text>
-      <text class="mode-card__value">{{stats[0].value}}</text>
-      <text class="mode-card__hint">{{stats[0].hint}}</text>
-    </view>
-    <view class="mode-card mode-card--light">
-      <text class="mode-card__label">{{stats[1].label}}</text>
-      <text class="mode-card__value">{{stats[1].value}}</text>
-      <text class="mode-card__hint">{{stats[1].hint}}</text>
-    </view>
-    <view class="mode-card mode-card--light">
-      <text class="mode-card__label">{{stats[2].label}}</text>
-      <text class="mode-card__value">{{stats[2].value}}</text>
-      <text class="mode-card__hint">{{stats[2].hint}}</text>
-    </view>
-    <view class="mode-card mode-card--light">
-      <text class="mode-card__label">本周频次</text>
-      <view class="week-bars">
-        <view class="week-bars__track"></view>
-        <view class="week-bars__active week-bars__active--a"></view>
-        <view class="week-bars__active week-bars__active--b"></view>
-      </view>
-    </view>
+  <!-- ── 名字 ── -->
+  <text class="profile-name">{{user.name}}</text>
+
+  <!-- ── 简介行 ── -->
+  <view class="profile-bio-lines">
+    <text class="profile-bio-line">◈  {{user.bio}}</text>
+    <text class="profile-bio-line">⌖  {{user.location}}</text>
   </view>
 
+  <!-- ── 标签 ── -->
+  <view class="profile-tags">
+    <view wx:for="{{user.tags}}" wx:key="index" class="pill">{{item}}</view>
+  </view>
+
+  <!-- ── 统计行（参考图好友/夸夸那排风格）── -->
+  <view class="profile-stats">
+    <text class="profile-stats__num">{{stats[0].value}}</text>
+    <text class="profile-stats__label">{{stats[0].label}}</text>
+    <text class="profile-stats__dot">·</text>
+    <text class="profile-stats__num">{{stats[1].value}}</text>
+    <text class="profile-stats__label">{{stats[1].label}}</text>
+    <view class="profile-stats__line"></view>
+  </view>
+
+  <!-- ── 我的瞬间 ── -->
+  <view class="moments-head">
+    <text class="moments-head__title">我的瞬间</text>
+    <text class="moments-head__action">去查看 ›</text>
+  </view>
+
+  <view class="moments-grid">
+
+    <!-- row 1 -->
+    <view class="moment-card moment-card--tall moment-art--night">
+      <text class="moment-card__label">旷野公社 · 深夜漫谈</text>
+    </view>
+    <view class="moment-card moment-card--tall moment-art--dusk">
+      <text class="moment-card__label">Monad 黑客松</text>
+    </view>
+
+    <!-- row 2: 横版全宽 -->
+    <view class="moment-card moment-card--wide moment-art--forest">
+      <text class="moment-card__label">泊光集 · 那个聊到凌晨的夜晚</text>
+    </view>
+
+    <!-- row 3 -->
+    <view class="moment-card moment-card--tall moment-art--sky">
+      <text class="moment-card__label">ETH Shanghai</text>
+    </view>
+    <view class="moment-card moment-card--tall moment-art--warm">
+      <text class="moment-card__label">外滩大会</text>
+    </view>
+
+  </view>
+
+  <!-- ── 会员入口 ── -->
   <view class="membership-entry" bindtap="openMembership">
-    <view class="pill">会员权益</view>
-    <text class="membership-entry__copy">{{membership.plan}} · 点击查看权益详情</text>
+    <text class="membership-entry__plan">{{membership.plan}}</text>
+    <text class="membership-entry__sub">有效期至 {{membership.renewal}} · 点击查看权益</text>
   </view>
+
 </view>

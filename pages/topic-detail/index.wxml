@@ -1,0 +1,71 @@
+<view class="page-shell topic-detail-page {{pageReady ? 'page-ready' : ''}} {{pageLeaving ? 'page-leaving' : ''}}">
+
+  <!-- ── 渐变 Hero ── -->
+  <view class="detail-hero detail-hero--1" style="padding-top: {{statusBarHeight + 44}}px;">
+    <view class="detail-hero__mist detail-hero__mist--a"></view>
+    <view class="detail-hero__mist detail-hero__mist--b"></view>
+    <view class="detail-hero__back" bindtap="goBack">← 返回</view>
+    <view class="detail-hero__body">
+      <view class="detail-hero__status">
+        <view class="detail-hero__dot detail-hero__dot--{{topic.status}}"></view>
+        <text class="detail-hero__status-label">{{topic.statusLabel}}{{topic.status === 'live' ? ' · LIVE' : ''}}</text>
+      </view>
+      <text class="detail-hero__title">{{topic.title}}</text>
+      <view class="detail-hero__meta">
+        <text class="detail-hero__initiator">{{topic.initiator}}</text>
+        <text class="detail-hero__meta-rest"> 发起 · {{topic.time}} · {{topic.location}}</text>
+      </view>
+      <view class="detail-hero__tags">
+        <view wx:for="{{topic.tags}}" wx:key="index" wx:for-item="tag" class="pill detail-hero__pill">{{tag}}</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- ── 元信息 ── -->
+  <view class="meta-list">
+    <view class="meta-row">
+      <text class="meta-row__label">人数</text>
+      <text class="meta-row__value">{{topic.current}}/{{topic.total}} · 余 {{topic.total - topic.current}} 位</text>
+    </view>
+    <view class="meta-row">
+      <text class="meta-row__label">规则</text>
+      <text class="meta-row__value">{{topic.rules}}</text>
+    </view>
+  </view>
+
+  <!-- ── 参与者 ── -->
+  <view class="detail-block">
+    <text class="detail-block__title">参与者</text>
+    <view class="participants-row">
+      <view
+        wx:for="{{topic.participants}}"
+        wx:key="id"
+        class="participant"
+        data-id="{{item.id}}"
+        bindtap="goMemberCard"
+      >
+        <view class="participant__avatar">
+          <text class="participant__initial">{{item.initial}}</text>
+        </view>
+        <text class="participant__name">{{item.name}}</text>
+        <text class="participant__role">{{item.role}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- ── 说明 ── -->
+  <view class="detail-block">
+    <text class="detail-block__title">进入后</text>
+    <text class="detail-block__copy">内容仅限在场参与者可见。加入后系统自动下发该空间的核销凭证。</text>
+  </view>
+
+</view>
+
+<!-- ── 固定底部操作栏 ── -->
+<view class="detail-footer">
+  <view class="detail-footer__rail">
+    <view class="detail-footer__back" bindtap="goBack">返回</view>
+    <view class="detail-footer__cta">申请加入</view>
+    <view class="detail-footer__ghost">分享话题</view>
+  </view>
+</view>

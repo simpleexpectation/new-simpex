@@ -1,50 +1,72 @@
-<view class="page-shell {{pageReady ? 'page-ready' : ''}} {{pageLeaving ? 'page-leaving' : ''}}">
-  <nav-shell eyebrow="官方核心局" title="活动" compact="{{true}}" />
+<view class="page-shell event-detail-page {{pageReady ? 'page-ready' : ''}} {{pageLeaving ? 'page-leaving' : ''}}">
 
-  <view class="event-hero glass-panel">
-    <text class="event-hero__eyebrow">{{event.status}}</text>
-    <text class="section-title">{{event.title}}</text>
-    <text class="section-copy">{{event.description}}</text>
-    <view class="event-hero__meta">
-      <text>时间：今晚 19:30 - 21:30</text>
-      <text>地点：泊光集 · 杭州天目里附近</text>
-      <text>引导人：Iris / 产品叙事研究</text>
-      <text>席位：20 人内，当前已报名 13 人</text>
+  <!-- ── 渐变 Hero ── -->
+  <view class="detail-hero detail-hero--0" style="padding-top: {{statusBarHeight + 44}}px;">
+    <view class="detail-hero__mist detail-hero__mist--a"></view>
+    <view class="detail-hero__mist detail-hero__mist--b"></view>
+    <view class="detail-hero__back" bindtap="goBack">← 返回</view>
+    <view class="detail-hero__body">
+      <view class="pill detail-hero__pill">官方核心局</view>
+      <text class="detail-hero__title">{{event.title}}</text>
+      <text class="detail-hero__desc">{{event.description}}</text>
     </view>
   </view>
 
-  <view class="detail-section">
-    <text class="detail-section__title">到场之后</text>
-    <text class="detail-section__copy">碰一碰进场，界面会退到黑洞模式。你只会看到同场的人、他们的极简名片，以及轻触共鸣入口。</text>
+  <!-- ── 元信息列表 ── -->
+  <view class="meta-list">
+    <view class="meta-row">
+      <text class="meta-row__label">时间</text>
+      <text class="meta-row__value">今晚 19:30 – 21:30</text>
+    </view>
+    <view class="meta-row">
+      <text class="meta-row__label">地点</text>
+      <text class="meta-row__value">泊光集 · 杭州天目里附近</text>
+    </view>
+    <view class="meta-row">
+      <text class="meta-row__label">引导人</text>
+      <text class="meta-row__value">Iris · 产品叙事研究</text>
+    </view>
+    <view class="meta-row">
+      <text class="meta-row__label">席位</text>
+      <text class="meta-row__value">{{event.status}} · 余 7 位（限额 20 人）</text>
+    </view>
   </view>
 
-  <view class="card-grid">
-    <view class="mini-panel glass-panel">
-      <text class="mini-panel__label">报名权益</text>
-      <text class="mini-panel__value">399 票可参加单领域全部场次</text>
+  <!-- ── 到场之后 ── -->
+  <view class="detail-block">
+    <text class="detail-block__title">到场之后</text>
+    <text class="detail-block__copy">碰一碰进场，界面退到黑洞模式。你只会看到同场的人、他们的极简名片，以及轻触共鸣入口。</text>
+  </view>
+
+  <!-- ── 权益卡片 ── -->
+  <view class="info-grid">
+    <view class="info-card">
+      <text class="info-card__label">报名权益</text>
+      <text class="info-card__value">399 票可参加单领域全部场次</text>
     </view>
-    <view class="mini-panel glass-panel">
-      <text class="mini-panel__label">核销方式</text>
-      <text class="mini-panel__value">NFC 场地卡 + 二维码兜底</text>
+    <view class="info-card">
+      <text class="info-card__label">核销方式</text>
+      <text class="info-card__value">NFC 场地卡 + 二维码兜底</text>
     </view>
   </view>
 
-  <view class="actions">
-    <view class="cta-button cta-button--light" bindtap="openRsvpModal">实名预约</view>
-    <view class="cta-button cta-button--ghost" bindtap="enterBlackhole">查看现场模式</view>
+</view>
+
+<!-- ── 固定底部操作栏 ── -->
+<view class="detail-footer">
+  <view class="detail-footer__rail">
+    <view class="detail-footer__back" bindtap="goBack">返回</view>
+    <view class="detail-footer__cta" bindtap="openRsvpModal">实名预约</view>
+    <view class="detail-footer__ghost" bindtap="enterBlackhole">查看现场模式</view>
   </view>
 </view>
 
-<!-- 预约确认弹窗 -->
+<!-- ── 预约弹窗 ── -->
 <view wx:if="{{showRsvpModal}}" class="rsvp-mask" bindtap="closeRsvpModal">
   <view class="rsvp-sheet" catchtap="">
-
     <view class="rsvp-sheet__handle"></view>
-
     <text class="rsvp-sheet__eyebrow">确认实名预约</text>
     <text class="rsvp-sheet__event">{{event.title}}</text>
-
-    <!-- 未签到次数警告 -->
     <view wx:if="{{noShowCount >= 2}}" class="rsvp-warning">
       <view class="rsvp-warning__bar"></view>
       <view class="rsvp-warning__body">
@@ -52,11 +74,9 @@
         <text class="rsvp-warning__copy">本月已有 {{noShowCount}} 次预约活动未签到。若本月内超过两次未签到，月票资格将被自动取消。</text>
       </view>
     </view>
-
     <view class="rsvp-sheet__actions">
       <view class="cta-button cta-button--ghost" bindtap="closeRsvpModal">取消</view>
       <view class="cta-button cta-button--light" bindtap="confirmRsvp">确认预约</view>
     </view>
-
   </view>
 </view>

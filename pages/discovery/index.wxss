@@ -35,7 +35,7 @@
 }
 
 .calendar-row__week {
-  color: var(--text-tertiary);
+  color: rgba(243, 241, 231, 0.55);
   font-size: 22rpx;
 }
 
@@ -46,8 +46,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--panel-soft);
-  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.12);
+  color: rgba(243, 241, 231, 0.82);
   font-size: 22rpx;
 }
 
@@ -91,7 +91,7 @@
 }
 
 .calendar-month__label {
-  color: var(--text-tertiary);
+  color: rgba(243, 241, 231, 0.55);
   font-size: 22rpx;
   letter-spacing: 0.5rpx;
 }
@@ -104,7 +104,7 @@
 .calendar-month__wday {
   flex: 1;
   text-align: center;
-  color: var(--text-tertiary);
+  color: rgba(243, 241, 231, 0.55);
   font-size: 20rpx;
 }
 
@@ -143,8 +143,8 @@
 .calendar-toggle__chevron {
   width: 22rpx;
   height: 22rpx;
-  border-right: 2rpx solid var(--text-tertiary);
-  border-bottom: 2rpx solid var(--text-tertiary);
+  border-right: 2rpx solid rgba(243, 241, 231, 0.55);
+  border-bottom: 2rpx solid rgba(243, 241, 231, 0.55);
   transform: rotate(45deg) translateY(-4rpx);
   transition: transform 0.3s ease;
 }
