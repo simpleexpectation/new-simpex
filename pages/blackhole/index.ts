@@ -59,7 +59,7 @@ Page({
   endSession() {
     this.setData({ pageLeaving: true, showCard: false })
     setTimeout(() => {
-      wx.switchTab({ url: '/pages/discovery/index' })
+      wx.switchTab({ url: '/pages/card/index' })
     }, 180)
   }
 })

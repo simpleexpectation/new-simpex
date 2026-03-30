@@ -1,6 +1,5 @@
 const tabs = [
-  { text: '发现', pagePath: '/pages/discovery/index', icon: '〰' },
-  { text: '空间', pagePath: '/pages/card/index', icon: '◉' },
+  { text: '话题', pagePath: '/pages/card/index', icon: '◉' },
   { text: '在场', pagePath: '/pages/blackhole/index', icon: '☰' },
   { text: '我的', pagePath: '/pages/profile/index', icon: '◐' }
 ]
@@ -13,7 +12,7 @@ Component({
   },
   methods: {
     sync(route, hidden) {
-      const currentRoute = route || '/pages/discovery/index'
+      const currentRoute = route || '/pages/card/index'
       const selected = tabs.findIndex((item) => item.pagePath === currentRoute)
       this.setData({
         selected: selected >= 0 ? selected : 0,
@@ -33,7 +32,7 @@ Component({
     attached() {
       const pages = getCurrentPages()
       const current = pages[pages.length - 1]
-      const currentRoute = `/${(current && current.route) || 'pages/discovery/index'}`
+      const currentRoute = `/${(current && current.route) || 'pages/card/index'}`
       this.sync(currentRoute, currentRoute === '/pages/blackhole/index')
     }
   }
