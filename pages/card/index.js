@@ -35,8 +35,12 @@ Page({
       wx.navigateTo({ url: `/pages/topic-detail/index?id=${id}` })
     }, 180)
   },
-  joinTopic() {
-    // catchtap 阻止冒泡，此处占位
+  joinTopic(e) {
+    const { id } = e.currentTarget.dataset
+    this.setData({ pageLeaving: true })
+    setTimeout(() => {
+      wx.navigateTo({ url: `/pages/topic-detail/index?id=${id}` })
+    }, 180)
   },
   goVenueDetail(e) {
     const { id } = e.currentTarget.dataset
