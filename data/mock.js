@@ -77,11 +77,12 @@ const venues = [
 ]
 
 const bubbles = [
-  { id: 'bubble-1', name: '青原', initial: '青', role: '研究哲学的程序员', x: 22, y: 24, size: 120, floatDelay: '0' },
-  { id: 'bubble-2', name: 'Momo', initial: 'M', role: '做城市策展的人', x: 68, y: 18, size: 92, floatDelay: '-1.4' },
-  { id: 'bubble-3', name: 'Lynn', initial: 'L', role: '在练习更松弛地创作', x: 56, y: 46, size: 138, floatDelay: '-2.8' },
-  { id: 'bubble-4', name: '小越', initial: '小', role: '产品设计师，最近在重建节奏', x: 20, y: 58, size: 106, floatDelay: '-0.7' },
-  { id: 'bubble-5', name: 'Aki', initial: 'A', role: '拍纪录片，也写诗', x: 78, y: 64, size: 116, floatDelay: '-3.5' }
+  { id: 'bubble-1', name: '青原', initial: '青', role: '研究哲学的程序员', x: 22, y: 24, size: 188, floatDelay: '0', driftX: '14rpx', driftY: '22rpx', accentA: '#FFD9AE', accentB: '#F3A8C7', accentC: '#B6D7FF' },
+  { id: 'bubble-2', name: 'Momo', initial: 'M', role: '做城市策展的人', x: 68, y: 18, size: 168, floatDelay: '-1.4', driftX: '18rpx', driftY: '16rpx', accentA: '#FFF0A8', accentB: '#A7E7C7', accentC: '#A9C7FF' },
+  { id: 'bubble-3', name: 'Lynn', initial: 'L', role: '在练习更松弛地创作', x: 56, y: 46, size: 208, floatDelay: '-2.8', driftX: '16rpx', driftY: '24rpx', accentA: '#FFC7D9', accentB: '#F7E2A6', accentC: '#C4C8FF' },
+  { id: 'bubble-4', name: '小越', initial: '小', role: '产品设计师，最近在重建节奏', x: 20, y: 58, size: 174, floatDelay: '-0.7', driftX: '20rpx', driftY: '18rpx', accentA: '#CFE7FF', accentB: '#B8F0D2', accentC: '#F6C3B1' },
+  { id: 'bubble-5', name: 'Aki', initial: 'A', role: '拍纪录片，也写诗', x: 78, y: 64, size: 184, floatDelay: '-3.5', driftX: '22rpx', driftY: '20rpx', accentA: '#FFE2B6', accentB: '#FDB7AE', accentC: '#D3C3FF' },
+  { id: 'bubble-6', name: 'Nora', initial: 'N', role: '一个做播客的观察者', x: 42, y: 70, size: 178, floatDelay: '-4.6', driftX: '18rpx', driftY: '26rpx', accentA: '#FFE8C8', accentB: '#B8D8FF', accentC: '#F2B6D8' }
 ]
 
 const presencePhases = [
@@ -173,11 +174,30 @@ const presenceConversations = [
   },
   {
     id: 'presence-dialog-2',
+    title: '离职之后，你是怎么重新找到节奏的？',
+    schedule: '今晚 22:30 - 00:30',
+    venue: '文二路某咖啡馆',
+    month: '4月',
+    day: '1日',
+    role: 'applicant',
+    roleLabel: '你申请加入',
+    status: 'pending',
+    statusLabel: '等待回应',
+    statusHint: '发起人还没有处理你的申请。现在不需要你做任何事，只等对方点头。',
+    autoConfirmHint: '若 30 分钟内仍未处理，系统将默认同意。',
+    ticketReady: false,
+    attendeeCount: 4,
+    featuredAttendeeId: 'attendee-2',
+    featuredAttendeeName: 'Momo',
+    featuredAttendeeLine: '做城市策展，也在学习慢一点生活'
+  },
+  {
+    id: 'presence-dialog-3',
     title: '城市里的人情味，会如何慢慢长出来？',
     schedule: '明晚 20:00 - 22:00',
     venue: '旷野公社',
-    month: '3月',
-    day: '23日',
+    month: '4月',
+    day: '2日',
     role: 'host',
     roleLabel: '你发起的对话',
     status: 'pending',
@@ -189,6 +209,63 @@ const presenceConversations = [
     featuredAttendeeId: 'attendee-4',
     featuredAttendeeName: 'Lynn',
     featuredAttendeeLine: '在练习更松弛地创作'
+  },
+  {
+    id: 'presence-dialog-4',
+    title: '人在亲密关系里，最难说出口的话是什么？',
+    schedule: '4月3日 21:00 - 23:00',
+    venue: '天目里咖啡厅',
+    month: '4月',
+    day: '3日',
+    role: 'applicant',
+    roleLabel: '你申请加入',
+    status: 'declined',
+    statusLabel: '未通过',
+    statusHint: '这场对话这次没有和你匹配成功。你可以先放下，之后再看看别的相遇。',
+    autoConfirmHint: '系统已为你保留同类型推荐。',
+    ticketReady: false,
+    attendeeCount: 0,
+    featuredAttendeeId: 'attendee-6',
+    featuredAttendeeName: 'Nora',
+    featuredAttendeeLine: '一个做播客的观察者'
+  },
+  {
+    id: 'presence-dialog-5',
+    title: '如果不再追求效率，生活会不会更完整？',
+    schedule: '4月4日 15:00 - 17:00',
+    venue: '西湖边书店',
+    month: '4月',
+    day: '4日',
+    role: 'host',
+    roleLabel: '你发起的对话',
+    status: 'confirmed',
+    statusLabel: '已成局',
+    statusHint: '这场对话已经凑齐人了。你只需要按时到场，剩下的交给在场。',
+    autoConfirmHint: '票据与同场名单已就绪。',
+    ticketReady: true,
+    attendeeCount: 5,
+    featuredAttendeeId: 'attendee-3',
+    featuredAttendeeName: 'Aki',
+    featuredAttendeeLine: '拍纪录片，也写诗'
+  },
+  {
+    id: 'presence-dialog-6',
+    title: '当代城市里，什么是真正的孤独？',
+    schedule: '刚刚结束 · 今晚 23:00',
+    venue: '西湖边某处',
+    month: '4月',
+    day: '1日',
+    role: 'ended',
+    roleLabel: '刚刚结束',
+    status: 'recap',
+    statusLabel: '写此刻',
+    statusHint: '这一刻已经过去了。如果愿意，留一句话或一张照片，让它成为下次相遇前的期待。',
+    autoConfirmHint: '你留下的内容，会在下次对话前被温柔展示。',
+    ticketReady: false,
+    attendeeCount: 2,
+    featuredAttendeeId: 'attendee-5',
+    featuredAttendeeName: '小越',
+    featuredAttendeeLine: '产品设计师，最近在重建节奏'
   }
 ]
 

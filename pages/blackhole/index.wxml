@@ -3,20 +3,7 @@
     <view class="presence-shell__glow presence-shell__glow--a"></view>
     <view class="presence-shell__glow presence-shell__glow--b"></view>
     <nav-shell eyebrow="Simpex" title="在场" />
-
-    <view class="presence-phase-switch glass-panel">
-      <view
-        wx:for="{{presencePhases}}"
-        wx:key="key"
-        class="presence-phase-switch__item {{presencePhase === item.key ? 'presence-phase-switch__item--active' : ''}}"
-        data-phase="{{item.key}}"
-        bindtap="switchPhase"
-      >
-        <text>{{item.label}}</text>
-      </view>
-    </view>
-
-    <view wx:if="{{presencePhase === 'before'}}" class="presence-before">
+    <view class="presence-before">
       <view class="presence-conversation-list">
         <view
           wx:for="{{presenceConversations}}"
@@ -27,7 +14,10 @@
         >
           <view class="presence-dialog__head">
             <view class="presence-dialog__intro">
-              <text class="presence-dialog__role">{{item.roleLabel}}</text>
+              <view class="presence-dialog__role-row">
+                <text class="presence-dialog__role">{{item.roleLabel}}</text>
+                <text wx:if="{{item.status === 'recap'}}" class="presence-dialog__ephemeral">24h 内可留痕</text>
+              </view>
               <text class="presence-dialog__title">{{item.title}}</text>
               <text class="presence-dialog__meta">{{item.schedule}} · {{item.venue}}</text>
             </view>
@@ -45,7 +35,37 @@
           <text class="presence-dialog__auto">{{item.autoConfirmHint}}</text>
 
           <view wx:if="{{selectedConversationId === item.id}}" class="presence-dialog__detail">
-            <view class="presence-ticket presence-ticket--compact">
+            <view wx:if="{{item.status === 'recap'}}" class="presence-recap-card">
+              <view class="presence-recap-card__glow"></view>
+              <text class="presence-recap-card__title">写此刻</text>
+              <text class="presence-recap-card__copy">一句话或一张照片，让今晚留下来。</text>
+              <view class="presence-recap-card__actions">
+                <view class="presence-recap-card__button" bindtap="createMoment">写一句话</view>
+                <view class="presence-recap-card__button" bindtap="createMoment">放一张照片</view>
+              </view>
+            </view>
+
+            <view wx:elif="{{item.role === 'host' && item.status === 'pending'}}" class="presence-request-card">
+              <view class="presence-request-card__glow"></view>
+              <view class="presence-request-card__main">
+                <view class="presence-request-card__alert">
+                  <text class="presence-request-card__dot"></text>
+                  <text>有人正在申请加入</text>
+                </view>
+                <text class="presence-request-card__name">{{item.featuredAttendeeName}}</text>
+                <text class="presence-request-card__line">{{item.featuredAttendeeLine}}</text>
+                <text class="presence-request-card__copy">先看看对方的数字名片，再决定是否接受这次申请。</text>
+              </view>
+              <view class="presence-request-card__actions presence-request-card__actions--top">
+                <view class="presence-request-card__ghost presence-request-card__ghost--card" data-id="{{item.id}}" bindtap="openRosterSheet">先看名片</view>
+              </view>
+              <view class="presence-request-card__actions">
+                <view class="presence-request-card__ghost" data-id="{{item.id}}" bindtap="rejectApplicant">暂不同意</view>
+                <view class="presence-request-card__cta" data-id="{{item.id}}" bindtap="approveApplicant">同意加入</view>
+              </view>
+            </view>
+
+            <view wx:else class="presence-ticket presence-ticket--compact">
               <view class="presence-ticket__glow"></view>
               <view class="presence-ticket__main">
                 <view>
@@ -59,7 +79,7 @@
                 <view class="presence-ticket__actions">
                   <view class="presence-ticket__ghost" data-id="{{item.id}}" bindtap="openRosterSheet">参与人</view>
                   <view class="presence-ticket__ghost" bindtap="openPassSheet">{{item.ticketReady ? '票据' : '详情'}}</view>
-                  <view wx:if="{{item.ticketReady}}" class="presence-ticket__cta" bindtap="enterImmersive">签到</view>
+                  <view wx:if="{{item.ticketReady}}" class="presence-ticket__cta" data-id="{{item.id}}" bindtap="enterImmersive">签到</view>
                   <view wx:else class="presence-ticket__cta presence-ticket__cta--muted" bindtap="openPassSheet">待确认</view>
                 </view>
               </view>
@@ -68,61 +88,71 @@
         </view>
       </view>
     </view>
-
-    <view wx:if="{{presencePhase === 'after'}}" class="presence-after">
-      <view class="presence-hero presence-hero--after">
-        <text class="presence-hero__eyebrow">活动已结束</text>
-        <text class="presence-hero__title">把今晚留下一点点</text>
-        <text class="presence-hero__copy">对话已经在线下结束了，但它不必立刻消失。你可以写下感悟，也可以把这个瞬间沉淀成一个属于自己的事件。</text>
-      </view>
-
-      <view class="reflection-sheet glass-panel">
-        <text class="reflection-sheet__title">活动后的温柔提醒</text>
-        <view wx:for="{{reflectionPrompts}}" wx:key="*this" class="reflection-sheet__item">
-          <text>{{item}}</text>
-        </view>
-      </view>
-
-      <view class="presence-actions presence-actions--stacked">
-        <view class="cta-button cta-button--light" bindtap="createMoment">添加为自我事件</view>
-        <view class="cta-button cta-button--ghost" bindtap="switchPhase" data-phase="before">回到活动前视图</view>
-      </view>
-    </view>
   </view>
 
   <view wx:if="{{presencePhase === 'during'}}" class="immersive-scene">
     <view class="immersive-scene__veil immersive-scene__veil--top"></view>
     <view class="immersive-scene__veil immersive-scene__veil--bottom"></view>
+    <view class="immersive-scene__grain"></view>
+    <view class="immersive-back" bindtap="exitImmersive">返回</view>
+    <view class="immersive-scene__ambient immersive-scene__ambient--a"></view>
+    <view class="immersive-scene__ambient immersive-scene__ambient--b"></view>
+    <view class="immersive-scene__ambient immersive-scene__ambient--c"></view>
 
-    <view class="immersive-status">
-      <text class="immersive-status__label">数字静默进行中</text>
-      <text class="immersive-status__copy">导航与按钮已褪去。你只能轻轻看见彼此，或向某个人发出一个很轻的信号。</text>
-    </view>
+    <view class="immersive-meteor immersive-meteor--1"></view>
+    <view class="immersive-meteor immersive-meteor--2"></view>
+    <view class="immersive-meteor immersive-meteor--3"></view>
+    <view class="immersive-meteor immersive-meteor--4"></view>
+    <view class="immersive-meteor immersive-meteor--5"></view>
 
-    <view class="field {{connected ? '' : 'field--off'}}">
-      <view class="field__glow"></view>
-      <view class="field__halo field__halo--a"></view>
-      <view class="field__halo field__halo--b"></view>
-      <view
-        wx:for="{{bubbles}}"
-        wx:key="id"
-        class="field__orb {{selectedBubble && selectedBubble.id === item.id ? 'field__orb--selected' : ''}}"
-        style="left: {{item.x}}%; top: {{item.y}}%; animation-delay: {{item.floatDelay}}s;"
-        data-id="{{item.id}}"
-        bindtap="selectBubble"
-        bindlongpress="nudgeBubble"
-      >
-        <glow-orb size="{{item.size}}" label="{{item.initial}}" hint="" />
+    <view class="immersive-copy">
+      <view class="immersive-copy__line immersive-copy__line--cn immersive-copy__shadow immersive-copy__shadow--cn">
+        <text
+          wx:for="{{immersiveCopyCn}}"
+          wx:key="index"
+          class="immersive-copy__glyph {{item.isSpace ? 'immersive-copy__glyph--space' : ''}}"
+          style="animation-delay: {{item.delay}};"
+        >{{item.glyph}}</text>
+      </view>
+      <view class="immersive-copy__line immersive-copy__line--cn immersive-copy__title immersive-copy__title--cn">
+        <text
+          wx:for="{{immersiveCopyCn}}"
+          wx:key="index"
+          class="immersive-copy__glyph {{item.isSpace ? 'immersive-copy__glyph--space' : ''}}"
+          style="animation-delay: {{item.delay}};"
+        >{{item.glyph}}</text>
+      </view>
+      <view class="immersive-copy__line immersive-copy__line--en immersive-copy__shadow immersive-copy__shadow--en">
+        <text
+          wx:for="{{immersiveCopyEn}}"
+          wx:key="index"
+          class="immersive-copy__glyph {{item.isSpace ? 'immersive-copy__glyph--space' : ''}}"
+          style="animation-delay: {{item.delay}};"
+        >{{item.glyph}}</text>
+      </view>
+      <view class="immersive-copy__line immersive-copy__line--en immersive-copy__title immersive-copy__title--en">
+        <text
+          wx:for="{{immersiveCopyEn}}"
+          wx:key="index"
+          class="immersive-copy__glyph {{item.isSpace ? 'immersive-copy__glyph--space' : ''}}"
+          style="animation-delay: {{item.delay}};"
+        >{{item.glyph}}</text>
       </view>
     </view>
 
-    <view class="immersive-footer">
-      <text class="immersive-footer__hint">{{connected ? '轻点气泡翻阅名片，长按发出一次温柔的共鸣。' : '你已暂时离开数字静默。'}}</text>
-      <view class="immersive-footer__actions">
-        <view class="immersive-footer__ghost" bindtap="toggleConnect">{{connected ? '暂停在场' : '重新加入'}}</view>
-        <view class="immersive-footer__ghost" bindtap="completeSession">结束活动</view>
-      </view>
+    <view class="immersive-minibar">
+      <view class="immersive-minibar__end" bindtap="completeSession">结束活动</view>
     </view>
+  </view>
+</view>
+
+<view wx:if="{{enteringImmersive}}" class="presence-entry">
+  <view class="presence-entry__glow presence-entry__glow--a"></view>
+  <view class="presence-entry__glow presence-entry__glow--b"></view>
+  <view class="presence-entry__panel">
+    <text class="presence-entry__eyebrow">正在进入在场</text>
+    <text class="presence-entry__title">让屏幕慢一点</text>
+    <text class="presence-entry__copy">真实的交流，正在前面等你。</text>
   </view>
 </view>
 
@@ -162,23 +192,5 @@
 
     <text class="presence-sheet__hint">{{presenceEvent.qrHint}}</text>
     <view class="cta-button cta-button--light" bindtap="closePassSheet">收起</view>
-  </view>
-</view>
-
-<view wx:if="{{showCard}}" class="orb-card" bindtap="closeCard">
-  <view class="orb-card__sheet" catchtap="">
-    <view class="orb-card__handle"></view>
-    <view class="orb-card__paper">
-      <text class="orb-card__name">{{selectedBubble.name}}</text>
-      <text class="orb-card__role">{{selectedBubble.role}}</text>
-      <text class="orb-card__signature">“先不急着认识全部，只先看见一个真实的人。”</text>
-    </view>
-    <view class="orb-card__actions">
-      <view class="orb-card__nudge" bindtap="nudge">
-        <text class="orb-card__nudge-wave">〰</text>
-        <text>物理共鸣</text>
-      </view>
-      <view class="orb-card__view" bindtap="viewCard">查看名片</view>
-    </view>
   </view>
 </view>

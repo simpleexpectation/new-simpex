@@ -2,27 +2,41 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   border-radius: 999rpx;
-  padding: 20rpx;
+  padding: 18rpx 22rpx;
   box-sizing: border-box;
   background:
-    radial-gradient(circle at 30% 30%, rgba(226, 220, 186, 0.5), rgba(141, 166, 207, 0.24) 40%, rgba(255, 255, 255, 0.06) 68%, rgba(255, 255, 255, 0.02) 100%);
-  border: 1rpx solid rgba(255, 255, 255, 0.1);
+    radial-gradient(circle at 28% 24%, rgba(255, 255, 255, 0.94), rgba(255, 255, 255, 0.18) 10%, transparent 22%),
+    radial-gradient(circle at 32% 32%, var(--orb-a), transparent 52%),
+    radial-gradient(circle at 74% 28%, var(--orb-b), transparent 46%),
+    radial-gradient(circle at 56% 78%, var(--orb-c), transparent 52%),
+    radial-gradient(circle at 50% 54%, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02) 54%, rgba(255, 255, 255, 0) 92%);
   box-shadow:
-    0 0 40rpx rgba(212, 204, 182, 0.12),
-    inset 0 0 30rpx rgba(255, 255, 255, 0.08);
+    0 0 80rpx rgba(255, 216, 184, 0.18),
+    0 0 140rpx rgba(184, 205, 255, 0.14),
+    inset 0 0 58rpx rgba(255, 255, 255, 0.14),
+    inset 0 -28rpx 42rpx rgba(82, 54, 74, 0.06);
+  filter: saturate(1.06);
 }
 
 .orb__label {
-  color: #f3f1e7;
-  font-size: 26rpx;
+  color: rgba(255, 255, 255, 0.96);
+  font-size: 24rpx;
   font-weight: 600;
   text-align: center;
+  text-shadow:
+    0 2rpx 12rpx rgba(48, 26, 39, 0.18),
+    0 0 4rpx rgba(255, 255, 255, 0.16);
+  max-width: 80%;
+  line-height: 1.2;
+  position: relative;
+  z-index: 2;
 }
 
 .orb__hint {
   margin-top: 8rpx;
-  color: rgba(243, 241, 231, 0.6);
+  color: rgba(255, 255, 255, 0.72);
   font-size: 20rpx;
   text-align: center;
 }
