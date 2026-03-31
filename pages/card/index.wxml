@@ -3,23 +3,63 @@
 
   <nav-shell>
     <view class="tab-switch">
-      <text
+      <view
         class="tab-switch__item {{activeTab === 'topics' ? 'tab-switch__item--active' : ''}}"
         bindtap="switchTab"
         data-tab="topics"
-      >话题</text>
-      <text
+      >
+        <text class="tab-switch__eyebrow">Conversations</text>
+        <text class="tab-switch__label">对话</text>
+      </view>
+      <view
         class="tab-switch__item {{activeTab === 'venues' ? 'tab-switch__item--active' : ''}}"
         bindtap="switchTab"
         data-tab="venues"
-      >空间</text>
+      >
+        <text class="tab-switch__eyebrow">Spaces</text>
+        <text class="tab-switch__label">空间</text>
+      </view>
     </view>
   </nav-shell>
 
   <!-- ── 话题列表 ── -->
   <view wx:if="{{activeTab === 'topics'}}" class="topic-list">
+    <view class="topic-calendar-panel glass-panel">
+      <view class="topic-calendar-strip">
+        <view
+          wx:for="{{calendarDays}}"
+          wx:key="key"
+          class="topic-calendar-strip__dot {{selectedDateKey === item.key ? 'topic-calendar-strip__dot--active' : ''}} {{item.hasTopic ? 'topic-calendar-strip__dot--enabled' : ''}}"
+          data-key="{{item.key}}"
+          bindtap="selectCalendarDate"
+        >
+          <text class="topic-calendar-strip__weekday">{{item.weekday}}</text>
+          <text class="topic-calendar-strip__day">{{item.day}}</text>
+        </view>
+      </view>
+
+      <view class="topic-calendar-panel__mini-toggle" bindtap="toggleCalendar">
+        <view class="topic-calendar-panel__mini-icon"></view>
+      </view>
+
+      <view wx:if="{{showCalendar}}" class="topic-calendar-panel__sheet">
+        <view class="topic-calendar-panel__grid">
+          <view
+            wx:for="{{calendarDays}}"
+            wx:key="key"
+            class="topic-calendar-panel__cell {{selectedDateKey === item.key ? 'topic-calendar-panel__cell--active' : ''}} {{item.hasTopic ? 'topic-calendar-panel__cell--enabled' : ''}}"
+            data-key="{{item.key}}"
+            bindtap="selectCalendarDate"
+          >
+            <text class="topic-calendar-panel__weekday">{{item.weekday}}</text>
+            <text class="topic-calendar-panel__day">{{item.day}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
     <view
-      wx:for="{{topics}}"
+      wx:for="{{visibleTopics}}"
       wx:key="id"
       class="topic-card topic-card--{{index % 3}}"
       data-id="{{item.id}}"
@@ -52,37 +92,44 @@
         <view class="topic-join-btn" catchtap="joinTopic" data-id="{{item.id}}">申请加入 →</view>
       </view>
     </view>
+
   </view>
 
   <!-- ── 空间列表 ── -->
   <view wx:if="{{activeTab === 'venues'}}">
-    <view class="explore-intro">
-      <text class="explore-intro__copy">一些适合真实相遇的地点。每个空间都有自己的节奏、氛围和会员权益。</text>
+    <view class="venue-page-head">
+      <text class="venue-page-head__eyebrow">Today in spaces</text>
+      <view class="venue-page-head__date">
+        <text class="venue-page-head__month">{{venueMonthLabel}}</text>
+        <text class="venue-page-head__day">{{venueDayLabel}}日</text>
+      </view>
     </view>
 
-    <scroll-view class="poster-scroll" scroll-x="true" show-scrollbar="false">
-      <view class="poster-track">
-        <view class="poster-card" data-id="{{venues[0].id}}" bindtap="goVenueDetail">
-          <text class="poster-card__meta">{{venues[0].discount}}</text>
-          <text class="poster-card__title">{{venues[0].name}}</text>
-          <text class="poster-card__sub">{{venues[0].mood}}</text>
-          <view class="poster-card__art poster-card__art--earth"></view>
+    <view class="venue-list">
+      <view
+        wx:for="{{venues}}"
+        wx:key="id"
+        class="venue-stage"
+        data-id="{{item.id}}"
+        bindtap="goVenueDetail"
+      >
+        <view class="venue-stage__head">
+          <text class="venue-stage__caption">{{item.caption}}</text>
         </view>
-        <view class="poster-card" data-id="{{venues[1].id}}" bindtap="goVenueDetail">
-          <text class="poster-card__meta">{{venues[1].discount}}</text>
-          <text class="poster-card__title">{{venues[1].name}}</text>
-          <text class="poster-card__sub">{{venues[1].mood}}</text>
-          <view class="poster-card__art poster-card__art--sky"></view>
+
+        <view class="venue-stage__card venue-stage__card--{{index}}">
+          <view class="venue-stage__glow"></view>
+          <view class="venue-stage__body">
+            <text class="venue-stage__eyebrow">{{item.dateCopy}}</text>
+            <text class="venue-stage__title">{{item.name}}</text>
+            <text class="venue-stage__copy">{{item.mood}}</text>
+            <view class="venue-stage__meta">
+              <text class="venue-stage__meta-pill">{{item.discount}}</text>
+              <text class="venue-stage__meta-pill">{{item.presence}}</text>
+            </view>
+          </view>
         </view>
       </view>
-    </scroll-view>
-
-    <view class="moment-sheet" data-id="{{venues[2].id}}" bindtap="goVenueDetail">
-      <text class="moment-sheet__tag">精选地点</text>
-      <view class="moment-sheet__art"></view>
-      <text class="moment-sheet__date">{{venues[2].presence}}</text>
-      <text class="moment-sheet__title">{{venues[2].name}}</text>
-      <text class="moment-sheet__copy">{{venues[2].mood}}。{{venues[2].discount}}，适合做轻松破冰和多人漫谈。</text>
     </view>
   </view>
 </view>

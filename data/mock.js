@@ -37,27 +37,42 @@ const officialEvents = [
 const venues = [
   {
     id: 'venue-kuangye',
-    name: '旷野公社',
+    name: '敞开酒馆',
+    caption: '适合慢下来说真话',
     mood: '适合慢下来说真话',
+    heroImage: 'https://images.pexels.com/photos/30658142/pexels-photo-30658142.jpeg?cs=srgb&dl=pexels-noelace-30658142.jpg&fm=jpg',
     discount: '会员 8.5 折',
     presence: '在店 11 人',
-    action: '激活空间权益'
+    action: '激活空间权益',
+    monthLabel: '3月',
+    dayLabel: '22',
+    dateCopy: '周六开放'
   },
   {
     id: 'venue-boguang',
     name: '泊光集',
+    caption: '适合深夜反刍与复盘',
     mood: '适合深夜反刍与复盘',
+    heroImage: 'https://images.pexels.com/photos/32458791/pexels-photo-32458791.jpeg?cs=srgb&dl=pexels-xx-32458791.jpg&fm=jpg',
     discount: '赠热饮一杯',
     presence: '在店 7 人',
-    action: '进入活动场域'
+    action: '进入活动场域',
+    monthLabel: '3月',
+    dayLabel: '20',
+    dateCopy: '本周精选'
   },
   {
     id: 'venue-cat',
     name: '猫客厅',
+    caption: '适合轻松破冰与漫谈',
     mood: '适合轻松破冰与漫谈',
+    heroImage: 'https://images.pexels.com/photos/34989165/pexels-photo-34989165.jpeg?cs=srgb&dl=pexels-shields-34989165.jpg&fm=jpg',
     discount: '会员专属入场',
     presence: '在店 14 人',
-    action: '查看本周局'
+    action: '查看本周局',
+    monthLabel: '3月',
+    dayLabel: '18',
+    dateCopy: '常驻空间'
   }
 ]
 
@@ -69,9 +84,122 @@ const bubbles = [
   { id: 'bubble-5', name: 'Aki', initial: 'A', role: '拍纪录片，也写诗', x: 78, y: 64, size: 116, floatDelay: '-3.5' }
 ]
 
+const presencePhases = [
+  { key: 'before', label: '活动前' },
+  { key: 'during', label: '活动中' },
+  { key: 'after', label: '活动后' }
+]
+
+const presenceEvent = {
+  title: '设计焦虑与不确定感的对话',
+  schedule: '今晚 19:30 - 21:30',
+  venue: '泊光集 2F',
+  status: '申请已确认',
+  passCode: 'SPX-0721',
+  qrHint: '到场后出示二维码完成签到，之后自动进入数字静默。',
+  notice: '你已被加入本次在场名单。系统会在开场前 20 分钟再次提醒。'
+}
+
+const attendeeCards = [
+  {
+    id: 'attendee-1',
+    name: '青原',
+    line: '一个正在研究哲学的程序员',
+    expectation: '工作之外，什么还能定义一个人',
+    accent: 'peach'
+  },
+  {
+    id: 'attendee-2',
+    name: 'Momo',
+    line: '做城市策展，也在学习慢一点生活',
+    expectation: '会带来一个关于城市陌生感的真实故事',
+    accent: 'mist'
+  },
+  {
+    id: 'attendee-3',
+    name: 'Aki',
+    line: '拍纪录片，也写诗',
+    expectation: '也许会把今晚某个瞬间变成一句被记住的话',
+    accent: 'sand'
+  },
+  {
+    id: 'attendee-4',
+    name: 'Lynn',
+    line: '在练习更松弛地创作',
+    expectation: '最近正在重新定义努力与表达',
+    accent: 'sky'
+  },
+  {
+    id: 'attendee-5',
+    name: '小越',
+    line: '产品设计师，最近在重建节奏',
+    expectation: '可能会谈到如何从失控里慢慢回来',
+    accent: 'peach'
+  },
+  {
+    id: 'attendee-6',
+    name: 'Nora',
+    line: '一个做播客的观察者',
+    expectation: '她总能把别人的情绪说得很轻很准',
+    accent: 'mist'
+  }
+]
+
+const reflectionPrompts = [
+  '把今晚你最想带走的一句话留在这里。',
+  '记录一个你原本不会开口，但最后说出来了的瞬间。',
+  '如果愿意，把这次相遇沉淀成一个属于你的事件。'
+]
+
+const presenceConversations = [
+  {
+    id: 'presence-dialog-1',
+    title: '设计焦虑与不确定感的对话',
+    schedule: '今晚 19:30 - 21:30',
+    venue: '泊光集 2F',
+    month: '3月',
+    day: '22日',
+    role: 'applicant',
+    roleLabel: '你申请加入',
+    status: 'confirmed',
+    statusLabel: '已确认',
+    statusHint: '你和发起人都已确认，这场对话已经成立。',
+    autoConfirmHint: '若 30 分钟内无人操作，系统将默认同意。',
+    ticketReady: true,
+    attendeeCount: 6,
+    featuredAttendeeId: 'attendee-1',
+    featuredAttendeeName: '青原',
+    featuredAttendeeLine: '一个正在研究哲学的程序员'
+  },
+  {
+    id: 'presence-dialog-2',
+    title: '城市里的人情味，会如何慢慢长出来？',
+    schedule: '明晚 20:00 - 22:00',
+    venue: '旷野公社',
+    month: '3月',
+    day: '23日',
+    role: 'host',
+    roleLabel: '你发起的对话',
+    status: 'pending',
+    statusLabel: '待你确认',
+    statusHint: '有 1 位申请者正在等待加入。你不处理的话，30 分钟后系统会默认同意。',
+    autoConfirmHint: '剩余自动确认时间 17 分钟。',
+    ticketReady: false,
+    attendeeCount: 4,
+    featuredAttendeeId: 'attendee-4',
+    featuredAttendeeName: 'Lynn',
+    featuredAttendeeLine: '在练习更松弛地创作'
+  }
+]
+
 const topics = [
   {
     id: 'topic-1',
+    venueId: 'venue-kuangye',
+    dateKey: '2026-03-20',
+    monthLabel: '3月',
+    dayLabel: '20',
+    weekday: '五',
     status: 'live',
     statusLabel: '正在发生',
     title: '"离职之后，你是怎么重新找到节奏的？"',
@@ -91,6 +219,11 @@ const topics = [
   },
   {
     id: 'topic-2',
+    venueId: 'venue-boguang',
+    dateKey: '2026-03-21',
+    monthLabel: '3月',
+    dayLabel: '21',
+    weekday: '六',
     status: 'upcoming',
     statusLabel: '明天发生',
     title: '"AI 会不会让创意工作者失业？我不这么认为"',
@@ -109,6 +242,11 @@ const topics = [
   },
   {
     id: 'topic-3',
+    venueId: 'venue-cat',
+    dateKey: '2026-03-22',
+    monthLabel: '3月',
+    dayLabel: '22',
+    weekday: '日',
     status: 'live',
     statusLabel: '正在发生',
     title: '"当代城市里，什么是真正的孤独？"',
@@ -123,6 +261,120 @@ const topics = [
       { id: 'bubble-1', name: '青原', role: '研究哲学的程序员', initial: '青' },
       { id: 'bubble-4', name: '小越', role: '产品设计师', initial: '越' }
     ]
+  },
+  {
+    id: 'topic-4',
+    venueId: 'venue-boguang',
+    dateKey: '2026-03-20',
+    monthLabel: '3月',
+    dayLabel: '20',
+    weekday: '五',
+    status: 'upcoming',
+    statusLabel: '今晚发生',
+    title: '"探索活动推荐创意"',
+    initiator: 'Mavis',
+    time: '19:30 · 今晚',
+    location: '滨江共享空间',
+    tags: ['活动', '创意', '策划'],
+    current: 2,
+    total: 6,
+    rules: '< 6人 · 时长 > 90分钟 · 用户自发',
+    participants: []
+  },
+  {
+    id: 'topic-5',
+    venueId: 'venue-kuangye',
+    dateKey: '2026-03-21',
+    monthLabel: '3月',
+    dayLabel: '21',
+    weekday: '六',
+    status: 'live',
+    statusLabel: '正在发生',
+    title: '"第一次创业失败后，怎么重新相信自己？"',
+    initiator: '林夏',
+    time: '20:30 · 周六',
+    location: '武林路小酒馆',
+    tags: ['创业', '失败', '重建'],
+    current: 5,
+    total: 6,
+    rules: '< 6人 · 时长 > 2小时 · 用户自发',
+    participants: []
+  },
+  {
+    id: 'topic-6',
+    venueId: 'venue-cat',
+    dateKey: '2026-03-21',
+    monthLabel: '3月',
+    dayLabel: '21',
+    weekday: '六',
+    status: 'upcoming',
+    statusLabel: '明晚发生',
+    title: '"人在亲密关系里，最难说出口的话是什么？"',
+    initiator: '阿北',
+    time: '21:00 · 周六',
+    location: '天目里咖啡厅',
+    tags: ['亲密关系', '表达'],
+    current: 3,
+    total: 6,
+    rules: '< 6人 · 时长 > 2小时 · 用户自发',
+    participants: []
+  },
+  {
+    id: 'topic-7',
+    venueId: 'venue-boguang',
+    dateKey: '2026-03-22',
+    monthLabel: '3月',
+    dayLabel: '22',
+    weekday: '日',
+    status: 'live',
+    statusLabel: '正在发生',
+    title: '"如果不再追求效率，生活会不会更完整？"',
+    initiator: '周周',
+    time: '15:00 · 周日',
+    location: '西湖边书店',
+    tags: ['生活', '效率', '松弛'],
+    current: 4,
+    total: 6,
+    rules: '< 6人 · 时长 > 90分钟 · 用户自发',
+    participants: []
+  },
+  {
+    id: 'topic-8',
+    venueId: 'venue-kuangye',
+    dateKey: '2026-03-22',
+    monthLabel: '3月',
+    dayLabel: '22',
+    weekday: '日',
+    status: 'upcoming',
+    statusLabel: '今晚发生',
+    title: '"为什么我们越来越难真正地休息？"',
+    initiator: 'Momo',
+    time: '19:00 · 周日',
+    location: '湖滨露台',
+    tags: ['休息', '情绪', '身体'],
+    current: 1,
+    total: 6,
+    rules: '< 6人 · 时长 > 2小时 · 用户自发',
+    participants: []
+  },
+  {
+    id: 'topic-9',
+    venueId: 'venue-cat',
+    dateKey: '2026-03-22',
+    monthLabel: '3月',
+    dayLabel: '22',
+    weekday: '日',
+    status: 'upcoming',
+    statusLabel: '周日发生',
+    title: '"城市里还有没有真正的陌生人时刻？"',
+    initiator: 'Aki',
+    time: '20:30 · 周日',
+    location: '运河边散步线',
+    tags: ['城市', '陌生感', '观察'],
+    current: 2,
+    total: 6,
+    rules: '< 6人 · 时长 > 2小时 · 用户自发',
+    participants: []
   }
 ]
 
@@ -144,6 +396,11 @@ module.exports = {
   officialEvents,
   venues,
   bubbles,
+  presencePhases,
+  presenceEvent,
+  attendeeCards,
+  reflectionPrompts,
+  presenceConversations,
   topics,
   memberMoments
 }

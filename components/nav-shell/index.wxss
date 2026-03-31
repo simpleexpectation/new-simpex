@@ -5,6 +5,10 @@
   background: linear-gradient(180deg, rgba(0, 0, 0, 0.96), rgba(0, 0, 0, 0));
 }
 
+.nav-shell--light {
+  background: linear-gradient(180deg, rgba(255, 250, 247, 0.96), rgba(255, 250, 247, 0));
+}
+
 .nav-shell__inner {
   padding: 24rpx 0 18rpx;
 }
@@ -20,6 +24,10 @@
   font-size: 22rpx;
 }
 
+.nav-shell--light .nav-shell__eyebrow {
+  color: rgba(61, 43, 38, 0.48);
+}
+
 .nav-shell__title {
   display: block;
   font-size: 78rpx;
@@ -27,4 +35,8 @@
   letter-spacing: -2rpx;
   color: #f3f1e7;
   font-weight: 600;
+}
+
+.nav-shell--light .nav-shell__title {
+  color: #171312;
 }

@@ -1,5 +1,17 @@
-<view class="page-shell {{pageReady ? 'page-ready' : ''}} {{pageLeaving ? 'page-leaving' : ''}}">
-  <nav-shell eyebrow="特权空间" title="{{venue.name}}" compact="{{true}}" />
+<view class="page-shell venue-detail-page {{pageReady ? 'page-ready' : ''}} {{pageLeaving ? 'page-leaving' : ''}}">
+  <view class="venue-detail-hero" style="padding-top: {{statusBarHeight + 44}}px;">
+    <image class="venue-detail-hero__image" src="{{venue.heroImage}}" mode="aspectFill" />
+    <view class="venue-detail-hero__shade"></view>
+    <view class="venue-detail-hero__mist venue-detail-hero__mist--a"></view>
+    <view class="venue-detail-hero__mist venue-detail-hero__mist--b"></view>
+    <view class="detail-hero__back" bindtap="goBack">返回</view>
+
+    <view class="venue-detail-hero__body">
+      <text class="venue-detail-hero__status">{{venue.caption}}</text>
+      <text class="venue-detail-hero__title">{{venue.name}}</text>
+      <text class="venue-detail-hero__copy">当你抵达这里，系统只做两件事：确认你在场，和把打扰降到最低。</text>
+    </view>
+  </view>
 
   <view class="venue-hero glass-panel">
     <text class="venue-hero__mood">{{venue.mood}}</text>
@@ -18,6 +30,31 @@
 
   <view class="story glass-panel">
     <text class="story__title">空间节奏</text>
+    <text class="story__mood">{{venueTodayMood}}</text>
     <text class="story__copy">更像一个安静入口，而不是商家页面。场地卡碰一碰后，自动识别 `venue_id`，根据当前时段与权限决定是否展示活动入口、折扣或黑洞模式。</text>
+  </view>
+
+  <view class="venue-topic-section">
+    <text class="venue-topic-section__title">这个空间的对话</text>
+    <view
+      wx:for="{{venueTopics}}"
+      wx:key="id"
+      class="venue-topic-card"
+      data-id="{{item.id}}"
+      bindtap="goTopicDetail"
+    >
+      <view class="venue-topic-card__head">
+        <view class="venue-topic-card__status">
+          <view class="venue-topic-card__dot venue-topic-card__dot--{{item.status}}"></view>
+          <text class="venue-topic-card__status-label">{{item.statusLabel}}</text>
+        </view>
+        <text class="venue-topic-card__date">{{item.monthLabel}}{{item.dayLabel}}日</text>
+      </view>
+      <text class="venue-topic-card__title">{{item.title}}</text>
+      <text class="venue-topic-card__meta">{{item.initiator}} 发起 · {{item.time}} · {{item.location}}</text>
+      <view class="venue-topic-card__tags">
+        <view wx:for="{{item.tags}}" wx:key="index" wx:for-item="tag" class="venue-topic-card__pill">{{tag}}</view>
+      </view>
+    </view>
   </view>
 </view>

@@ -1,47 +1,182 @@
 <view class="blackhole-page {{pageReady ? 'page-ready' : ''}} {{pageLeaving ? 'page-leaving' : ''}}">
+  <view wx:if="{{presencePhase !== 'during'}}" class="presence-shell presence-shell--light">
+    <view class="presence-shell__glow presence-shell__glow--a"></view>
+    <view class="presence-shell__glow presence-shell__glow--b"></view>
+    <nav-shell eyebrow="Simpex" title="在场" />
 
-  <!-- ── 场域气泡 ── -->
-  <view class="field {{connected ? '' : 'field--off'}}">
-    <view class="field__glow"></view>
-    <view
-      wx:for="{{bubbles}}"
-      wx:key="id"
-      class="field__orb {{selectedBubble.id === item.id ? 'field__orb--selected' : ''}}"
-      style="left: {{item.x}}%; top: {{item.y}}%; animation-delay: {{item.floatDelay}}s;"
-      data-id="{{item.id}}"
-      bindtap="selectBubble"
-      bindlongpress="nudgeBubble"
-    >
-      <glow-orb size="{{item.size}}" label="{{item.initial}}" hint="" />
-    </view>
-  </view>
-
-  <!-- ── 底部开关区 ── -->
-  <view class="switch-area">
-    <view class="switch-wrap" bindtap="toggleConnect">
-      <view class="switch {{connected ? 'switch--on' : 'switch--off'}}">
-        <view class="switch__knob"></view>
+    <view class="presence-phase-switch glass-panel">
+      <view
+        wx:for="{{presencePhases}}"
+        wx:key="key"
+        class="presence-phase-switch__item {{presencePhase === item.key ? 'presence-phase-switch__item--active' : ''}}"
+        data-phase="{{item.key}}"
+        bindtap="switchPhase"
+      >
+        <text>{{item.label}}</text>
       </view>
     </view>
-    <text class="switch-label">{{connected ? '在场' : '已暂停'}}</text>
-    <text class="switch-sub">{{connected ? bubbles.length + ' 人同在此刻' : '再次拨动即可重新加入'}}</text>
-    <view wx:if="{{!connected}}" class="switch-exit" bindtap="endSession">退出活动</view>
+
+    <view wx:if="{{presencePhase === 'before'}}" class="presence-before">
+      <view class="presence-conversation-list">
+        <view
+          wx:for="{{presenceConversations}}"
+          wx:key="id"
+          class="presence-dialog {{selectedConversationId === item.id ? 'presence-dialog--active' : ''}}"
+          data-id="{{item.id}}"
+          bindtap="selectConversation"
+        >
+          <view class="presence-dialog__head">
+            <view class="presence-dialog__intro">
+              <text class="presence-dialog__role">{{item.roleLabel}}</text>
+              <text class="presence-dialog__title">{{item.title}}</text>
+              <text class="presence-dialog__meta">{{item.schedule}} · {{item.venue}}</text>
+            </view>
+            <view class="presence-dialog__date">
+              <text class="presence-dialog__month">{{item.month}}</text>
+              <text class="presence-dialog__day">{{item.day}}</text>
+            </view>
+          </view>
+
+          <view class="presence-dialog__status">
+            <view class="presence-dialog__pill presence-dialog__pill--{{item.status}}">{{item.statusLabel}}</view>
+            <text class="presence-dialog__hint">{{item.statusHint}}</text>
+          </view>
+
+          <text class="presence-dialog__auto">{{item.autoConfirmHint}}</text>
+
+          <view wx:if="{{selectedConversationId === item.id}}" class="presence-dialog__detail">
+            <view class="presence-ticket presence-ticket--compact">
+              <view class="presence-ticket__glow"></view>
+              <view class="presence-ticket__main">
+                <view>
+                  <text class="presence-ticket__label">{{item.ticketReady ? '今晚签到后自动进入数字静默' : '等待确认完成后，再开放票据与签到'}}</text>
+                  <text class="presence-ticket__meta">{{item.schedule}} · {{item.venue}}</text>
+                </view>
+                <view class="presence-ticket__badge">{{item.statusLabel}}</view>
+              </view>
+              <view class="presence-ticket__footer">
+                <text class="presence-ticket__hint">{{item.ticketReady ? '票据里再展示二维码，避免提前暴露过多功能。' : '当前保持轻提醒，系统会继续等待对方回应。'}}</text>
+                <view class="presence-ticket__actions">
+                  <view class="presence-ticket__ghost" data-id="{{item.id}}" bindtap="openRosterSheet">参与人</view>
+                  <view class="presence-ticket__ghost" bindtap="openPassSheet">{{item.ticketReady ? '票据' : '详情'}}</view>
+                  <view wx:if="{{item.ticketReady}}" class="presence-ticket__cta" bindtap="enterImmersive">签到</view>
+                  <view wx:else class="presence-ticket__cta presence-ticket__cta--muted" bindtap="openPassSheet">待确认</view>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view wx:if="{{presencePhase === 'after'}}" class="presence-after">
+      <view class="presence-hero presence-hero--after">
+        <text class="presence-hero__eyebrow">活动已结束</text>
+        <text class="presence-hero__title">把今晚留下一点点</text>
+        <text class="presence-hero__copy">对话已经在线下结束了，但它不必立刻消失。你可以写下感悟，也可以把这个瞬间沉淀成一个属于自己的事件。</text>
+      </view>
+
+      <view class="reflection-sheet glass-panel">
+        <text class="reflection-sheet__title">活动后的温柔提醒</text>
+        <view wx:for="{{reflectionPrompts}}" wx:key="*this" class="reflection-sheet__item">
+          <text>{{item}}</text>
+        </view>
+      </view>
+
+      <view class="presence-actions presence-actions--stacked">
+        <view class="cta-button cta-button--light" bindtap="createMoment">添加为自我事件</view>
+        <view class="cta-button cta-button--ghost" bindtap="switchPhase" data-phase="before">回到活动前视图</view>
+      </view>
+    </view>
   </view>
 
+  <view wx:if="{{presencePhase === 'during'}}" class="immersive-scene">
+    <view class="immersive-scene__veil immersive-scene__veil--top"></view>
+    <view class="immersive-scene__veil immersive-scene__veil--bottom"></view>
+
+    <view class="immersive-status">
+      <text class="immersive-status__label">数字静默进行中</text>
+      <text class="immersive-status__copy">导航与按钮已褪去。你只能轻轻看见彼此，或向某个人发出一个很轻的信号。</text>
+    </view>
+
+    <view class="field {{connected ? '' : 'field--off'}}">
+      <view class="field__glow"></view>
+      <view class="field__halo field__halo--a"></view>
+      <view class="field__halo field__halo--b"></view>
+      <view
+        wx:for="{{bubbles}}"
+        wx:key="id"
+        class="field__orb {{selectedBubble && selectedBubble.id === item.id ? 'field__orb--selected' : ''}}"
+        style="left: {{item.x}}%; top: {{item.y}}%; animation-delay: {{item.floatDelay}}s;"
+        data-id="{{item.id}}"
+        bindtap="selectBubble"
+        bindlongpress="nudgeBubble"
+      >
+        <glow-orb size="{{item.size}}" label="{{item.initial}}" hint="" />
+      </view>
+    </view>
+
+    <view class="immersive-footer">
+      <text class="immersive-footer__hint">{{connected ? '轻点气泡翻阅名片，长按发出一次温柔的共鸣。' : '你已暂时离开数字静默。'}}</text>
+      <view class="immersive-footer__actions">
+        <view class="immersive-footer__ghost" bindtap="toggleConnect">{{connected ? '暂停在场' : '重新加入'}}</view>
+        <view class="immersive-footer__ghost" bindtap="completeSession">结束活动</view>
+      </view>
+    </view>
+  </view>
 </view>
 
-<!-- ── 名片弹层 ── -->
+<view wx:if="{{showRosterSheet}}" class="presence-sheet" bindtap="closeRosterSheet">
+  <view class="presence-sheet__panel presence-sheet__panel--roster" catchtap="">
+    <view class="presence-sheet__handle"></view>
+    <text class="presence-sheet__label">数字名片</text>
+    <text class="presence-sheet__title">与当前对话相关的人</text>
+    <text class="presence-sheet__meta">这里再慢慢看，不必在首页一次性看完。</text>
+
+    <view class="presence-cards__grid">
+      <view wx:for="{{attendeeCards}}" wx:key="id" class="presence-card presence-card--{{item.accent}}">
+        <text class="presence-card__name">{{item.name}}</text>
+        <text class="presence-card__line">{{item.line}}</text>
+        <text class="presence-card__expectation">{{item.expectation}}</text>
+      </view>
+    </view>
+  </view>
+</view>
+
+<view wx:if="{{showPassSheet}}" class="presence-sheet" bindtap="closePassSheet">
+  <view class="presence-sheet__panel" catchtap="">
+    <view class="presence-sheet__handle"></view>
+    <text class="presence-sheet__label">入场票据</text>
+    <text class="presence-sheet__title">{{presenceEvent.title}}</text>
+    <text class="presence-sheet__meta">{{presenceEvent.schedule}} · {{presenceEvent.venue}}</text>
+
+    <view class="presence-pass__qr">
+      <view wx:for="{{qrMatrix}}" wx:key="index" class="presence-pass__qr-row">
+        <view
+          wx:for="{{item}}"
+          wx:key="index"
+          class="presence-pass__qr-cell {{item ? 'presence-pass__qr-cell--solid' : ''}}"
+        ></view>
+      </view>
+    </view>
+
+    <text class="presence-sheet__hint">{{presenceEvent.qrHint}}</text>
+    <view class="cta-button cta-button--light" bindtap="closePassSheet">收起</view>
+  </view>
+</view>
+
 <view wx:if="{{showCard}}" class="orb-card" bindtap="closeCard">
   <view class="orb-card__sheet" catchtap="">
     <view class="orb-card__handle"></view>
-    <view class="orb-card__info">
+    <view class="orb-card__paper">
       <text class="orb-card__name">{{selectedBubble.name}}</text>
       <text class="orb-card__role">{{selectedBubble.role}}</text>
+      <text class="orb-card__signature">“先不急着认识全部，只先看见一个真实的人。”</text>
     </view>
     <view class="orb-card__actions">
       <view class="orb-card__nudge" bindtap="nudge">
         <text class="orb-card__nudge-wave">〰</text>
-        <text>轻触共鸣</text>
+        <text>物理共鸣</text>
       </view>
       <view class="orb-card__view" bindtap="viewCard">查看名片</view>
     </view>

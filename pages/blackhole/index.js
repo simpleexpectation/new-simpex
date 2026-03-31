@@ -1,8 +1,32 @@
-const { bubbles } = require('../../data/mock')
+const { attendeeCards, bubbles, presenceConversations, presenceEvent, presencePhases, reflectionPrompts } = require('../../data/mock')
+
+const qrMatrix = [
+  [1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1],
+  [1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1],
+  [1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1],
+  [1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1],
+  [1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [1, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 1, 0],
+  [0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0],
+  [1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1],
+  [1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1],
+  [1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1]
+]
 
 Page({
   data: {
+    presenceEvent,
+    presencePhases,
+    presenceConversations,
+    attendeeCards,
+    reflectionPrompts,
+    qrMatrix,
     bubbles,
+    presencePhase: 'before',
+    showPassSheet: false,
+    showRosterSheet: false,
+    selectedConversationId: presenceConversations[0].id,
     selectedBubble: null,
     showCard: false,
     connected: true,
@@ -10,19 +34,69 @@ Page({
     pageLeaving: false
   },
   onShow() {
-    this.hideTabBar()
-    this.setData({ pageLeaving: false, pageReady: false, showCard: false, selectedBubble: null })
+    this.setData({
+      pageLeaving: false,
+      pageReady: false,
+      showCard: false,
+      showPassSheet: false,
+      showRosterSheet: false,
+      selectedBubble: null,
+      connected: true
+    })
+    this.syncTabBar(this.data.presencePhase)
     setTimeout(() => { this.setData({ pageReady: true }) }, 20)
+  },
+  switchPhase(e) {
+    const { phase } = e.currentTarget.dataset
+    if (!phase) return
+    this.setData({
+      presencePhase: phase,
+      showCard: false,
+      selectedBubble: null,
+      connected: phase === 'during' ? this.data.connected : true
+    })
+    this.syncTabBar(phase)
+  },
+  enterImmersive() {
+    this.setData({
+      presencePhase: 'during',
+      connected: true,
+      showCard: false,
+      selectedBubble: null
+    })
+    this.syncTabBar('during')
+    wx.vibrateShort({ type: 'heavy' })
+  },
+  openPassSheet() {
+    this.setData({ showPassSheet: true })
+  },
+  closePassSheet() {
+    this.setData({ showPassSheet: false })
+  },
+  openRosterSheet(e) {
+    const { id } = e.currentTarget.dataset
+    this.setData({
+      showRosterSheet: true,
+      selectedConversationId: id || this.data.selectedConversationId
+    })
+  },
+  closeRosterSheet() {
+    this.setData({ showRosterSheet: false })
+  },
+  selectConversation(e) {
+    const { id } = e.currentTarget.dataset
+    if (!id) return
+    this.setData({ selectedConversationId: id })
   },
   toggleConnect() {
     const connected = !this.data.connected
     this.setData({ connected, showCard: false })
     wx.vibrateShort({ type: connected ? 'heavy' : 'light' })
   },
-  hideTabBar() {
+  syncTabBar(phase) {
     const tabBar = this.getTabBar && this.getTabBar()
     if (tabBar && tabBar.sync) {
-      tabBar.sync('/pages/blackhole/index', true)
+      tabBar.sync('/pages/blackhole/index', phase === 'during')
     }
   },
   selectBubble(e) {
@@ -61,5 +135,19 @@ Page({
     setTimeout(() => {
       wx.switchTab({ url: '/pages/card/index' })
     }, 180)
+  },
+  completeSession() {
+    this.setData({
+      presencePhase: 'after',
+      connected: true,
+      showPassSheet: false,
+      showRosterSheet: false,
+      showCard: false,
+      selectedBubble: null
+    })
+    this.syncTabBar('after')
+  },
+  createMoment() {
+    wx.showToast({ title: '下一步接入“自我事件”', icon: 'none' })
   }
 })

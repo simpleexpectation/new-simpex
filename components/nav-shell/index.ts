@@ -11,6 +11,10 @@ Component({
     compact: {
       type: Boolean,
       value: false
+    },
+    light: {
+      type: Boolean,
+      value: false
     }
   },
   data: {
