@@ -61,7 +61,7 @@
     <view
       wx:for="{{visibleTopics}}"
       wx:key="id"
-      class="topic-card topic-card--{{index % 3}}"
+      class="topic-card topic-card--{{index % 9}}"
       data-id="{{item.id}}"
       bindtap="goTopicDetail"
     >
@@ -128,6 +128,17 @@
               <text class="venue-stage__meta-pill">{{item.presence}}</text>
             </view>
           </view>
+        </view>
+      </view>
+
+      <view class="venue-recommend-entry" bindtap="openVenueRecommend">
+        <view class="venue-recommend-entry__glow"></view>
+        <text class="venue-recommend-entry__eyebrow">Co-create a space</text>
+        <text class="venue-recommend-entry__title">推荐空间</text>
+        <text class="venue-recommend-entry__copy">如果你知道一个适合真实对话发生的地方，也可以推荐给我们。通过官方审核后，它会进入正式空间列表。</text>
+        <view class="venue-recommend-entry__footer">
+          <text class="venue-recommend-entry__meta">用户推荐 · 官方审核后上线</text>
+          <view class="venue-recommend-entry__action">去推荐 →</view>
         </view>
       </view>
     </view>

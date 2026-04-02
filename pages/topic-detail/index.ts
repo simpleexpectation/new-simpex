@@ -17,6 +17,6 @@ Page({
   },
   goMemberCard(e: WechatMiniprogram.BaseEvent) {
     const { id } = e.currentTarget.dataset as any
-    wx.navigateTo({ url: `/pages/profile/index?memberId=${id}` })
+    wx.navigateTo({ url: `/pages/person/index?id=${id}` })
   }
 })

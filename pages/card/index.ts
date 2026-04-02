@@ -116,5 +116,11 @@ Page({
     setTimeout(() => {
       wx.navigateTo({ url: `/pages/venue-detail/index?id=${id}` })
     }, 180)
+  },
+  openVenueRecommend() {
+    wx.showToast({
+      title: '下一步接入推荐空间提交流程',
+      icon: 'none'
+    })
   }
 })

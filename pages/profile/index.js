@@ -9,16 +9,26 @@ Page({
       location: '中国 · 杭州',
       tags: ['创作者']
     },
+    benefitsHub: {
+      eyebrow: 'Access',
+      title: '权益中心',
+      summary: '两种方式，同样进入',
+      intro: '你可以选择开通会员，或者邀请 2 位朋友加入，免费解锁当月体验。',
+      tip: '发起活动时可额外邀请 1 位站外好友参与，具体规则可分别进入查看。'
+    },
     membership: {
+      badge: '订阅进入',
       plan: '99 / 月会员',
       renewal: '2026.04.21'
     },
     inviteSummary: {
-      title: '邀请中心',
-      detail: '邀请 2 位新用户注册，可得当月免费订阅',
-      subdetail: '活动发起时可额外邀请 1 位站外好友参与'
+      badge: '邀请进入',
+      title: '邀请 2 人免费解锁',
+      detail: '邀请 2 位新用户注册，可得当月免费订阅'
     },
     myEvents,
+    selectedEvent: null,
+    showEventModal: false,
     pageReady: false,
     pageLeaving: false
   },
@@ -53,9 +63,22 @@ Page({
   openMyEvent(e) {
     const { id } = e.currentTarget.dataset
     if (!id) return
-    this.setData({ pageLeaving: true })
-    setTimeout(() => {
-      wx.navigateTo({ url: `/pages/event-detail/index?source=profile&id=${id}` })
-    }, 180)
+    const selectedEvent = this.data.myEvents.find((item) => item.id === id) || null
+    this.setData({
+      selectedEvent,
+      showEventModal: !!selectedEvent
+    })
+  },
+  closeEventModal() {
+    this.setData({
+      selectedEvent: null,
+      showEventModal: false
+    })
+  },
+  pinEventToProfile() {
+    wx.showToast({ title: '这里接挂到名片', icon: 'none' })
+  },
+  useEventAsStarter() {
+    wx.showToast({ title: '这里接作为发起入口', icon: 'none' })
   }
 })

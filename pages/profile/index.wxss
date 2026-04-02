@@ -2,17 +2,21 @@
   position: relative;
 }
 
-/* ── 头像 ── */
+.profile-hero {
+  margin-top: 8rpx;
+  margin-bottom: 28rpx;
+  padding: 10rpx 4rpx 6rpx;
+}
+
 .profile-avatar {
-  width: 148rpx;
-  height: 148rpx;
+  width: 132rpx;
+  height: 132rpx;
   border-radius: 50%;
-  background: linear-gradient(145deg, #738087, #c8beb7 55%, #c19a76);
+  background: linear-gradient(145deg, #6f787f, #beb6b0 56%, #b98f69);
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 16rpx;
-  margin-bottom: 28rpx;
+  margin-bottom: 22rpx;
 }
 
 .profile-avatar__initial {
@@ -22,23 +26,21 @@
   line-height: 1;
 }
 
-/* ── 名字 ── */
 .profile-name {
   display: block;
-  font-size: 86rpx;
+  font-size: 80rpx;
   font-weight: 700;
   line-height: 0.92;
   letter-spacing: -3rpx;
   color: #f3f1e7;
-  margin-bottom: 24rpx;
+  margin-bottom: 18rpx;
 }
 
-/* ── 简介行 ── */
 .profile-bio-lines {
   display: flex;
   flex-direction: column;
   gap: 10rpx;
-  margin-bottom: 24rpx;
+  margin-bottom: 18rpx;
 }
 
 .profile-bio-line {
@@ -47,12 +49,10 @@
   line-height: 1.5;
 }
 
-/* ── 标签 ── */
 .profile-tags {
   display: flex;
   flex-wrap: wrap;
   gap: 12rpx;
-  margin-bottom: 44rpx;
 }
 
 .profile-tags .pill {
@@ -61,7 +61,6 @@
   color: rgba(243, 241, 231, 0.88);
 }
 
-/* ── 瞬间标题栏 ── */
 .moments-head {
   display: flex;
   align-items: center;
@@ -79,7 +78,6 @@
   color: rgba(243, 241, 231, 0.48);
 }
 
-/* ── 事件照片网格 ── */
 .moments-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -87,7 +85,7 @@
   margin-bottom: 36rpx;
 }
 
-.moment-card {
+.moment-fragment {
   position: relative;
   border-radius: 22rpx;
   overflow: hidden;
@@ -95,20 +93,13 @@
   background-position: center;
 }
 
-.moment-card--tall {
+.moment-fragment--tall {
   height: 320rpx;
 }
 
-.moment-card--wide {
+.moment-fragment--wide {
   grid-column: span 2;
   height: 240rpx;
-}
-
-.moment-art--night {
-  background:
-    linear-gradient(180deg, transparent 38%, rgba(0,0,0,0.48) 100%),
-    radial-gradient(circle at 50% 38%, rgba(111,237,161,0.18), transparent 22%),
-    linear-gradient(180deg, #2f6e54, #3b7c5e 50%, #4d9970);
 }
 
 .moment-art--dusk {
@@ -123,19 +114,6 @@
     linear-gradient(180deg, #3f7657, #4f8c69 56%, #8ee6a0 100%);
 }
 
-.moment-art--sky {
-  background:
-    linear-gradient(180deg, transparent 38%, rgba(0,0,0,0.44) 100%),
-    radial-gradient(circle at 54% 34%, rgba(242,151,229,0.55), transparent 22%),
-    linear-gradient(180deg, #c4b0de, #beb4e8 52%, #b7d0e8);
-}
-
-.moment-art--warm {
-  background:
-    linear-gradient(180deg, transparent 38%, rgba(0,0,0,0.46) 100%),
-    linear-gradient(180deg, #dedcef, #efe9e2 72%, #ff8a00 100%);
-}
-
 .moment-art--paper {
   background: linear-gradient(180deg, #f5efe8, #ece2d7);
 }
@@ -144,8 +122,13 @@
   background: linear-gradient(180deg, #dad2c8, #cec4ba);
 }
 
-.moment-card__overlay,
-.moment-card__paper {
+.moment-art--warm {
+  background:
+    linear-gradient(180deg, transparent 38%, rgba(0,0,0,0.46) 100%),
+    linear-gradient(180deg, #dedcef, #efe9e2 72%, #ff8a00 100%);
+}
+
+.moment-fragment__body {
   position: absolute;
   inset: 0;
   padding: 18rpx;
@@ -154,33 +137,22 @@
   justify-content: space-between;
 }
 
-.moment-card__paper {
-  justify-content: flex-start;
-  gap: 10rpx;
-  background: rgba(255, 250, 246, 0.72);
+.moment-fragment__body--text {
+  background: rgba(255, 250, 246, 0.76);
   backdrop-filter: blur(20rpx);
 }
 
-.moment-card__module {
-  align-self: flex-start;
-  max-width: 78%;
-  padding: 14rpx 16rpx;
-  border-radius: 18rpx;
-  background: rgba(255, 250, 246, 0.82);
-  backdrop-filter: blur(20rpx);
-}
-
-.moment-card__eyebrow {
+.moment-fragment__eyebrow {
   font-size: 18rpx;
   color: rgba(255, 255, 255, 0.66);
-  margin-bottom: 6rpx;
 }
 
-.moment-card__eyebrow--dark {
-  color: rgba(25, 18, 17, 0.46);
+.moment-fragment__body--text .moment-fragment__eyebrow,
+.moment-fragment__body--text .moment-fragment__meta {
+  color: rgba(25, 18, 17, 0.48);
 }
 
-.moment-card__title {
+.moment-fragment__title {
   font-size: 28rpx;
   font-weight: 600;
   color: #ffffff;
@@ -188,115 +160,209 @@
   text-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.4);
 }
 
-.moment-card__title--dark {
+.moment-fragment__body--text .moment-fragment__title {
   color: #191211;
   text-shadow: none;
 }
 
-.moment-card__tag {
-  align-self: flex-start;
-  min-height: 38rpx;
-  padding: 0 14rpx;
-  border-radius: 999rpx;
-  background: rgba(255, 250, 246, 0.78);
-  color: #3a2520;
-  font-size: 18rpx;
-  display: inline-flex;
-  align-items: center;
-}
-
-.moment-card__label {
-  margin-top: auto;
-  font-size: 24rpx;
-  font-weight: 500;
-  color: #ffffff;
-  line-height: 1.4;
-  text-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.6);
-}
-
-.moment-card__copy {
+.moment-fragment__meta {
   font-size: 22rpx;
-  color: rgba(25, 18, 17, 0.72);
-  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.76);
+  line-height: 1.45;
 }
 
-.invite-entry {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 20rpx;
-  margin-bottom: 18rpx;
-  padding: 30rpx 28rpx;
-  border-radius: 32rpx;
-  background:
-    radial-gradient(circle at 84% 22%, rgba(248, 229, 172, 0.18), transparent 22%),
-    linear-gradient(145deg, rgba(49, 36, 22, 0.94), rgba(24, 17, 10, 0.98));
-  border: 1rpx solid rgba(255, 228, 181, 0.12);
-}
-
-.invite-entry__title {
-  display: block;
-  font-size: 34rpx;
-  font-weight: 600;
-  color: #fff2d4;
-}
-
-.invite-entry__detail {
-  display: block;
-  margin-top: 10rpx;
-  color: rgba(255, 242, 212, 0.76);
-  font-size: 24rpx;
-  line-height: 1.6;
-}
-
-.invite-entry__subdetail {
-  display: block;
-  margin-top: 8rpx;
-  color: rgba(255, 242, 212, 0.52);
-  font-size: 22rpx;
-  line-height: 1.6;
-}
-
-.invite-entry__action {
-  padding-top: 6rpx;
-  color: #fff2d4;
-  font-size: 22rpx;
-  white-space: nowrap;
-}
-
-/* ── 会员入口（暗金黑卡风格）── */
-.membership-entry {
-  position: relative;
-  overflow: hidden;
-  border-radius: 36rpx;
-  padding: 36rpx 32rpx;
-  background: linear-gradient(135deg, #141108 0%, #1e1b0e 50%, #141108 100%);
-  border: 1rpx solid rgba(223, 215, 176, 0.22);
-}
-
-/* 右上角光晕装饰 */
-.membership-entry::after {
-  content: '';
-  position: absolute;
-  top: -40rpx;
-  right: -40rpx;
-  width: 200rpx;
-  height: 200rpx;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(223, 215, 176, 0.1) 0%, transparent 70%);
-  pointer-events: none;
-}
-
-.membership-entry__plan {
-  display: block;
-  font-size: 34rpx;
-  font-weight: 600;
-  color: #dfd7b0;
+.benefits-hub {
+  margin-top: 6rpx;
   margin-bottom: 10rpx;
 }
 
-.membership-entry__sub {
+.benefits-hub__head {
   display: block;
-  color: rgba(223, 215, 176, 0.45);
+  margin-bottom: 14rpx;
+}
+
+.benefits-hub__eyebrow {
+  display: block;
+  margin-bottom: 6rpx;
+  font-size: 18rpx;
+  letter-spacing: 2.4rpx;
+  text-transform: uppercase;
+  color: rgba(243, 241, 231, 0.36);
+}
+
+.benefits-hub__title {
+  display: block;
+  font-size: 28rpx;
+  font-weight: 600;
+  color: rgba(243, 241, 231, 0.82);
+}
+
+.benefits-hub__options {
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+}
+
+.benefit-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16rpx;
+  padding: 18rpx 18rpx;
+  border-radius: 22rpx;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1rpx solid rgba(255, 255, 255, 0.06);
+}
+
+.benefit-option--invite {
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.benefit-option__badge {
+  display: block;
+  font-size: 18rpx;
+  color: rgba(243, 241, 231, 0.34);
+}
+
+.benefit-option__title {
+  display: block;
+  margin-top: 6rpx;
+  font-size: 26rpx;
+  color: rgba(243, 241, 231, 0.86);
+  font-weight: 600;
+}
+
+.benefit-option__detail {
+  display: block;
+  margin-top: 8rpx;
+  font-size: 20rpx;
+  color: rgba(243, 241, 231, 0.46);
+  line-height: 1.5;
+}
+
+.benefit-option__action {
+  color: rgba(243, 241, 231, 0.56);
+  font-size: 20rpx;
+  white-space: nowrap;
+}
+
+.event-modal-mask {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.58);
+  z-index: 220;
+  display: flex;
+  align-items: flex-end;
+}
+
+.event-modal {
+  width: 100%;
+  border-radius: 42rpx 42rpx 0 0;
+  background: #101012;
+  padding: 18rpx 24rpx calc(28rpx + env(safe-area-inset-bottom));
+}
+
+.event-modal__handle {
+  width: 76rpx;
+  height: 8rpx;
+  border-radius: 999rpx;
+  background: rgba(243, 241, 231, 0.16);
+  margin: 0 auto 22rpx;
+}
+
+.event-modal__hero {
+  min-height: 280rpx;
+  border-radius: 30rpx;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 82% 18%, rgba(255, 228, 181, 0.16), transparent 24%),
+    rgba(255, 255, 255, 0.04);
+}
+
+.event-modal__hero--text {
+  background: linear-gradient(180deg, rgba(255, 251, 246, 0.96), rgba(241, 236, 230, 0.9));
+}
+
+.event-modal__hero-card {
+  height: 100%;
+  padding: 24rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.event-modal__hero-card--text .event-modal__eyebrow,
+.event-modal__hero-card--text .event-modal__meta {
+  color: rgba(25, 18, 17, 0.5);
+}
+
+.event-modal__eyebrow {
+  display: block;
+  color: rgba(243, 241, 231, 0.48);
+  font-size: 18rpx;
+}
+
+.event-modal__title {
+  display: block;
+  margin-top: 12rpx;
+  color: #f3f1e7;
+  font-size: 42rpx;
+  line-height: 1.18;
+  font-weight: 600;
+}
+
+.event-modal__hero-card--text .event-modal__title {
+  color: #191211;
+}
+
+.event-modal__meta {
+  display: block;
+  color: rgba(243, 241, 231, 0.74);
   font-size: 24rpx;
+  line-height: 1.55;
+}
+
+.event-modal__section {
+  margin-top: 18rpx;
+  padding: 26rpx 24rpx;
+  border-radius: 28rpx;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.event-modal__section-label {
+  display: block;
+  color: rgba(243, 241, 231, 0.44);
+  font-size: 20rpx;
+}
+
+.event-modal__section-copy {
+  display: block;
+  margin-top: 12rpx;
+  color: rgba(243, 241, 231, 0.88);
+  font-size: 26rpx;
+  line-height: 1.7;
+}
+
+.event-modal__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+  margin-top: 18rpx;
+}
+
+.event-modal__button {
+  min-height: 92rpx;
+  border-radius: 26rpx;
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(243, 241, 231, 0.84);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26rpx;
+}
+
+.event-modal__button--primary {
+  background: linear-gradient(135deg, #f1eddd, #d8cfb5);
+  color: #111111;
+  font-weight: 600;
 }

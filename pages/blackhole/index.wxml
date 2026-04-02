@@ -2,16 +2,36 @@
   <view wx:if="{{presencePhase !== 'during'}}" class="presence-shell presence-shell--light">
     <view class="presence-shell__glow presence-shell__glow--a"></view>
     <view class="presence-shell__glow presence-shell__glow--b"></view>
-    <nav-shell eyebrow="Simpex" title="在场" />
+    <view class="presence-top-offset" style="height: {{statusBarHeight + 24}}px;"></view>
+    <view class="presence-subtabs">
+      <view
+        class="presence-subtabs__item {{activeSubtab === 'presence' ? 'presence-subtabs__item--active' : ''}}"
+        data-key="presence"
+        bindtap="switchSubtab"
+      >
+        <text class="presence-subtabs__eyebrow">Presence</text>
+        <text class="presence-subtabs__label">在场</text>
+      </view>
+      <view
+        class="presence-subtabs__item {{activeSubtab === 'chat' ? 'presence-subtabs__item--active' : ''}}"
+        data-key="chat"
+        bindtap="switchSubtab"
+      >
+        <text class="presence-subtabs__eyebrow">Group Chat</text>
+        <text class="presence-subtabs__label">群聊</text>
+      </view>
+    </view>
     <view class="presence-before">
-      <view class="presence-conversation-list">
+      <view wx:if="{{activeSubtab === 'presence'}}" class="presence-conversation-list">
         <view
           wx:for="{{presenceConversations}}"
           wx:key="id"
-          class="presence-dialog {{selectedConversationId === item.id ? 'presence-dialog--active' : ''}}"
+          class="presence-dialog presence-dialog--{{index % 9}} {{selectedConversationId === item.id ? 'presence-dialog--active' : ''}}"
           data-id="{{item.id}}"
           bindtap="selectConversation"
         >
+          <view class="presence-dialog__mist presence-dialog__mist--a"></view>
+          <view class="presence-dialog__mist presence-dialog__mist--b"></view>
           <view class="presence-dialog__head">
             <view class="presence-dialog__intro">
               <view class="presence-dialog__role-row">
@@ -33,92 +53,126 @@
           </view>
 
           <text class="presence-dialog__auto">{{item.autoConfirmHint}}</text>
+          <view class="presence-dialog__chevron-row">
+            <text class="presence-dialog__chevron {{selectedConversationId === item.id ? 'presence-dialog__chevron--active' : ''}}">▾</text>
+          </view>
 
           <view wx:if="{{selectedConversationId === item.id}}" class="presence-dialog__detail">
-            <view wx:if="{{item.status !== 'recap'}}" class="presence-bridge-card">
-              <view class="presence-bridge-card__glow presence-bridge-card__glow--a"></view>
-              <view class="presence-bridge-card__glow presence-bridge-card__glow--b"></view>
-              <text class="presence-bridge-card__status">{{item.bridgeStateTitle}}</text>
-              <text class="presence-bridge-card__title">{{item.title}}</text>
-              <text class="presence-bridge-card__meta">{{item.schedule}} · {{item.venue}}</text>
-              <text class="presence-bridge-card__why">{{item.bridgeWhyYou}}</text>
-
-              <view class="presence-bridge-card__chips">
-                <text class="presence-bridge-card__chip">{{item.bridgeStatusMeta}}</text>
-                <text class="presence-bridge-card__chip">{{item.moodKeywords}}</text>
-              </view>
-
-              <view class="presence-bridge-card__block">
-                <text class="presence-bridge-card__label">你会遇见怎样的人</text>
-                <text class="presence-bridge-card__copy">{{item.whoYouMayMeet}}</text>
-              </view>
-
-              <view class="presence-bridge-card__block">
-                <text class="presence-bridge-card__label">这场对话的感觉</text>
-                <text class="presence-bridge-card__copy">{{item.bridgeSceneCopy}}</text>
-              </view>
-
-              <view class="presence-bridge-card__block">
-                <text class="presence-bridge-card__label">接下来怎么去</text>
-                <text class="presence-bridge-card__copy">{{item.bridgeArrivalTip}}</text>
-              </view>
-
-              <view class="presence-bridge-card__actions">
-                <view class="presence-bridge-card__ghost" data-id="{{item.id}}" bindtap="openRosterSheet">{{item.bridgePrimaryAction}}</view>
-                <view class="presence-bridge-card__cta" bindtap="openPassSheet">{{item.bridgeSecondaryAction}}</view>
+            <view wx:if="{{item.status === 'recap'}}" class="presence-mini-card">
+              <text class="presence-mini-card__title">这场对话刚刚结束</text>
+              <text class="presence-mini-card__copy">去群聊里的最后一段，把此刻写下来。24 小时后它会自然消失。</text>
+              <view class="presence-mini-card__actions">
+                <view class="presence-mini-card__button presence-mini-card__button--ghost" data-key="chat" bindtap="switchSubtab">去群聊</view>
               </view>
             </view>
 
-            <view wx:if="{{item.status === 'recap'}}" class="presence-recap-card">
-              <view class="presence-recap-card__glow"></view>
-              <text class="presence-recap-card__title">写此刻</text>
-              <text class="presence-recap-card__copy">一句话或一张照片，让今晚留下来。</text>
-              <view class="presence-recap-card__actions">
-                <view class="presence-recap-card__button" bindtap="createMoment">写一句话</view>
-                <view class="presence-recap-card__button" bindtap="createMoment">放一张照片</view>
+            <view wx:elif="{{item.role === 'host' && item.status === 'pending'}}" class="presence-mini-card">
+              <text class="presence-mini-card__title">有人申请加入</text>
+              <text class="presence-mini-card__copy">先看名片，再决定是否接受。这一步还是留在这里更自然。</text>
+              <view class="presence-mini-card__actions">
+                <view class="presence-mini-card__button presence-mini-card__button--ghost" data-id="{{item.id}}" bindtap="openRosterSheet">先看名片</view>
+                <view class="presence-mini-card__button presence-mini-card__button--ghost" data-id="{{item.id}}" bindtap="rejectApplicant">暂不同意</view>
+                <view class="presence-mini-card__button presence-mini-card__button--cta" data-id="{{item.id}}" bindtap="approveApplicant">同意加入</view>
               </view>
             </view>
 
-            <view wx:elif="{{item.role === 'host' && item.status === 'pending'}}" class="presence-request-card">
-              <view class="presence-request-card__glow"></view>
-              <view class="presence-request-card__main">
-                <view class="presence-request-card__alert">
-                  <text class="presence-request-card__dot"></text>
-                  <text>有人正在申请加入</text>
+            <view wx:elif="{{item.status === 'confirmed' && item.ticketReady}}">
+              <view class="presence-ticket presence-ticket--compact">
+                <view class="presence-ticket__glow"></view>
+                <view class="presence-ticket__main">
+                  <view>
+                    <text class="presence-ticket__label">今晚签到后自动进入数字静默</text>
+                    <text class="presence-ticket__meta">{{item.schedule}} · {{item.venue}}</text>
+                  </view>
+                  <view class="presence-ticket__badge">{{item.statusLabel}}</view>
                 </view>
-                <text class="presence-request-card__name">{{item.featuredAttendeeName}}</text>
-                <text class="presence-request-card__line">{{item.featuredAttendeeLine}}</text>
-                <text class="presence-request-card__copy">先看看对方的数字名片，再决定是否接受这次申请。</text>
-              </view>
-              <view class="presence-request-card__actions presence-request-card__actions--top">
-                <view class="presence-request-card__ghost presence-request-card__ghost--card" data-id="{{item.id}}" bindtap="openRosterSheet">先看名片</view>
-              </view>
-              <view class="presence-request-card__actions">
-                <view class="presence-request-card__ghost" data-id="{{item.id}}" bindtap="rejectApplicant">暂不同意</view>
-                <view class="presence-request-card__cta" data-id="{{item.id}}" bindtap="approveApplicant">同意加入</view>
+                <view class="presence-ticket__footer">
+                  <text class="presence-ticket__hint">票据里再展示二维码，避免提前暴露过多功能。</text>
+                  <view class="presence-ticket__actions">
+                    <view class="presence-ticket__ghost" data-id="{{item.id}}" bindtap="openPresenceRoom">聊天室</view>
+                    <view class="presence-ticket__ghost" data-id="{{item.id}}" bindtap="openRosterSheet">参与人</view>
+                    <view class="presence-ticket__ghost" bindtap="openPassSheet">票据</view>
+                    <view class="presence-ticket__cta" data-id="{{item.id}}" bindtap="enterImmersive">签到</view>
+                  </view>
+                </view>
               </view>
             </view>
 
-            <view wx:elif="{{item.status === 'confirmed' && item.ticketReady}}" class="presence-ticket presence-ticket--compact">
-              <view class="presence-ticket__glow"></view>
-              <view class="presence-ticket__main">
-                <view>
-                  <text class="presence-ticket__label">{{item.ticketReady ? '今晚签到后自动进入数字静默' : '等待确认完成后，再开放票据与签到'}}</text>
-                  <text class="presence-ticket__meta">{{item.schedule}} · {{item.venue}}</text>
-                </view>
-                <view class="presence-ticket__badge">{{item.statusLabel}}</view>
-              </view>
-              <view class="presence-ticket__footer">
-                <text class="presence-ticket__hint">{{item.ticketReady ? '票据里再展示二维码，避免提前暴露过多功能。' : '当前保持轻提醒，系统会继续等待对方回应。'}}</text>
-                <view class="presence-ticket__actions">
-                  <view class="presence-ticket__ghost" data-id="{{item.id}}" bindtap="openRosterSheet">参与人</view>
-                  <view class="presence-ticket__ghost" bindtap="openPassSheet">{{item.ticketReady ? '票据' : '详情'}}</view>
-                  <view wx:if="{{item.ticketReady}}" class="presence-ticket__cta" data-id="{{item.id}}" bindtap="enterImmersive">签到</view>
-                  <view wx:else class="presence-ticket__cta presence-ticket__cta--muted" bindtap="openPassSheet">待确认</view>
-                </view>
-              </view>
+            <view wx:elif="{{item.role === 'applicant' && item.status === 'pending'}}" class="presence-mini-card">
+              <text class="presence-mini-card__title">现在先不用继续做什么</text>
+              <text class="presence-mini-card__copy">等对方确认之后，聊天室才会开放。现在你只需要保留一点点期待。</text>
+            </view>
+
+            <view wx:elif="{{item.status === 'declined'}}" class="presence-mini-card presence-mini-card--muted">
+              <text class="presence-mini-card__title">这次没有成局</text>
+              <text class="presence-mini-card__copy">不需要再处理什么，系统已经替你保留了相近的推荐线索。</text>
             </view>
           </view>
+        </view>
+      </view>
+
+      <view wx:elif="{{activeSubtab === 'chat'}}" class="presence-chat">
+        <view wx:if="{{chatRooms.length}}" class="presence-chat__tabs">
+          <scroll-view class="presence-chat__tabs-scroll" scroll-x enhanced show-scrollbar="{{false}}">
+            <view class="presence-chat__tabs-track">
+              <view
+                wx:for="{{chatRooms}}"
+                wx:key="id"
+                class="presence-chat__tab {{selectedConversationId === item.id ? 'presence-chat__tab--active' : ''}}"
+                data-id="{{item.id}}"
+                bindtap="selectChatRoom"
+              >
+                <view class="presence-chat__tab-topline">
+                  <text class="presence-chat__tab-badge">{{item.badge}}</text>
+                </view>
+                <text class="presence-chat__tab-title">{{item.title}}</text>
+                <text class="presence-chat__tab-meta">{{item.meta}}</text>
+              </view>
+            </view>
+          </scroll-view>
+        </view>
+
+        <view wx:if="{{currentRoom}}" class="presence-chat__panel">
+          <view class="presence-chat__hero">
+            <text class="presence-chat__eyebrow">{{currentRoom.badge}}</text>
+            <text class="presence-chat__title">{{currentRoom.title}}</text>
+            <text class="presence-chat__meta">{{currentRoom.schedule}} · {{currentRoom.venue}}</text>
+            <text class="presence-chat__copy">{{currentRoom.prompt}}</text>
+          </view>
+
+          <view class="presence-chat__stream">
+            <view wx:for="{{currentRoom.messages}}" wx:key="id" class="presence-chat__message presence-chat__message--{{item.type}}">
+              <text wx:if="{{item.type === 'system'}}" class="presence-chat__system">{{item.text}}</text>
+              <block wx:else>
+                <view class="presence-chat__message-head">
+                  <text class="presence-chat__message-name">{{item.name}}</text>
+                  <text class="presence-chat__message-time">{{item.time}}</text>
+                </view>
+                <text class="presence-chat__message-body">{{item.text}}</text>
+              </block>
+            </view>
+          </view>
+
+          <view wx:if="{{currentRoom.actionMode === 'recap'}}" class="presence-chat__recap">
+            <text class="presence-chat__recap-title">写此刻</text>
+            <text class="presence-chat__recap-copy">一句话或一张照片，让这场真实发生过的相遇留下来。</text>
+            <view class="presence-chat__recap-actions">
+              <view class="presence-chat__recap-button" bindtap="createMoment">写一句话</view>
+              <view class="presence-chat__recap-button" bindtap="createMoment">放一张照片</view>
+            </view>
+          </view>
+
+          <view wx:else class="presence-chat__composer">
+            <view class="presence-chat__composer-field">
+              <text class="presence-chat__composer-placeholder">先轻轻说一句，开场后这里会自动静默。</text>
+            </view>
+            <view class="presence-chat__composer-send">说一句</view>
+          </view>
+        </view>
+
+        <view wx:else class="presence-chat__empty">
+          <text class="presence-chat__empty-title">还没有可进入的群聊</text>
+          <text class="presence-chat__empty-copy">等一场对话确认成局后，这里才会自然长出同行房。</text>
         </view>
       </view>
     </view>

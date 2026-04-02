@@ -246,6 +246,40 @@ export const attendeeCards = [
   }
 ]
 
+export const presenceRooms = [
+  {
+    conversationId: 'presence-dialog-1',
+    title: '设计焦虑与不确定感的对话',
+    schedule: '今晚 19:30 - 21:30',
+    venue: '泊光集 2F',
+    badge: '活动前同行房',
+    hint: '只在开始前开放，开场后自动静默。',
+    prompt: '现在不用把话说满，先轻轻开一个口就够了。',
+    participants: ['青原', 'Momo', 'Aki', 'Lynn', '小越', 'Nora'],
+    messages: [
+      { id: 'room-1-msg-1', type: 'system', text: '青原 已进入这场对话的同行房。' },
+      { id: 'room-1-msg-2', type: 'other', name: 'Momo', text: '我可能会提前十分钟到，想先找个靠窗的位置。', time: '19:02' },
+      { id: 'room-1-msg-3', type: 'self', name: '你', text: '最近也一直在想，工作之外还有什么在定义一个人。', time: '19:06' },
+      { id: 'room-1-msg-4', type: 'other', name: 'Aki', text: '今晚也许不用急着得出结论，先把那个卡住的点说出来就很好。', time: '19:08' }
+    ]
+  },
+  {
+    conversationId: 'presence-dialog-5',
+    title: '如果不再追求效率，生活会不会更完整？',
+    schedule: '4月4日 15:00 - 17:00',
+    venue: '西湖边书店',
+    badge: '活动前同行房',
+    hint: '开始前可以先打个招呼，开场后这里会自动静下来。',
+    prompt: '这更像一张安静留言板，不需要把它聊成一个大群。',
+    participants: ['Aki', '青原', 'Lynn', 'Nora', '你'],
+    messages: [
+      { id: 'room-5-msg-1', type: 'system', text: '你发起的这场对话已经凑齐人了。' },
+      { id: 'room-5-msg-2', type: 'other', name: 'Nora', text: '我会带一本最近在看的书过来，也许能接上今晚的话题。', time: '14:12' },
+      { id: 'room-5-msg-3', type: 'other', name: 'Lynn', text: '我大概会提前一点到，想先在楼下站一会儿。', time: '14:15' }
+    ]
+  }
+]
+
 export const reflectionPrompts = [
   '把今晚你最想带走的一句话留在这里。',
   '记录一个你原本不会开口，但最后说出来了的瞬间。',
@@ -267,6 +301,7 @@ export const presenceConversations = [
     statusHint: '你和发起人都已确认，这场对话已经成立。',
     autoConfirmHint: '若 30 分钟内无人操作，系统将默认同意。',
     ticketReady: true,
+    roomReady: true,
     attendeeCount: 6,
     featuredAttendeeId: 'attendee-1',
     featuredAttendeeName: '青原',
@@ -286,6 +321,7 @@ export const presenceConversations = [
     statusHint: '发起人还没有处理你的申请。现在不需要你做任何事，只等对方点头。',
     autoConfirmHint: '若 30 分钟内仍未处理，系统将默认同意。',
     ticketReady: false,
+    roomReady: false,
     attendeeCount: 4,
     featuredAttendeeId: 'attendee-2',
     featuredAttendeeName: 'Momo',
@@ -305,6 +341,7 @@ export const presenceConversations = [
     statusHint: '有 1 位申请者正在等待加入。你不处理的话，30 分钟后系统会默认同意。',
     autoConfirmHint: '剩余自动确认时间 17 分钟。',
     ticketReady: false,
+    roomReady: false,
     attendeeCount: 4,
     featuredAttendeeId: 'attendee-4',
     featuredAttendeeName: 'Lynn',
@@ -324,6 +361,7 @@ export const presenceConversations = [
     statusHint: '这场对话这次没有和你匹配成功。你可以先放下，之后再看看别的相遇。',
     autoConfirmHint: '系统已为你保留同类型推荐。',
     ticketReady: false,
+    roomReady: false,
     attendeeCount: 0,
     featuredAttendeeId: 'attendee-6',
     featuredAttendeeName: 'Nora',
@@ -343,6 +381,7 @@ export const presenceConversations = [
     statusHint: '这场对话已经凑齐人了。你只需要按时到场，剩下的交给在场。',
     autoConfirmHint: '票据与同场名单已就绪。',
     ticketReady: true,
+    roomReady: true,
     attendeeCount: 5,
     featuredAttendeeId: 'attendee-3',
     featuredAttendeeName: 'Aki',
@@ -362,6 +401,7 @@ export const presenceConversations = [
     statusHint: '这一刻已经过去了。如果愿意，留一句话或一张照片，让它成为下次相遇前的期待。',
     autoConfirmHint: '你留下的内容，会在下次对话前被温柔展示。',
     ticketReady: false,
+    roomReady: false,
     attendeeCount: 2,
     featuredAttendeeId: 'attendee-5',
     featuredAttendeeName: '小越',

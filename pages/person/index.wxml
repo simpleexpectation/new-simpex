@@ -1,0 +1,69 @@
+<view class="page-shell person-page {{pageReady ? 'page-ready' : ''}} {{pageLeaving ? 'page-leaving' : ''}}">
+  <nav-shell eyebrow="Profile" title="{{person.name}}">
+    <view class="person-nav">
+      <view class="person-nav__back" bindtap="goBack">返回</view>
+    </view>
+  </nav-shell>
+
+  <view class="person-hero">
+    <view class="person-hero__glow person-hero__glow--a"></view>
+    <view class="person-hero__glow person-hero__glow--b"></view>
+    <view class="person-avatar">
+      <text class="person-avatar__initial">{{person.initial}}</text>
+    </view>
+    <text class="person-name">{{person.name}}</text>
+    <view class="person-bio-lines">
+      <text class="person-bio-line">◈  {{person.bio}}</text>
+      <text class="person-bio-line">⌖  {{person.location}}</text>
+    </view>
+    <view class="person-tags">
+      <view wx:for="{{person.tags}}" wx:key="index" class="pill">{{item}}</view>
+    </view>
+  </view>
+
+  <view class="person-section-head">
+    <text class="person-section-head__title">从这些切片开始认识 TA</text>
+    <text class="person-section-head__copy">{{person.connectionHint}}</text>
+  </view>
+
+  <view class="person-grid">
+    <view
+      wx:for="{{visibleEvents}}"
+      wx:key="id"
+      class="person-fragment person-fragment--{{item.layout}} person-fragment--{{item.previewMode}} person-art--{{item.art}}"
+      style="{{item.previewMode === 'image' && item.photoUrl ? 'background-image: linear-gradient(180deg, rgba(0,0,0,0.08), rgba(0,0,0,0.42)), url(' + item.photoUrl + '); background-size: cover; background-position: center;' : ''}}"
+      data-id="{{item.id}}"
+      bindtap="openEvent"
+    >
+      <view class="person-fragment__body {{item.previewMode === 'text' ? 'person-fragment__body--text' : ''}}">
+        <text class="person-fragment__eyebrow">{{item.kindLabel}}</text>
+        <text class="person-fragment__title">{{item.previewTitle}}</text>
+        <text class="person-fragment__meta">{{item.previewText}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{showEventModal && selectedEvent}}" class="person-event-modal-mask" bindtap="closeEventModal">
+    <view class="person-event-modal" catchtap="">
+      <view class="person-event-modal__handle"></view>
+      <view
+        class="person-event-modal__hero person-event-modal__hero--{{selectedEvent.previewMode}}"
+        style="{{selectedEvent.previewMode === 'image' && selectedEvent.photoUrl ? 'background-image: linear-gradient(180deg, rgba(0,0,0,0.12), rgba(0,0,0,0.48)), url(' + selectedEvent.photoUrl + '); background-size: cover; background-position: center;' : ''}}"
+      >
+        <view class="person-event-modal__hero-card {{selectedEvent.previewMode === 'text' ? 'person-event-modal__hero-card--text' : ''}}">
+          <text class="person-event-modal__eyebrow">{{selectedEvent.kindLabel}} · {{selectedEvent.anchor}}</text>
+          <text class="person-event-modal__title">{{selectedEvent.previewTitle}}</text>
+          <text class="person-event-modal__meta">{{selectedEvent.previewText}}</text>
+        </view>
+      </view>
+      <view class="person-event-modal__section">
+        <text class="person-event-modal__section-label">这条切片会让你怎么理解 TA</text>
+        <text class="person-event-modal__section-copy">{{selectedEvent.identityLens}}</text>
+      </view>
+      <view class="person-event-modal__actions">
+        <view class="person-event-modal__button person-event-modal__button--primary" bindtap="connectFromEvent">从这里认识 TA</view>
+        <view class="person-event-modal__button" bindtap="resonateFromEvent">以此发起共鸣</view>
+      </view>
+    </view>
+  </view>
+</view>

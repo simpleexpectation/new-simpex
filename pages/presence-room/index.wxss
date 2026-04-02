@@ -1,0 +1,230 @@
+.presence-room-page {
+  position: relative;
+  overflow: hidden;
+}
+
+.presence-room-page__glow {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(96rpx);
+  pointer-events: none;
+  opacity: 0.72;
+}
+
+.presence-room-page__glow--a {
+  top: 160rpx;
+  right: -50rpx;
+  width: 340rpx;
+  height: 280rpx;
+  background: rgba(248, 213, 157, 0.18);
+}
+
+.presence-room-page__glow--b {
+  left: -40rpx;
+  bottom: 240rpx;
+  width: 320rpx;
+  height: 260rpx;
+  background: rgba(158, 187, 236, 0.14);
+}
+
+.presence-room-nav {
+  display: flex;
+  align-items: center;
+  gap: 18rpx;
+}
+
+.presence-room-nav__back {
+  min-width: 96rpx;
+  height: 62rpx;
+  padding: 0 20rpx;
+  border-radius: 999rpx;
+  background: rgba(255, 255, 255, 0.06);
+  color: #f3f1e7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22rpx;
+}
+
+.presence-room-nav__copy {
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+
+.presence-room-nav__title {
+  color: #f3f1e7;
+  font-size: 38rpx;
+  font-weight: 600;
+}
+
+.presence-room-nav__sub {
+  color: rgba(243, 241, 231, 0.46);
+  font-size: 20rpx;
+}
+
+.presence-room-hero {
+  margin-top: 34rpx;
+  padding: 28rpx;
+  border-radius: 34rpx;
+}
+
+.presence-room-hero__eyebrow {
+  display: block;
+  color: rgba(243, 241, 231, 0.44);
+  font-size: 20rpx;
+}
+
+.presence-room-hero__title {
+  display: block;
+  margin-top: 12rpx;
+  color: #f3f1e7;
+  font-size: 42rpx;
+  line-height: 1.18;
+  font-weight: 600;
+}
+
+.presence-room-hero__meta {
+  display: block;
+  margin-top: 12rpx;
+  color: rgba(243, 241, 231, 0.54);
+  font-size: 22rpx;
+}
+
+.presence-room-hero__copy {
+  display: block;
+  margin-top: 18rpx;
+  color: rgba(243, 241, 231, 0.74);
+  font-size: 24rpx;
+  line-height: 1.65;
+}
+
+.presence-room-hero__people {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10rpx;
+  margin-top: 22rpx;
+}
+
+.presence-room-hero__person {
+  min-height: 42rpx;
+  padding: 0 16rpx;
+  border-radius: 999rpx;
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(243, 241, 231, 0.72);
+  display: inline-flex;
+  align-items: center;
+  font-size: 20rpx;
+}
+
+.presence-room-stream {
+  margin-top: 22rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.presence-room-message {
+  border-radius: 28rpx;
+  padding: 24rpx;
+}
+
+.presence-room-message--system {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1rpx solid rgba(255, 255, 255, 0.08);
+}
+
+.presence-room-message--other,
+.presence-room-message--self {
+  background: #111214;
+}
+
+.presence-room-message--self {
+  background: linear-gradient(180deg, rgba(225, 171, 146, 0.94), rgba(212, 167, 141, 0.94));
+}
+
+.presence-room-message__system {
+  display: block;
+  color: rgba(243, 241, 231, 0.58);
+  font-size: 22rpx;
+  line-height: 1.55;
+}
+
+.presence-room-message__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16rpx;
+}
+
+.presence-room-message__name {
+  color: #f3f1e7;
+  font-size: 24rpx;
+  font-weight: 600;
+}
+
+.presence-room-message__time {
+  color: rgba(243, 241, 231, 0.36);
+  font-size: 20rpx;
+}
+
+.presence-room-message__body {
+  display: block;
+  margin-top: 12rpx;
+  color: rgba(243, 241, 231, 0.84);
+  font-size: 25rpx;
+  line-height: 1.7;
+}
+
+.presence-room-message--self .presence-room-message__name,
+.presence-room-message--self .presence-room-message__body {
+  color: #191211;
+}
+
+.presence-room-message--self .presence-room-message__time {
+  color: rgba(25, 18, 17, 0.48);
+}
+
+.presence-room-compose {
+  position: sticky;
+  bottom: calc(22rpx + env(safe-area-inset-bottom));
+  margin-top: 24rpx;
+  display: flex;
+  gap: 12rpx;
+  align-items: center;
+}
+
+.presence-room-compose__field {
+  flex: 1;
+  min-height: 88rpx;
+  border-radius: 999rpx;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1rpx solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  padding: 0 24rpx;
+}
+
+.presence-room-compose__input {
+  width: 100%;
+  color: #f3f1e7;
+  font-size: 24rpx;
+}
+
+.presence-room-compose__placeholder {
+  color: rgba(243, 241, 231, 0.34);
+}
+
+.presence-room-compose__send {
+  min-width: 132rpx;
+  height: 88rpx;
+  padding: 0 24rpx;
+  border-radius: 999rpx;
+  background: linear-gradient(135deg, #efe2c8, #e7c39c);
+  color: #1a1411;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24rpx;
+  font-weight: 600;
+}

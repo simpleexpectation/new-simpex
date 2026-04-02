@@ -1,0 +1,50 @@
+<view class="page-shell presence-room-page {{pageReady ? 'page-ready' : ''}} {{pageLeaving ? 'page-leaving' : ''}}">
+  <view class="presence-room-page__glow presence-room-page__glow--a"></view>
+  <view class="presence-room-page__glow presence-room-page__glow--b"></view>
+
+  <nav-shell eyebrow="Simpex">
+    <view class="presence-room-nav">
+      <view class="presence-room-nav__back" bindtap="goBack">返回</view>
+      <view class="presence-room-nav__copy">
+        <text class="presence-room-nav__title">同行房</text>
+        <text class="presence-room-nav__sub">只在开始前开放，开场后自动静默</text>
+      </view>
+    </view>
+  </nav-shell>
+
+  <view class="presence-room-hero glass-panel">
+    <text class="presence-room-hero__eyebrow">{{room.badge}}</text>
+    <text class="presence-room-hero__title">{{room.title}}</text>
+    <text class="presence-room-hero__meta">{{room.schedule}} · {{room.venue}}</text>
+    <text class="presence-room-hero__copy">{{room.prompt}}</text>
+    <view class="presence-room-hero__people">
+      <text wx:for="{{room.participants}}" wx:key="index" class="presence-room-hero__person">{{item}}</text>
+    </view>
+  </view>
+
+  <view class="presence-room-stream">
+    <view wx:for="{{room.messages}}" wx:key="id" class="presence-room-message presence-room-message--{{item.type}}">
+      <text wx:if="{{item.type === 'system'}}" class="presence-room-message__system">{{item.text}}</text>
+      <block wx:else>
+        <view class="presence-room-message__head">
+          <text class="presence-room-message__name">{{item.name}}</text>
+          <text class="presence-room-message__time">{{item.time}}</text>
+        </view>
+        <text class="presence-room-message__body">{{item.text}}</text>
+      </block>
+    </view>
+  </view>
+
+  <view class="presence-room-compose">
+    <view class="presence-room-compose__field">
+      <input
+        class="presence-room-compose__input"
+        placeholder="先轻轻说一句"
+        placeholder-class="presence-room-compose__placeholder"
+        value="{{draft}}"
+        bindinput="onDraftInput"
+      />
+    </view>
+    <view class="presence-room-compose__send" bindtap="sendDraft">发一句</view>
+  </view>
+</view>

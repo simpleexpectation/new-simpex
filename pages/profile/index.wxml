@@ -1,69 +1,91 @@
 <view class="page-shell profile-page {{pageReady ? 'page-ready' : ''}} {{pageLeaving ? 'page-leaving' : ''}}">
-
   <nav-shell eyebrow="Simpex" title="我的" />
 
-  <!-- ── 头像 ── -->
-  <view class="profile-avatar">
-    <text class="profile-avatar__initial">{{user.initial}}</text>
+  <view class="profile-hero">
+    <view class="profile-avatar">
+      <text class="profile-avatar__initial">{{user.initial}}</text>
+    </view>
+    <text class="profile-name">{{user.name}}</text>
+    <view class="profile-bio-lines">
+      <text class="profile-bio-line">◈  {{user.bio}}</text>
+      <text class="profile-bio-line">⌖  {{user.location}}</text>
+    </view>
+    <view class="profile-tags">
+      <view wx:for="{{user.tags}}" wx:key="index" class="pill">{{item}}</view>
+    </view>
   </view>
 
-  <!-- ── 名字 ── -->
-  <text class="profile-name">{{user.name}}</text>
-
-  <!-- ── 简介行 ── -->
-  <view class="profile-bio-lines">
-    <text class="profile-bio-line">◈  {{user.bio}}</text>
-    <text class="profile-bio-line">⌖  {{user.location}}</text>
-  </view>
-
-  <!-- ── 标签 ── -->
-  <view class="profile-tags">
-    <view wx:for="{{user.tags}}" wx:key="index" class="pill">{{item}}</view>
-  </view>
-
-  <!-- ── 我的事件 ── -->
   <view class="moments-head">
-    <text class="moments-head__title">我的事件</text>
-    <text class="moments-head__action">点开查看 ›</text>
+    <text class="moments-head__title">最近留下来的切片</text>
+    <text class="moments-head__action">轻点放大，不跳转</text>
   </view>
 
   <view class="moments-grid">
     <view
       wx:for="{{myEvents}}"
       wx:key="id"
-      class="moment-card moment-card--{{item.layout}} moment-card--{{item.previewMode}} moment-art--{{item.art}}"
+      class="moment-fragment moment-fragment--{{item.layout}} moment-fragment--{{item.previewMode}} moment-art--{{item.art}}"
       style="{{item.previewMode === 'image' && item.photoUrl ? 'background-image: linear-gradient(180deg, rgba(0,0,0,0.08), rgba(0,0,0,0.42)), url(' + item.photoUrl + '); background-size: cover; background-position: center;' : ''}}"
       data-id="{{item.id}}"
       bindtap="openMyEvent"
     >
-      <view wx:if="{{item.previewMode === 'image'}}" class="moment-card__overlay">
-        <view class="moment-card__module">
-          <text class="moment-card__eyebrow">{{item.previewEyebrow}}</text>
-          <text class="moment-card__title">{{item.previewTitle}}</text>
+      <view class="moment-fragment__body {{item.previewMode === 'text' ? 'moment-fragment__body--text' : ''}}">
+        <text class="moment-fragment__eyebrow">{{item.kindLabel}}</text>
+        <text class="moment-fragment__title">{{item.previewTitle}}</text>
+        <text class="moment-fragment__meta">{{item.previewText}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="benefits-hub">
+    <view class="benefits-hub__head">
+      <view>
+        <text class="benefits-hub__eyebrow">{{benefitsHub.eyebrow}}</text>
+        <text class="benefits-hub__title">{{benefitsHub.title}}</text>
+      </view>
+    </view>
+    <view class="benefits-hub__options">
+      <view class="benefit-option" bindtap="openMembership">
+        <view class="benefit-option__meta">
+          <text class="benefit-option__badge">{{membership.badge}}</text>
+          <text class="benefit-option__title">{{membership.plan}}</text>
+          <text class="benefit-option__detail">有效期至 {{membership.renewal}}</text>
         </view>
-        <text class="moment-card__tag">{{item.previewText}}</text>
+        <text class="benefit-option__action">查看权益 ›</text>
       </view>
-      <view wx:else class="moment-card__paper">
-        <text class="moment-card__eyebrow moment-card__eyebrow--dark">{{item.previewEyebrow}}</text>
-        <text class="moment-card__title moment-card__title--dark">{{item.previewTitle}}</text>
-        <text class="moment-card__copy">{{item.previewText}}</text>
+      <view class="benefit-option benefit-option--invite" bindtap="openInviteCenter">
+        <view class="benefit-option__meta">
+          <text class="benefit-option__badge">{{inviteSummary.badge}}</text>
+          <text class="benefit-option__title">{{inviteSummary.title}}</text>
+          <text class="benefit-option__detail">{{inviteSummary.detail}}</text>
+        </view>
+        <text class="benefit-option__action">邀请好友 ›</text>
       </view>
     </view>
   </view>
 
-  <view class="invite-entry" bindtap="openInviteCenter">
-    <view>
-      <text class="invite-entry__title">{{inviteSummary.title}}</text>
-      <text class="invite-entry__detail">{{inviteSummary.detail}}</text>
-      <text class="invite-entry__subdetail">{{inviteSummary.subdetail}}</text>
+  <view wx:if="{{showEventModal && selectedEvent}}" class="event-modal-mask" bindtap="closeEventModal">
+    <view class="event-modal" catchtap="">
+      <view class="event-modal__handle"></view>
+      <view
+        class="event-modal__hero event-modal__hero--{{selectedEvent.previewMode}}"
+        style="{{selectedEvent.previewMode === 'image' && selectedEvent.photoUrl ? 'background-image: linear-gradient(180deg, rgba(0,0,0,0.12), rgba(0,0,0,0.48)), url(' + selectedEvent.photoUrl + '); background-size: cover; background-position: center;' : ''}}"
+      >
+        <view class="event-modal__hero-card {{selectedEvent.previewMode === 'text' ? 'event-modal__hero-card--text' : ''}}">
+          <text class="event-modal__eyebrow">{{selectedEvent.kindLabel}} · {{selectedEvent.anchor}}</text>
+          <text class="event-modal__title">{{selectedEvent.previewTitle}}</text>
+          <text class="event-modal__meta">{{selectedEvent.previewText}}</text>
+        </view>
+      </view>
+      <view class="event-modal__section">
+        <text class="event-modal__section-label">这条切片正在代表你什么</text>
+        <text class="event-modal__section-copy">{{selectedEvent.identityLens}}</text>
+      </view>
+      <view class="event-modal__actions">
+        <view class="event-modal__button event-modal__button--primary" bindtap="pinEventToProfile">挂到名片</view>
+        <view class="event-modal__button" bindtap="useEventAsStarter">作为发起入口</view>
+        <view class="event-modal__button" bindtap="closeEventModal">继续保留</view>
+      </view>
     </view>
-    <text class="invite-entry__action">查看规则 ›</text>
   </view>
-
-  <!-- ── 会员入口 ── -->
-  <view class="membership-entry" bindtap="openMembership">
-    <text class="membership-entry__plan">{{membership.plan}}</text>
-    <text class="membership-entry__sub">有效期至 {{membership.renewal}} · 点击查看权益</text>
-  </view>
-
 </view>

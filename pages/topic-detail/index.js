@@ -25,6 +25,6 @@ Page({
   },
   goMemberCard(e) {
     const { id } = e.currentTarget.dataset
-    wx.navigateTo({ url: `/pages/profile/index?memberId=${id}` })
+    wx.navigateTo({ url: `/pages/person/index?id=${id}` })
   }
 })
