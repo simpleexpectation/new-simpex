@@ -52,45 +52,13 @@
   display: flex;
   flex-wrap: wrap;
   gap: 12rpx;
-  margin-bottom: 32rpx;
+  margin-bottom: 44rpx;
 }
 
 .profile-tags .pill {
   background: rgba(255, 255, 255, 0.12);
   border: 1rpx solid rgba(255, 255, 255, 0.14);
   color: rgba(243, 241, 231, 0.88);
-}
-
-/* ── 统计行 ── */
-.profile-stats {
-  display: flex;
-  align-items: center;
-  gap: 8rpx;
-  margin-bottom: 48rpx;
-}
-
-.profile-stats__num {
-  font-size: 28rpx;
-  font-weight: 600;
-  color: #f3f1e7;
-}
-
-.profile-stats__label {
-  font-size: 26rpx;
-  color: rgba(243, 241, 231, 0.62);
-}
-
-.profile-stats__dot {
-  font-size: 22rpx;
-  color: rgba(243, 241, 231, 0.35);
-  margin: 0 6rpx;
-}
-
-.profile-stats__line {
-  flex: 1;
-  height: 1rpx;
-  background: var(--line);
-  margin-left: 8rpx;
 }
 
 /* ── 瞬间标题栏 ── */
@@ -111,7 +79,7 @@
   color: rgba(243, 241, 231, 0.48);
 }
 
-/* ── 瞬间照片网格 ── */
+/* ── 事件照片网格 ── */
 .moments-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -123,21 +91,19 @@
   position: relative;
   border-radius: 22rpx;
   overflow: hidden;
+  background-size: cover;
+  background-position: center;
 }
 
 .moment-card--tall {
   height: 320rpx;
 }
 
-/* 横版全宽：占满两列 */
 .moment-card--wide {
   grid-column: span 2;
   height: 240rpx;
 }
 
-/* 各张照片的渐变美术 —— 对齐 app 现有色系 */
-
-/* 在场页风格：深森林绿 */
 .moment-art--night {
   background:
     linear-gradient(180deg, transparent 38%, rgba(0,0,0,0.48) 100%),
@@ -145,21 +111,18 @@
     linear-gradient(180deg, #2f6e54, #3b7c5e 50%, #4d9970);
 }
 
-/* 活动卡片色系 0：石板灰 → 暖棕 */
 .moment-art--dusk {
   background:
     linear-gradient(180deg, transparent 38%, rgba(0,0,0,0.42) 100%),
     linear-gradient(180deg, #738087, #c8beb7 76%, #c19a76 100%);
 }
 
-/* 活动卡片色系 2：森林绿 */
 .moment-art--forest {
   background:
     linear-gradient(180deg, transparent 35%, rgba(0,0,0,0.44) 100%),
     linear-gradient(180deg, #3f7657, #4f8c69 56%, #8ee6a0 100%);
 }
 
-/* 空间页 poster 天空色：薰衣草紫 → 蓝 */
 .moment-art--sky {
   background:
     linear-gradient(180deg, transparent 38%, rgba(0,0,0,0.44) 100%),
@@ -167,24 +130,138 @@
     linear-gradient(180deg, #c4b0de, #beb4e8 52%, #b7d0e8);
 }
 
-/* 活动卡片色系 1：薰衣草 → 橙 */
 .moment-art--warm {
   background:
     linear-gradient(180deg, transparent 38%, rgba(0,0,0,0.46) 100%),
     linear-gradient(180deg, #dedcef, #efe9e2 72%, #ff8a00 100%);
 }
 
-/* 文字标签浮在照片上 */
-.moment-card__label {
+.moment-art--paper {
+  background: linear-gradient(180deg, #f5efe8, #ece2d7);
+}
+
+.moment-art--mist {
+  background: linear-gradient(180deg, #dad2c8, #cec4ba);
+}
+
+.moment-card__overlay,
+.moment-card__paper {
   position: absolute;
-  bottom: 18rpx;
-  left: 18rpx;
-  right: 18rpx;
+  inset: 0;
+  padding: 18rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.moment-card__paper {
+  justify-content: flex-start;
+  gap: 10rpx;
+  background: rgba(255, 250, 246, 0.72);
+  backdrop-filter: blur(20rpx);
+}
+
+.moment-card__module {
+  align-self: flex-start;
+  max-width: 78%;
+  padding: 14rpx 16rpx;
+  border-radius: 18rpx;
+  background: rgba(255, 250, 246, 0.82);
+  backdrop-filter: blur(20rpx);
+}
+
+.moment-card__eyebrow {
+  font-size: 18rpx;
+  color: rgba(255, 255, 255, 0.66);
+  margin-bottom: 6rpx;
+}
+
+.moment-card__eyebrow--dark {
+  color: rgba(25, 18, 17, 0.46);
+}
+
+.moment-card__title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #ffffff;
+  line-height: 1.3;
+  text-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.4);
+}
+
+.moment-card__title--dark {
+  color: #191211;
+  text-shadow: none;
+}
+
+.moment-card__tag {
+  align-self: flex-start;
+  min-height: 38rpx;
+  padding: 0 14rpx;
+  border-radius: 999rpx;
+  background: rgba(255, 250, 246, 0.78);
+  color: #3a2520;
+  font-size: 18rpx;
+  display: inline-flex;
+  align-items: center;
+}
+
+.moment-card__label {
+  margin-top: auto;
   font-size: 24rpx;
   font-weight: 500;
   color: #ffffff;
   line-height: 1.4;
   text-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.6);
+}
+
+.moment-card__copy {
+  font-size: 22rpx;
+  color: rgba(25, 18, 17, 0.72);
+  line-height: 1.5;
+}
+
+.invite-entry {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20rpx;
+  margin-bottom: 18rpx;
+  padding: 30rpx 28rpx;
+  border-radius: 32rpx;
+  background:
+    radial-gradient(circle at 84% 22%, rgba(248, 229, 172, 0.18), transparent 22%),
+    linear-gradient(145deg, rgba(49, 36, 22, 0.94), rgba(24, 17, 10, 0.98));
+  border: 1rpx solid rgba(255, 228, 181, 0.12);
+}
+
+.invite-entry__title {
+  display: block;
+  font-size: 34rpx;
+  font-weight: 600;
+  color: #fff2d4;
+}
+
+.invite-entry__detail {
+  display: block;
+  margin-top: 10rpx;
+  color: rgba(255, 242, 212, 0.76);
+  font-size: 24rpx;
+  line-height: 1.6;
+}
+
+.invite-entry__subdetail {
+  display: block;
+  margin-top: 8rpx;
+  color: rgba(255, 242, 212, 0.52);
+  font-size: 22rpx;
+  line-height: 1.6;
+}
+
+.invite-entry__action {
+  padding-top: 6rpx;
+  color: #fff2d4;
+  font-size: 22rpx;
+  white-space: nowrap;
 }
 
 /* ── 会员入口（暗金黑卡风格）── */

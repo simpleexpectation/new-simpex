@@ -1,4 +1,22 @@
 <view wx:if="{{!hidden}}" class="tab-bar">
+  <view wx:if="{{composerOpen}}" class="tab-bar__mask" bindtap="closeComposer"></view>
+  <view wx:if="{{composerOpen}}" class="tab-bar__composer">
+    <text class="tab-bar__composer-title">你想从哪里开始这次对话？</text>
+    <text class="tab-bar__composer-sub">从自己、一个明确的话题，或者上一场还没说完的相遇开始。</text>
+    <view
+      wx:for="{{quickActions}}"
+      wx:key="key"
+      class="tab-bar__composer-card"
+      data-url="{{item.url}}"
+      bindtap="openQuickAction"
+    >
+      <text class="tab-bar__composer-label">{{item.label}}</text>
+      <text class="tab-bar__composer-copy">{{item.description}}</text>
+    </view>
+  </view>
+  <view wx:if="{{showFab}}" class="tab-bar__fab {{composerOpen ? 'tab-bar__fab--active' : ''}}" bindtap="toggleComposer">
+    <text class="tab-bar__fab-icon">{{composerOpen ? '×' : '+'}}</text>
+  </view>
   <view class="tab-bar__rail">
     <view
       wx:for="{{tabs}}"

@@ -4,11 +4,35 @@ const tabs = [
   { text: '我的', pagePath: '/pages/profile/index', icon: '◐' }
 ]
 
+const quickActions = [
+  {
+    key: 'self',
+    label: '从最近状态开始',
+    description: '上传近期表达，整理此刻的你',
+    url: '/pages/conversation-starter/index?entry=tab&mode=self'
+  },
+  {
+    key: 'direct',
+    label: '直接发起话题',
+    description: '带着一个想法，立刻进入发起',
+    url: '/pages/conversation-starter/index?entry=tab&mode=direct'
+  },
+  {
+    key: 'event',
+    label: '从事件继续延展',
+    description: '把某个事件里的余温变成新对话',
+    url: '/pages/conversation-starter/index?entry=tab&mode=event'
+  }
+]
+
 Component({
   data: {
     selected: 0,
     tabs,
-    hidden: false
+    hidden: false,
+    composerOpen: false,
+    quickActions,
+    showFab: true
   },
   methods: {
     sync(route: string, hidden: boolean) {
@@ -16,15 +40,28 @@ Component({
       const selected = tabs.findIndex((item) => item.pagePath === currentRoute)
       this.setData({
         selected: selected >= 0 ? selected : 0,
-        hidden: !!hidden
+        hidden: !!hidden,
+        showFab: currentRoute === '/pages/card/index'
       })
     },
     setHidden(hidden: boolean) {
       this.setData({ hidden: !!hidden })
     },
+    toggleComposer() {
+      this.setData({ composerOpen: !this.data.composerOpen })
+    },
+    closeComposer() {
+      this.setData({ composerOpen: false })
+    },
+    openQuickAction(e: WechatMiniprogram.BaseEvent) {
+      const { url } = e.currentTarget.dataset as { url?: string }
+      this.setData({ composerOpen: false })
+      if (!url) return
+      wx.navigateTo({ url })
+    },
     switchTab(e: WechatMiniprogram.BaseEvent) {
       const { path, index } = e.currentTarget.dataset
-      this.setData({ selected: index })
+      this.setData({ selected: index, composerOpen: false, showFab: path === '/pages/card/index' })
       wx.switchTab({ url: path })
     }
   },

@@ -1,0 +1,250 @@
+<view class="page-shell starter-page {{pageReady ? 'page-ready' : ''}} {{pageLeaving ? 'page-leaving' : ''}}">
+  <view class="starter-page__glow starter-page__glow--a"></view>
+  <view class="starter-page__glow starter-page__glow--b"></view>
+
+  <nav-shell eyebrow="Conversation flow">
+    <view class="starter-nav">
+      <view class="starter-nav__back" bindtap="goBack">‹</view>
+      <view class="starter-nav__copy">
+        <text class="starter-nav__title">从最近的表达开始</text>
+        <text class="starter-nav__sub">
+          {{entry === 'home' ? '首页轻露出进入' : '加号发起入口进入'}} · {{mode === 'self' ? '向内探索模式' : mode === 'event' ? '事件延展模式' : '直接发起模式'}}
+        </text>
+      </view>
+    </view>
+  </nav-shell>
+
+  <view class="starter-progress">
+    <view wx:for="{{steps}}" wx:key="key" class="starter-progress__item">
+      <view class="starter-progress__dot {{index <= currentStep ? 'starter-progress__dot--active' : ''}}"></view>
+      <text class="starter-progress__label {{index === currentStep ? 'starter-progress__label--active' : ''}}">{{item.label}}</text>
+    </view>
+  </view>
+
+  <view wx:if="{{currentStep === 0}}" class="starter-section">
+    <view class="starter-hero">
+      <text class="starter-hero__eyebrow">向内探索，向外发现</text>
+      <text class="starter-hero__title">用你最近的表达，快速整理此刻的你</text>
+      <text class="starter-hero__copy">这里就是上传入口。用户把最近的 3 张表达截图放进来，我们先替他整理出一版可发起的草稿，而不是让他自己从空白开始。</text>
+    </view>
+
+    <view class="upload-dropzone glass-panel">
+      <view class="upload-dropzone__head">
+        <text class="upload-dropzone__title">上传最近 3 张表达截图</text>
+        <text class="upload-dropzone__action">从相册选择</text>
+      </view>
+      <text class="upload-dropzone__copy">支持朋友圈、Bonjour、小红书、备忘录卡片等。也可以先传 1 到 2 张，系统会提示线索是否足够。</text>
+    </view>
+
+    <view class="starter-grid">
+      <view
+        wx:for="{{uploadCards}}"
+        wx:key="id"
+        class="upload-card upload-card--{{item.tone}} {{selectedUploadIds.indexOf(item.id) > -1 ? 'upload-card--selected' : ''}}"
+        data-id="{{item.id}}"
+        bindtap="selectUpload"
+      >
+        <view class="upload-card__top">
+          <text class="upload-card__source">{{item.source}}</text>
+          <text class="upload-card__badge">{{item.badge}}</text>
+        </view>
+        <text class="upload-card__caption">{{item.caption}}</text>
+        <text class="upload-card__state">{{selectedUploadIds.indexOf(item.id) > -1 ? '已选中' : '点击加入'}}</text>
+      </view>
+    </view>
+
+    <view class="starter-note glass-panel">
+      <text class="starter-note__title">系统会帮你先做这三件事</text>
+      <text class="starter-note__line">提炼关键词和当前状态</text>
+      <text class="starter-note__line">补一张轻量数字名片</text>
+      <text class="starter-note__line">把线索翻译成可直接发起的话题</text>
+    </view>
+  </view>
+
+  <view wx:if="{{currentStep === 1}}" class="starter-section">
+    <view class="section-head">
+      <text class="section-head__eyebrow">此刻的你</text>
+      <text class="section-head__title">我们先整理出一版可确认的自我线索</text>
+      <text class="section-head__copy">重点不是定义你，而是帮助你看见“最近的自己”。这些内容后续都可以编辑。</text>
+    </view>
+
+    <view class="insight-list">
+      <view wx:for="{{insightCards}}" wx:key="title" class="insight-card glass-panel">
+        <text class="insight-card__title">{{item.title}}</text>
+        <text class="insight-card__value">{{item.value}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{currentStep === 2}}" class="starter-section">
+    <view class="section-head">
+      <text class="section-head__eyebrow">适合开启的话题</text>
+      <text class="section-head__title">这些推荐，已经被整理成接近真实可发起的对话卡片</text>
+      <text class="section-head__copy">这里不该只是建议列表，而应该直接长成你们产品里原本使用的对话卡片，让用户在这个阶段就感觉“已经快要发起了”。</text>
+    </view>
+
+    <view class="topic-stack">
+      <view
+        wx:for="{{recommendedTopics}}"
+        wx:key="id"
+        class="starter-topic starter-topic--{{index}} {{selectedTopicId === item.id ? 'starter-topic--selected' : ''}}"
+        data-id="{{item.id}}"
+        bindtap="selectTopic"
+      >
+        <view class="starter-topic__mist starter-topic__mist--a"></view>
+        <view class="starter-topic__mist starter-topic__mist--b"></view>
+        <view class="starter-topic__header">
+          <view class="starter-topic__status">
+            <view class="starter-topic__dot"></view>
+            <text class="starter-topic__status-label">{{item.status}}</text>
+          </view>
+          <text class="starter-topic__seat">{{item.current}}/{{item.total}} 匹配度</text>
+        </view>
+        <view class="starter-topic__body">
+          <text class="starter-topic__depth">{{item.depth}}</text>
+          <text class="starter-topic__title">{{item.title}}</text>
+          <view class="starter-topic__meta-row">
+            <text class="starter-topic__initiator">{{item.initiator}}</text>
+            <text class="starter-topic__meta"> · {{item.time}} · {{item.location}}</text>
+          </view>
+          <view class="starter-topic__tags">
+            <text wx:for="{{item.tags}}" wx:key="index" class="starter-topic__pill">{{item}}</text>
+          </view>
+          <text class="starter-topic__reason">{{item.reason}}</text>
+        </view>
+        <view class="starter-topic__openers">
+          <text wx:for="{{item.openers}}" wx:key="index" class="starter-topic__opener">{{item}}</text>
+        </view>
+        <view class="starter-topic__footer">
+          <text class="starter-topic__rules">{{item.rules}}</text>
+          <view class="starter-topic__select">{{selectedTopicId === item.id ? '当前已选' : '选这个发起'}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{currentStep === 3 && !launchCompleted}}" class="starter-section">
+    <view class="section-head">
+      <text class="section-head__eyebrow">发起动作</text>
+      <text class="section-head__title">这里不应该再让用户重填一遍，系统要先自动补全</text>
+      <text class="section-head__copy">用户到了这一步，最理想的状态是只做少量确认。标题、开场白、连接对象和语气都应该先自动生成出来。</text>
+    </view>
+
+    <view class="launch-card">
+      <text class="launch-card__title">系统已自动补全这次发起</text>
+      <text class="launch-card__topic">{{selectedTopicTitle}}</text>
+      <view class="auto-fill-list">
+        <view wx:for="{{autoFillFields}}" wx:key="label" class="auto-fill-item">
+          <text class="auto-fill-item__label">{{item.label}}</text>
+          <text class="auto-fill-item__value">{{item.value}}</text>
+        </view>
+      </view>
+      <view class="edit-zone">
+        <text class="launch-card__title launch-card__title--sub">如果要微调，通常只需要改这里</text>
+        <view class="edit-card">
+          <view class="edit-card__head">
+            <text class="edit-card__label">连接对象</text>
+            <text class="edit-card__hint">少量可编辑</text>
+          </view>
+          <view class="audience-list">
+            <text
+              wx:for="{{audienceOptions}}"
+              wx:key="index"
+              class="audience-pill {{selectedAudience === item ? 'audience-pill--active' : ''}}"
+              data-value="{{item}}"
+              bindtap="selectAudience"
+            >{{item}}</text>
+          </view>
+        </view>
+
+        <view class="edit-card">
+          <view class="edit-card__head">
+            <text class="edit-card__label">发起语气</text>
+            <text class="edit-card__hint">建议只改一个维度</text>
+          </view>
+          <view class="audience-list">
+            <text
+              wx:for="{{toneOptions}}"
+              wx:key="index"
+              class="audience-pill {{selectedTone === item ? 'audience-pill--active' : ''}}"
+              data-value="{{item}}"
+              bindtap="selectTone"
+            >{{item}}</text>
+          </view>
+        </view>
+
+        <view class="edit-card">
+          <view class="edit-card__head">
+            <text class="edit-card__label">系统默认开场白</text>
+            <text class="edit-card__hint">可直接用，也可只改一句</text>
+          </view>
+          <view class="launch-preview">
+            <text class="launch-preview__copy">{{selectedOpener}}</text>
+          </view>
+        </view>
+      </view>
+      <view class="publish-note">
+        <text class="publish-note__title">发起后将自动带出的内容</text>
+        <text class="publish-note__copy">会带上你这次整理出的轻量数字名片、当前状态和推荐语气，用户不需要从空白重新组织自己。</text>
+      </view>
+      <view class="launch-actions">
+        <view class="launch-action launch-action--primary" bindtap="confirmLaunch">确认这些内容并发起</view>
+        <view class="launch-action">只改一句开场白再发起</view>
+        <view class="launch-action">切换成数字名片发起方式</view>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{launchCompleted}}" class="starter-section">
+    <view class="section-head">
+      <text class="section-head__eyebrow">发起成功</text>
+      <text class="section-head__title">这次对话已经被创建，现在需要一个清晰的承接页</text>
+      <text class="section-head__copy">这里不该只是一个“成功提示”，而应该让用户知道对话已进入什么状态，以及接下来还能做什么。</text>
+    </view>
+
+    <view class="success-card">
+      <text class="success-card__eyebrow">Conversation created</text>
+      <text class="success-card__title">{{createdConversation.title}}</text>
+      <text class="success-card__status">{{createdConversation.roomStatus}}</text>
+
+      <view class="success-card__section">
+        <text class="success-card__label">系统已带出开场白</text>
+        <text class="success-card__copy">{{createdConversation.opener}}</text>
+      </view>
+
+      <view class="success-card__grid">
+        <view class="success-card__meta">
+          <text class="success-card__meta-label">连接对象</text>
+          <text class="success-card__meta-value">{{createdConversation.audience}}</text>
+        </view>
+        <view class="success-card__meta">
+          <text class="success-card__meta-label">当前语气</text>
+          <text class="success-card__meta-value">{{createdConversation.tone}}</text>
+        </view>
+      </view>
+
+      <view class="success-card__section">
+        <text class="success-card__label">接下来系统会做什么</text>
+        <text class="success-card__copy">{{createdConversation.inviteHint}}</text>
+      </view>
+
+      <view class="success-actions">
+        <view class="launch-action launch-action--primary">进入这场对话</view>
+        <view class="launch-action">看看系统推荐了谁</view>
+        <view class="launch-action">返回首页继续浏览</view>
+      </view>
+    </view>
+
+    <view wx:if="{{resultReady}}" class="result-card glass-panel">
+      <text class="result-card__eyebrow">为什么这里要单独承接</text>
+      <text class="result-card__title">发起成功后的这一页，决定用户会不会继续往下走</text>
+      <text class="result-card__copy">如果这里只弹一个 toast，用户会不知道接下来去哪。但如果这里明确告诉他“对话已创建、推荐对象正在路上、你现在可以先进入或继续补充”，整条链路就闭环了。</text>
+      <text class="result-card__meta">这也是后面接“等待回应页”或“对话房间页”的最佳位置。</text>
+    </view>
+  </view>
+
+  <view class="starter-footer">
+    <view class="starter-footer__secondary" bindtap="goBack">{{launchCompleted ? '返回发起确认' : currentStep === 0 ? '返回上一页' : '上一步'}}</view>
+    <view class="starter-footer__primary" bindtap="nextStep">{{launchCompleted ? '再次查看流程说明' : currentStep === 3 ? '完成这版流程' : '继续下一步'}}</view>
+  </view>
+</view>

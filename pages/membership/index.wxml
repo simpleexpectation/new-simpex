@@ -6,8 +6,33 @@
   </nav-shell>
 
   <view class="membership-hero">
+    <text class="membership-hero__eyebrow">Monthly access</text>
     <text class="membership-hero__plan">{{membership.plan}}</text>
-    <text class="membership-hero__renewal">有效期至 {{membership.renewal}}</text>
+    <view class="membership-hero__price-row">
+      <text class="membership-hero__currency">¥</text>
+      <text class="membership-hero__price">{{membership.price}}</text>
+      <text class="membership-hero__billing">/ 月</text>
+    </view>
+    <text class="membership-hero__renewal">{{membership.billing}}</text>
+  </view>
+
+  <view class="membership-actions">
+    <view class="purchase-button" bindtap="startMembershipPurchase">
+      <text class="purchase-button__price">立即购买月卡 ¥{{membership.price}}</text>
+    </view>
+    <view class="invite-entry-button" bindtap="startInviteUnlock">
+      <text class="invite-entry-button__text">{{inviteProgram.buttonText}}</text>
+    </view>
+  </view>
+
+  <view class="invite-panel">
+    <view class="invite-panel__quota">
+      <text class="invite-panel__quota-label">限时免费名额仅剩</text>
+      <text class="invite-panel__quota-value">{{limitedQuota.remaining}}/{{limitedQuota.total}}</text>
+    </view>
+    <text class="invite-panel__eyebrow">Invite to unlock</text>
+    <text class="invite-panel__title">邀请 2 位好友后，直接跳过这次 99 元付费</text>
+    <text class="invite-panel__description">{{inviteProgram.description}}</text>
   </view>
 
   <view class="membership-list">

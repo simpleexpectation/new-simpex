@@ -1,10 +1,12 @@
 {
   "pages": [
     "pages/card/index",
+    "pages/conversation-starter/index",
     "pages/event-detail/index",
     "pages/topic-detail/index",
     "pages/venue-detail/index",
     "pages/membership/index",
+    "pages/invite-unlock/index",
     "pages/blackhole/index",
     "pages/profile/index"
   ],

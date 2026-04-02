@@ -19,6 +19,24 @@
   background: linear-gradient(180deg, #738087, #c8beb7 76%, #c19a76 100%);
 }
 
+.detail-hero--1 {
+  background: linear-gradient(180deg, #dedcef, #efe9e2 72%, #ff8a00 100%);
+}
+
+.detail-hero--2 {
+  background: linear-gradient(180deg, #3f7657, #4f8c69 56%, #8ee6a0 100%);
+}
+
+.detail-hero--3 {
+  background:
+    radial-gradient(circle at 54% 34%, rgba(242,151,229,0.55), transparent 22%),
+    linear-gradient(180deg, #c4b0de, #beb4e8 52%, #b7d0e8);
+}
+
+.detail-hero--4 {
+  background: linear-gradient(180deg, #dedcef, #efe9e2 72%, #ff8a00 100%);
+}
+
 .detail-hero__mist {
   position: absolute;
   border-radius: 50%;

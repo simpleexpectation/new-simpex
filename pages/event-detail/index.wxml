@@ -1,4 +1,57 @@
 <view class="page-shell event-detail-page {{pageReady ? 'page-ready' : ''}} {{pageLeaving ? 'page-leaving' : ''}}">
+  <block wx:if="{{detailMode === 'profile'}}">
+    <view class="detail-hero detail-hero--{{event.heroTone}}" style="padding-top: {{statusBarHeight + 44}}px;">
+      <view class="detail-hero__mist detail-hero__mist--a"></view>
+      <view class="detail-hero__mist detail-hero__mist--b"></view>
+      <view class="detail-hero__body">
+        <view class="pill detail-hero__pill">{{event.anchor}}</view>
+        <text class="detail-hero__title">{{event.title}}</text>
+        <text class="detail-hero__desc">{{event.description}}</text>
+      </view>
+    </view>
+
+    <view class="meta-list">
+      <view class="meta-row">
+        <text class="meta-row__label">时间</text>
+        <text class="meta-row__value">{{event.date}}</text>
+      </view>
+      <view class="meta-row">
+        <text class="meta-row__label">地点</text>
+        <text class="meta-row__value">{{event.venue}}</text>
+      </view>
+      <view class="meta-row">
+        <text class="meta-row__label">形式</text>
+        <text class="meta-row__value">{{event.kindLabel}}</text>
+      </view>
+      <view class="meta-row">
+        <text class="meta-row__label">作用</text>
+        <text class="meta-row__value">补足你的个人画像</text>
+      </view>
+    </view>
+
+    <view class="detail-block">
+      <text class="detail-block__title">这次对话后，你留下的感受</text>
+      <text class="detail-block__copy">{{event.body}}</text>
+    </view>
+
+    <view class="detail-block">
+      <text class="detail-block__title">它怎样补足你是谁</text>
+      <text class="detail-block__copy">{{event.summary}}</text>
+    </view>
+
+    <view class="info-grid">
+      <view class="info-card">
+        <text class="info-card__label">事件标签</text>
+        <text class="info-card__value">{{event.chips[0]}} · {{event.chips[1]}}</text>
+      </view>
+      <view class="info-card">
+        <text class="info-card__label">留下方式</text>
+        <text class="info-card__value">{{event.anchor}}</text>
+      </view>
+    </view>
+  </block>
+
+  <block wx:else>
 
   <!-- ── 渐变 Hero ── -->
   <view class="detail-hero detail-hero--0" style="padding-top: {{statusBarHeight + 44}}px;">
@@ -48,6 +101,7 @@
       <text class="info-card__value">NFC 场地卡 + 二维码兜底</text>
     </view>
   </view>
+  </block>
 
 </view>
 
@@ -55,13 +109,19 @@
 <view class="detail-footer">
   <view class="detail-footer__rail">
     <view class="detail-footer__back" bindtap="goBack">返回</view>
-    <view class="detail-footer__cta" bindtap="openRsvpModal">实名预约</view>
-    <view class="detail-footer__ghost" bindtap="enterBlackhole">查看现场模式</view>
+    <block wx:if="{{detailMode === 'profile'}}">
+      <view class="detail-footer__cta" bindtap="goBack">回到我的</view>
+      <view class="detail-footer__ghost" bindtap="enterBlackhole">查看在场</view>
+    </block>
+    <block wx:else>
+      <view class="detail-footer__cta" bindtap="openRsvpModal">实名预约</view>
+      <view class="detail-footer__ghost" bindtap="enterBlackhole">查看现场模式</view>
+    </block>
   </view>
 </view>
 
 <!-- ── 预约弹窗 ── -->
-<view wx:if="{{showRsvpModal}}" class="rsvp-mask" bindtap="closeRsvpModal">
+<view wx:if="{{showRsvpModal && detailMode !== 'profile'}}" class="rsvp-mask" bindtap="closeRsvpModal">
   <view class="rsvp-sheet" catchtap="">
     <view class="rsvp-sheet__handle"></view>
     <text class="rsvp-sheet__eyebrow">确认实名预约</text>

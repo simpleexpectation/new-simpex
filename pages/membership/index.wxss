@@ -20,22 +20,100 @@
 .membership-hero {
   margin-top: 24rpx;
   border-radius: 36rpx;
-  padding: 28rpx;
-  background: #f0efe3;
-  color: #141414;
+  padding: 32rpx 30rpx;
+  background:
+    radial-gradient(circle at 84% 18%, rgba(255, 227, 164, 0.14), transparent 22%),
+    linear-gradient(145deg, #1a1511, #0e0b09);
+  color: #f7f0e3;
+  border: 1rpx solid rgba(255, 244, 220, 0.08);
+}
+
+.membership-hero__eyebrow {
+  display: block;
+  color: rgba(247, 240, 227, 0.46);
+  font-size: 18rpx;
+  letter-spacing: 1.8rpx;
+  text-transform: uppercase;
 }
 
 .membership-hero__plan {
   display: block;
-  font-size: 42rpx;
+  margin-top: 14rpx;
+  font-size: 48rpx;
   font-weight: 600;
+}
+
+.membership-hero__price-row {
+  display: flex;
+  align-items: flex-end;
+  margin-top: 22rpx;
+  color: #fff8ec;
+}
+
+.membership-hero__currency {
+  padding-bottom: 10rpx;
+  font-size: 34rpx;
+}
+
+.membership-hero__price {
+  font-size: 86rpx;
+  line-height: 0.92;
+  font-weight: 700;
+  letter-spacing: -2rpx;
+}
+
+.membership-hero__billing {
+  padding: 0 0 12rpx 10rpx;
+  font-size: 28rpx;
+  color: rgba(247, 240, 227, 0.68);
 }
 
 .membership-hero__renewal {
   display: block;
   margin-top: 12rpx;
-  color: rgba(20, 20, 20, 0.6);
+  color: rgba(247, 240, 227, 0.58);
   font-size: 24rpx;
+}
+
+.membership-actions {
+  display: flex;
+  gap: 16rpx;
+  margin-top: 18rpx;
+}
+
+.purchase-button,
+.invite-entry-button {
+  min-height: 96rpx;
+  border-radius: 28rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 24rpx;
+}
+
+.purchase-button {
+  flex: 1;
+  background: #f0efe3;
+  color: #171412;
+}
+
+.purchase-button__price {
+  font-size: 28rpx;
+  font-weight: 600;
+}
+
+.invite-entry-button {
+  flex: 1.12;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1rpx solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(16rpx);
+}
+
+.invite-entry-button__text {
+  color: rgba(243, 241, 231, 0.84);
+  font-size: 25rpx;
+  text-align: center;
+  line-height: 1.4;
 }
 
 .membership-list {
@@ -43,6 +121,61 @@
   flex-direction: column;
   gap: 16rpx;
   margin-top: 22rpx;
+}
+
+.invite-panel {
+  margin-top: 22rpx;
+  border-radius: 34rpx;
+  padding: 30rpx 28rpx;
+  background:
+    radial-gradient(circle at 85% 18%, rgba(248, 224, 162, 0.12), transparent 22%),
+    linear-gradient(145deg, rgba(31, 24, 19, 0.96), rgba(12, 10, 9, 0.98));
+  border: 1rpx solid rgba(255, 255, 255, 0.08);
+}
+
+.invite-panel__quota {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 18rpx;
+}
+
+.invite-panel__quota-label {
+  color: rgba(255, 244, 220, 0.76);
+  font-size: 24rpx;
+}
+
+.invite-panel__quota-value {
+  color: #fff2d4;
+  font-size: 42rpx;
+  line-height: 1;
+  font-weight: 700;
+}
+
+.invite-panel__eyebrow {
+  display: block;
+  margin-top: 22rpx;
+  color: rgba(255, 228, 181, 0.44);
+  font-size: 18rpx;
+  letter-spacing: 1.8rpx;
+  text-transform: uppercase;
+}
+
+.invite-panel__title {
+  display: block;
+  margin-top: 12rpx;
+  color: #fff2d4;
+  font-size: 38rpx;
+  line-height: 1.2;
+  font-weight: 600;
+}
+
+.invite-panel__description {
+  display: block;
+  margin-top: 18rpx;
+  color: rgba(255, 242, 212, 0.72);
+  font-size: 24rpx;
+  line-height: 1.7;
 }
 
 .membership-item {

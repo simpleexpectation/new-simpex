@@ -1,17 +1,25 @@
-const { featuredEvent } = require('../../data/mock')
+const { featuredEvent, myEvents } = require('../../data/mock')
 
 Page({
   data: {
     event: featuredEvent,
+    detailMode: 'official',
     noShowCount: 2,
     showRsvpModal: false,
     statusBarHeight: 0,
     pageReady: false,
     pageLeaving: false
   },
-  onLoad() {
+  onLoad(options) {
     const info = wx.getWindowInfo ? wx.getWindowInfo() : wx.getSystemInfoSync()
     this.setData({ statusBarHeight: info.statusBarHeight || 0 })
+    if (options.source === 'profile' && options.id) {
+      const event = myEvents.find((item) => item.id === options.id) || myEvents[0]
+      this.setData({
+        event,
+        detailMode: 'profile'
+      })
+    }
   },
   onShow() {
     this.enterPage()

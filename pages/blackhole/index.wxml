@@ -35,6 +35,40 @@
           <text class="presence-dialog__auto">{{item.autoConfirmHint}}</text>
 
           <view wx:if="{{selectedConversationId === item.id}}" class="presence-dialog__detail">
+            <view wx:if="{{item.status !== 'recap'}}" class="presence-bridge-card">
+              <view class="presence-bridge-card__glow presence-bridge-card__glow--a"></view>
+              <view class="presence-bridge-card__glow presence-bridge-card__glow--b"></view>
+              <text class="presence-bridge-card__status">{{item.bridgeStateTitle}}</text>
+              <text class="presence-bridge-card__title">{{item.title}}</text>
+              <text class="presence-bridge-card__meta">{{item.schedule}} · {{item.venue}}</text>
+              <text class="presence-bridge-card__why">{{item.bridgeWhyYou}}</text>
+
+              <view class="presence-bridge-card__chips">
+                <text class="presence-bridge-card__chip">{{item.bridgeStatusMeta}}</text>
+                <text class="presence-bridge-card__chip">{{item.moodKeywords}}</text>
+              </view>
+
+              <view class="presence-bridge-card__block">
+                <text class="presence-bridge-card__label">你会遇见怎样的人</text>
+                <text class="presence-bridge-card__copy">{{item.whoYouMayMeet}}</text>
+              </view>
+
+              <view class="presence-bridge-card__block">
+                <text class="presence-bridge-card__label">这场对话的感觉</text>
+                <text class="presence-bridge-card__copy">{{item.bridgeSceneCopy}}</text>
+              </view>
+
+              <view class="presence-bridge-card__block">
+                <text class="presence-bridge-card__label">接下来怎么去</text>
+                <text class="presence-bridge-card__copy">{{item.bridgeArrivalTip}}</text>
+              </view>
+
+              <view class="presence-bridge-card__actions">
+                <view class="presence-bridge-card__ghost" data-id="{{item.id}}" bindtap="openRosterSheet">{{item.bridgePrimaryAction}}</view>
+                <view class="presence-bridge-card__cta" bindtap="openPassSheet">{{item.bridgeSecondaryAction}}</view>
+              </view>
+            </view>
+
             <view wx:if="{{item.status === 'recap'}}" class="presence-recap-card">
               <view class="presence-recap-card__glow"></view>
               <text class="presence-recap-card__title">写此刻</text>
@@ -65,7 +99,7 @@
               </view>
             </view>
 
-            <view wx:else class="presence-ticket presence-ticket--compact">
+            <view wx:elif="{{item.status === 'confirmed' && item.ticketReady}}" class="presence-ticket presence-ticket--compact">
               <view class="presence-ticket__glow"></view>
               <view class="presence-ticket__main">
                 <view>
