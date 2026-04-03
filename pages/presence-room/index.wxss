@@ -1,6 +1,10 @@
 .presence-room-page {
   position: relative;
   overflow: hidden;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 0;
 }
 
 .presence-room-page__glow {
@@ -29,62 +33,126 @@
 
 .presence-room-nav {
   display: flex;
-  align-items: center;
-  gap: 18rpx;
+  align-items: flex-start;
+  gap: 20rpx;
+}
+
+.presence-room-nav-card {
+  position: relative;
+  overflow: hidden;
+  padding: 18rpx 20rpx;
+  border-radius: 30rpx;
+  background:
+    radial-gradient(circle at 82% 18%, rgba(245, 225, 170, 0.12), transparent 22%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.02));
+  border: 1rpx solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    inset 0 1rpx 0 rgba(255, 255, 255, 0.04),
+    0 18rpx 40rpx rgba(0, 0, 0, 0.12);
+  backdrop-filter: blur(18rpx);
+}
+
+.presence-room-nav-card__glow {
+  position: absolute;
+  top: -28rpx;
+  right: 4rpx;
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(245, 225, 170, 0.14), rgba(245, 225, 170, 0));
+  filter: blur(18rpx);
 }
 
 .presence-room-nav__back {
-  min-width: 96rpx;
-  height: 62rpx;
-  padding: 0 20rpx;
+  min-width: 88rpx;
+  height: 56rpx;
+  padding: 0 18rpx;
   border-radius: 999rpx;
   background: rgba(255, 255, 255, 0.06);
   color: #f3f1e7;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 22rpx;
+  font-size: 20rpx;
+  position: relative;
+  z-index: 1;
 }
 
 .presence-room-nav__copy {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
-  gap: 8rpx;
+  gap: 10rpx;
+  padding-top: 4rpx;
 }
 
 .presence-room-nav__title {
   color: #f3f1e7;
-  font-size: 38rpx;
+  font-size: 44rpx;
+  line-height: 1;
   font-weight: 600;
+  letter-spacing: -1rpx;
 }
 
 .presence-room-nav__sub {
-  color: rgba(243, 241, 231, 0.46);
+  color: rgba(243, 241, 231, 0.42);
   font-size: 20rpx;
+  line-height: 1.45;
 }
 
 .presence-room-hero {
   margin-top: 34rpx;
-  padding: 28rpx;
-  border-radius: 34rpx;
+  position: relative;
+  overflow: hidden;
+  padding: 30rpx 28rpx 28rpx;
+  border-radius: 36rpx;
+  background:
+    radial-gradient(circle at 82% 18%, rgba(244, 232, 182, 0.26), transparent 22%),
+    radial-gradient(circle at 18% 82%, rgba(206, 176, 160, 0.12), transparent 24%),
+    linear-gradient(180deg, rgba(120, 107, 96, 0.52), rgba(93, 81, 73, 0.62));
+  border: 1rpx solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    inset 0 1rpx 0 rgba(255, 255, 255, 0.04),
+    0 20rpx 48rpx rgba(0, 0, 0, 0.16);
+  backdrop-filter: blur(18rpx);
+}
+
+.presence-room-hero__glow {
+  position: absolute;
+  top: -24rpx;
+  right: 8rpx;
+  width: 180rpx;
+  height: 180rpx;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(245, 225, 170, 0.24), rgba(245, 225, 170, 0));
+  filter: blur(18rpx);
 }
 
 .presence-room-hero__eyebrow {
+  position: relative;
+  z-index: 1;
   display: block;
   color: rgba(243, 241, 231, 0.44);
   font-size: 20rpx;
+  letter-spacing: 1.2rpx;
 }
 
 .presence-room-hero__title {
+  position: relative;
+  z-index: 1;
   display: block;
   margin-top: 12rpx;
   color: #f3f1e7;
-  font-size: 42rpx;
+  font-size: 48rpx;
   line-height: 1.18;
   font-weight: 600;
+  letter-spacing: -1.2rpx;
 }
 
 .presence-room-hero__meta {
+  position: relative;
+  z-index: 1;
   display: block;
   margin-top: 12rpx;
   color: rgba(243, 241, 231, 0.54);
@@ -92,6 +160,8 @@
 }
 
 .presence-room-hero__copy {
+  position: relative;
+  z-index: 1;
   display: block;
   margin-top: 18rpx;
   color: rgba(243, 241, 231, 0.74);
@@ -100,6 +170,8 @@
 }
 
 .presence-room-hero__people {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-wrap: wrap;
   gap: 10rpx;
@@ -118,29 +190,31 @@
 }
 
 .presence-room-stream {
-  margin-top: 22rpx;
+  margin-top: 24rpx;
   display: flex;
   flex-direction: column;
   gap: 16rpx;
+  flex: 1;
 }
 
 .presence-room-message {
   border-radius: 28rpx;
-  padding: 24rpx;
+  padding: 22rpx 24rpx;
+  box-shadow: 0 8rpx 20rpx rgba(0, 0, 0, 0.06);
 }
 
 .presence-room-message--system {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1rpx solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1rpx solid rgba(255, 255, 255, 0.06);
 }
 
 .presence-room-message--other,
 .presence-room-message--self {
-  background: #111214;
+  background: rgba(17, 18, 20, 0.82);
 }
 
 .presence-room-message--self {
-  background: linear-gradient(180deg, rgba(225, 171, 146, 0.94), rgba(212, 167, 141, 0.94));
+  background: linear-gradient(180deg, rgba(225, 171, 146, 0.9), rgba(212, 167, 141, 0.9));
 }
 
 .presence-room-message__system {
@@ -187,22 +261,25 @@
 
 .presence-room-compose {
   position: sticky;
-  bottom: calc(22rpx + env(safe-area-inset-bottom));
-  margin-top: 24rpx;
+  bottom: 0;
+  margin-top: auto;
   display: flex;
   gap: 12rpx;
   align-items: center;
+  padding: 18rpx 0 calc(12rpx + env(safe-area-inset-bottom));
+  background: linear-gradient(180deg, rgba(5, 5, 5, 0), rgba(5, 5, 5, 0.9) 36%, rgba(5, 5, 5, 0.98) 100%);
 }
 
 .presence-room-compose__field {
   flex: 1;
   min-height: 88rpx;
   border-radius: 999rpx;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1rpx solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.045);
+  border: 1rpx solid rgba(255, 255, 255, 0.05);
   display: flex;
   align-items: center;
   padding: 0 24rpx;
+  backdrop-filter: blur(14rpx);
 }
 
 .presence-room-compose__input {
@@ -220,11 +297,12 @@
   height: 88rpx;
   padding: 0 24rpx;
   border-radius: 999rpx;
-  background: linear-gradient(135deg, #efe2c8, #e7c39c);
+  background: linear-gradient(135deg, #f3e5cc, #e8c9a3);
   color: #1a1411;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 24rpx;
   font-weight: 600;
+  box-shadow: 0 16rpx 36rpx rgba(0, 0, 0, 0.14);
 }

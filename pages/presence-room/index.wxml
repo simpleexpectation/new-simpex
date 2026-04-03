@@ -3,16 +3,20 @@
   <view class="presence-room-page__glow presence-room-page__glow--b"></view>
 
   <nav-shell eyebrow="Simpex">
-    <view class="presence-room-nav">
+    <view class="presence-room-nav-card">
+      <view class="presence-room-nav-card__glow"></view>
+      <view class="presence-room-nav">
       <view class="presence-room-nav__back" bindtap="goBack">返回</view>
       <view class="presence-room-nav__copy">
         <text class="presence-room-nav__title">同行房</text>
-        <text class="presence-room-nav__sub">只在开始前开放，开场后自动静默</text>
+        <text class="presence-room-nav__sub">开始前轻轻说几句，开场后这里会自动静默</text>
+      </view>
       </view>
     </view>
   </nav-shell>
 
-  <view class="presence-room-hero glass-panel">
+  <view class="presence-room-hero">
+    <view class="presence-room-hero__glow"></view>
     <text class="presence-room-hero__eyebrow">{{room.badge}}</text>
     <text class="presence-room-hero__title">{{room.title}}</text>
     <text class="presence-room-hero__meta">{{room.schedule}} · {{room.venue}}</text>

@@ -257,7 +257,6 @@ export const presenceRooms = [
     prompt: '现在不用把话说满，先轻轻开一个口就够了。',
     participants: ['青原', 'Momo', 'Aki', 'Lynn', '小越', 'Nora'],
     messages: [
-      { id: 'room-1-msg-1', type: 'system', text: '青原 已进入这场对话的同行房。' },
       { id: 'room-1-msg-2', type: 'other', name: 'Momo', text: '我可能会提前十分钟到，想先找个靠窗的位置。', time: '19:02' },
       { id: 'room-1-msg-3', type: 'self', name: '你', text: '最近也一直在想，工作之外还有什么在定义一个人。', time: '19:06' },
       { id: 'room-1-msg-4', type: 'other', name: 'Aki', text: '今晚也许不用急着得出结论，先把那个卡住的点说出来就很好。', time: '19:08' }
@@ -273,7 +272,6 @@ export const presenceRooms = [
     prompt: '这更像一张安静留言板，不需要把它聊成一个大群。',
     participants: ['Aki', '青原', 'Lynn', 'Nora', '你'],
     messages: [
-      { id: 'room-5-msg-1', type: 'system', text: '你发起的这场对话已经凑齐人了。' },
       { id: 'room-5-msg-2', type: 'other', name: 'Nora', text: '我会带一本最近在看的书过来，也许能接上今晚的话题。', time: '14:12' },
       { id: 'room-5-msg-3', type: 'other', name: 'Lynn', text: '我大概会提前一点到，想先在楼下站一会儿。', time: '14:15' }
     ]

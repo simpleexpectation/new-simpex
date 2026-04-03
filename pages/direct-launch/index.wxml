@@ -1,0 +1,121 @@
+<view class="page-shell direct-launch-page {{pageReady ? 'page-ready' : ''}} {{pageLeaving ? 'page-leaving' : ''}}">
+  <view class="direct-launch-page__glow direct-launch-page__glow--a"></view>
+  <view class="direct-launch-page__glow direct-launch-page__glow--b"></view>
+
+  <nav-shell eyebrow="Direct launch">
+    <view class="direct-launch-nav">
+      <view class="direct-launch-nav__back" bindtap="goBack">‹</view>
+      <view class="direct-launch-nav__copy">
+        <text class="direct-launch-nav__title">直接发起话题</text>
+        <text class="direct-launch-nav__sub">{{source === 'starter' ? '已从最近表达整理出一版话题' : entry === 'tab' ? '加号入口进入' : '其他入口进入'}} · {{source === 'starter' ? '补全时间和地点后直接发起' : '已有题目，直接发起'}}</text>
+      </view>
+    </view>
+  </nav-shell>
+
+  <view class="direct-launch-hero">
+    <text class="direct-launch-hero__eyebrow">{{source === 'starter' ? '已帮你整理好题目' : '已有题目'}}</text>
+    <text class="direct-launch-hero__title">{{source === 'starter' ? '这次你只需要定下时间和地点' : '把这次想聊的，直接发出来'}}</text>
+    <text class="direct-launch-hero__copy">{{source === 'starter' ? '主题、发起缘由和卡片背景已经替你带过来了。现在只要把这次对话真正落到一个具体时空里。' : '只补最必要的几项，然后直接发起。'}}</text>
+  </view>
+
+  <view class="direct-launch-form glass-panel">
+    <view class="direct-launch-intro">
+      <view class="direct-launch-intro__pill">{{source === 'starter' ? '已预填：主题、为什么发起、背景' : '你来写：主题、为什么发起、时间'}}</view>
+      <view class="direct-launch-intro__pill">{{source === 'starter' ? '你只需要补：时间、地点' : '系统来定：地点、背景'}}</view>
+    </view>
+
+    <view wx:if="{{source !== 'starter'}}" class="direct-launch-field">
+      <text class="direct-launch-field__label">主题</text>
+      <textarea
+        class="direct-launch-field__textarea"
+        value="{{form.topic}}"
+        data-field="topic"
+        bindinput="updateField"
+        maxlength="80"
+        auto-height
+        placeholder="写下这次想聊的话题"
+        placeholder-class="direct-launch-field__placeholder"
+      />
+    </view>
+
+    <view wx:if="{{source !== 'starter'}}" class="direct-launch-field">
+      <text class="direct-launch-field__label">为什么发起</text>
+      <textarea
+        class="direct-launch-field__textarea direct-launch-field__textarea--long"
+        value="{{form.reason}}"
+        data-field="reason"
+        bindinput="updateField"
+        maxlength="180"
+        auto-height
+        placeholder="补一句你为什么想发起这次对话"
+        placeholder-class="direct-launch-field__placeholder"
+      />
+    </view>
+
+    <view class="direct-launch-field">
+      <text class="direct-launch-field__label">时间</text>
+      <text wx:if="{{source === 'starter'}}" class="direct-launch-field__hint">把这场对话落到一个具体时间里就可以</text>
+      <input
+        class="direct-launch-field__input"
+        value="{{form.time}}"
+        data-field="time"
+        bindinput="updateField"
+        maxlength="40"
+        placeholder="比如：本周六 19:30 - 21:30"
+        placeholder-class="direct-launch-field__placeholder"
+      />
+    </view>
+
+    <view class="direct-launch-field">
+      <text class="direct-launch-field__label">地点</text>
+      <text class="direct-launch-field__hint">{{source === 'starter' ? '从系统提供的地点里选一个最适合这次对话的场' : '只能从系统提供的地点里选'}}</text>
+      <view class="venue-grid">
+        <view
+          wx:for="{{venueOptions}}"
+          wx:key="key"
+          class="venue-card {{form.venue === item.name ? 'venue-card--active' : ''}}"
+          data-value="{{item.name}}"
+          bindtap="selectVenue"
+        >
+          <view class="venue-card__top">
+            <text class="venue-card__name">{{item.name}}</text>
+            <text class="venue-card__slot">{{item.slot}}</text>
+          </view>
+          <text class="venue-card__mood">{{item.mood}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view wx:if="{{source !== 'starter'}}" class="direct-launch-field">
+      <text class="direct-launch-field__label">背景</text>
+      <text class="direct-launch-field__hint">只能从系统现有的 9 组渐变背景里选</text>
+      <view class="background-grid">
+        <view
+          wx:for="{{backgroundOptions}}"
+          wx:key="key"
+          class="background-picker background-card background-card--{{item.key}} {{form.background === item.key ? 'background-card--active' : ''}}"
+          data-value="{{item.key}}"
+          bindtap="selectBackground"
+        >
+          <view class="background-picker__shade"></view>
+          <text class="background-card__label">{{item.label}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="direct-launch-preview background-card background-card--{{form.background}}">
+      <view class="direct-launch-preview__top">
+        <text class="direct-launch-preview__venue">{{form.venue}}</text>
+        <text class="direct-launch-preview__time">{{form.time}}</text>
+      </view>
+      <text class="direct-launch-preview__eyebrow">对话预览</text>
+      <text class="direct-launch-preview__title">{{form.topic}}</text>
+      <text class="direct-launch-preview__reason">{{form.reason}}</text>
+    </view>
+  </view>
+
+  <view class="direct-launch-footer">
+    <view class="direct-launch-footer__ghost" bindtap="goBack">返回看看另一种方式</view>
+    <view class="direct-launch-footer__primary" bindtap="confirmLaunch">确认并发起</view>
+  </view>
+</view>

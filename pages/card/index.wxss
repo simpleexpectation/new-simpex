@@ -200,64 +200,65 @@
 
 .topic-card--0 {
   background:
-    radial-gradient(circle at 74% 18%, rgba(251, 240, 183, 0.42), transparent 22%),
-    radial-gradient(circle at 28% 74%, rgba(232, 188, 160, 0.28), transparent 28%),
-    linear-gradient(135deg, #98a9b6 0%, #c7b2aa 40%, #e5c79c 100%);
+    radial-gradient(circle at 76% 18%, rgba(248, 232, 131, 0.54), transparent 22%),
+    radial-gradient(circle at 24% 78%, rgba(241, 153, 110, 0.3), transparent 28%),
+    linear-gradient(180deg, #86a5b7 0%, #b49787 42%, #e5be79 100%);
 }
 
 .topic-card--1 {
   background:
-    radial-gradient(circle at 24% 18%, rgba(247, 205, 170, 0.4), transparent 22%),
-    radial-gradient(circle at 78% 70%, rgba(205, 234, 172, 0.26), transparent 26%),
-    linear-gradient(135deg, #c8c6e0 0%, #dcc7b7 46%, #c6dfac 100%);
+    radial-gradient(circle at 76% 22%, rgba(230, 235, 132, 0.46), transparent 24%),
+    radial-gradient(circle at 20% 76%, rgba(119, 201, 142, 0.28), transparent 28%),
+    linear-gradient(180deg, #82a59b 0%, #8f7d67 54%, #d8bf74 100%);
 }
 
 .topic-card--2 {
   background:
-    radial-gradient(circle at 70% 22%, rgba(241, 230, 173, 0.28), transparent 22%),
-    linear-gradient(180deg, #4c6c67, #7d8f87 60%, #d9c0ad 100%);
+    radial-gradient(circle at 72% 20%, rgba(247, 226, 118, 0.42), transparent 22%),
+    radial-gradient(circle at 22% 78%, rgba(255, 126, 72, 0.3), transparent 26%),
+    linear-gradient(180deg, #2f5958 0%, #7b4e3c 56%, #de9d63 100%);
 }
 
 .topic-card--3 {
   background:
-    radial-gradient(circle at 72% 22%, rgba(255, 228, 168, 0.34), transparent 22%),
-    radial-gradient(circle at 24% 72%, rgba(217, 196, 255, 0.2), transparent 26%),
-    linear-gradient(180deg, #b7c6d8, #d8cabd 60%, #f0d9a7 100%);
+    radial-gradient(circle at 74% 20%, rgba(231, 222, 169, 0.22), transparent 22%),
+    radial-gradient(circle at 22% 76%, rgba(152, 169, 196, 0.16), transparent 26%),
+    linear-gradient(180deg, #98a6b7 0%, #b4ada6 50%, #d0bd9c 100%);
 }
 
 .topic-card--4 {
   background:
-    radial-gradient(circle at 28% 18%, rgba(255, 216, 194, 0.28), transparent 22%),
-    radial-gradient(circle at 74% 76%, rgba(190, 227, 204, 0.22), transparent 28%),
-    linear-gradient(180deg, #cfd6cb, #dfe6bb 56%, #f0d1bf 100%);
+    radial-gradient(circle at 76% 24%, rgba(239, 228, 130, 0.4), transparent 24%),
+    radial-gradient(circle at 24% 80%, rgba(76, 196, 156, 0.24), transparent 28%),
+    linear-gradient(180deg, #7da59d 0%, #86736b 54%, #d6a389 100%);
 }
 
 .topic-card--5 {
   background:
-    radial-gradient(circle at 74% 20%, rgba(255, 238, 193, 0.32), transparent 22%),
-    radial-gradient(circle at 22% 78%, rgba(199, 214, 255, 0.24), transparent 26%),
-    linear-gradient(180deg, #cfd1e3, #e3d5d6 62%, #f0dfb7 100%);
+    radial-gradient(circle at 76% 20%, rgba(247, 232, 123, 0.4), transparent 22%),
+    radial-gradient(circle at 20% 78%, rgba(142, 122, 229, 0.24), transparent 26%),
+    linear-gradient(180deg, #7d96bb 0%, #95829e 50%, #d5aa76 100%);
 }
 
 .topic-card--6 {
   background:
-    radial-gradient(circle at 68% 20%, rgba(240, 225, 170, 0.24), transparent 20%),
-    radial-gradient(circle at 26% 76%, rgba(181, 222, 255, 0.22), transparent 26%),
-    linear-gradient(180deg, #7d8f87, #a7b8b1 52%, #e7d0b8 100%);
+    radial-gradient(circle at 74% 20%, rgba(237, 225, 128, 0.36), transparent 20%),
+    radial-gradient(circle at 20% 78%, rgba(62, 186, 214, 0.24), transparent 26%),
+    linear-gradient(180deg, #5b7f88 0%, #5d6258 46%, #c49d74 100%);
 }
 
 .topic-card--7 {
   background:
-    radial-gradient(circle at 28% 20%, rgba(255, 221, 201, 0.28), transparent 20%),
-    radial-gradient(circle at 78% 76%, rgba(214, 239, 195, 0.2), transparent 24%),
-    linear-gradient(180deg, #d9cec5, #e9dccc 62%, #d9ebb9 100%);
+    radial-gradient(circle at 76% 24%, rgba(235, 224, 125, 0.34), transparent 24%),
+    radial-gradient(circle at 24% 78%, rgba(214, 116, 84, 0.24), transparent 24%),
+    linear-gradient(180deg, #bd9381 0%, #a66f5b 52%, #d0a37d 100%);
 }
 
 .topic-card--8 {
   background:
-    radial-gradient(circle at 72% 20%, rgba(218, 236, 255, 0.3), transparent 22%),
-    radial-gradient(circle at 20% 78%, rgba(255, 232, 189, 0.18), transparent 26%),
-    linear-gradient(180deg, #d8d3df, #e8e2d5 66%, #cbe0ef 100%);
+    radial-gradient(circle at 74% 20%, rgba(205, 224, 232, 0.24), transparent 22%),
+    radial-gradient(circle at 22% 78%, rgba(197, 180, 154, 0.14), transparent 26%),
+    linear-gradient(180deg, #a4b6c6 0%, #b4b1a8 54%, #91b3bc 100%);
 }
 
 .topic-card__mist {

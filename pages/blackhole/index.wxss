@@ -91,7 +91,7 @@
 .presence-conversation-list {
   display: flex;
   flex-direction: column;
-  gap: 18rpx;
+  gap: 24rpx;
   margin-top: 26rpx;
   padding-bottom: 28rpx;
 }
@@ -99,15 +99,17 @@
 .presence-dialog {
   position: relative;
   overflow: hidden;
-  padding: 24rpx;
-  border-radius: 32rpx;
+  min-height: 720rpx;
+  padding: 28rpx;
+  box-sizing: border-box;
+  border-radius: 40rpx;
   background:
-    radial-gradient(circle at 74% 18%, rgba(251, 240, 183, 0.1), transparent 22%),
-    radial-gradient(circle at 28% 74%, rgba(232, 188, 160, 0.08), transparent 28%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
-  border: 1rpx solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 24rpx 64rpx rgba(0, 0, 0, 0.18);
-  backdrop-filter: blur(16rpx);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04));
+  border: 1rpx solid rgba(255, 255, 255, 0.12);
+  box-shadow:
+    0 32rpx 96rpx rgba(0, 0, 0, 0.24),
+    inset 0 1rpx 0 rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(22rpx);
 }
 
 .presence-dialog--active {
@@ -117,31 +119,36 @@
     inset 0 0 0 1rpx rgba(255, 255, 255, 0.08);
 }
 
+.presence-dialog--hero {
+  border-radius: 42rpx;
+}
+
 .presence-dialog--0 {
   background:
-    radial-gradient(circle at 74% 18%, rgba(251, 240, 183, 0.2), transparent 22%),
-    radial-gradient(circle at 28% 74%, rgba(232, 188, 160, 0.15), transparent 28%),
-    linear-gradient(135deg, rgba(152, 169, 182, 0.34), rgba(199, 178, 170, 0.28) 40%, rgba(229, 199, 156, 0.24) 100%);
+    radial-gradient(circle at 72% 22%, rgba(250, 234, 136, 0.4), transparent 22%),
+    radial-gradient(circle at 28% 76%, rgba(238, 193, 162, 0.3), transparent 28%),
+    linear-gradient(180deg, rgba(188, 202, 210, 0.52), rgba(230, 203, 184, 0.38) 74%, rgba(191, 194, 177, 0.32) 100%);
 }
 
 .presence-dialog--1 {
   background:
-    radial-gradient(circle at 24% 18%, rgba(247, 205, 170, 0.18), transparent 22%),
-    radial-gradient(circle at 78% 70%, rgba(205, 234, 172, 0.13), transparent 26%),
-    linear-gradient(135deg, rgba(200, 198, 224, 0.32), rgba(220, 199, 183, 0.26) 46%, rgba(198, 223, 172, 0.22) 100%);
+    radial-gradient(circle at 76% 22%, rgba(245, 240, 166, 0.34), transparent 22%),
+    radial-gradient(circle at 22% 74%, rgba(178, 220, 214, 0.3), transparent 28%),
+    linear-gradient(180deg, rgba(168, 205, 196, 0.52), rgba(209, 224, 180, 0.36) 66%, rgba(224, 204, 176, 0.3) 100%);
 }
 
 .presence-dialog--2 {
   background:
-    radial-gradient(circle at 70% 22%, rgba(241, 230, 173, 0.12), transparent 22%),
-    linear-gradient(180deg, rgba(76, 108, 103, 0.3), rgba(125, 143, 135, 0.24) 60%, rgba(217, 192, 173, 0.2) 100%);
+    radial-gradient(circle at 72% 20%, rgba(255, 214, 149, 0.34), transparent 22%),
+    radial-gradient(circle at 24% 78%, rgba(241, 155, 103, 0.28), transparent 26%),
+    linear-gradient(180deg, rgba(110, 102, 84, 0.5), rgba(196, 118, 69, 0.38) 64%, rgba(235, 180, 110, 0.28) 100%);
 }
 
 .presence-dialog--3 {
   background:
-    radial-gradient(circle at 72% 22%, rgba(255, 228, 168, 0.18), transparent 22%),
-    radial-gradient(circle at 24% 72%, rgba(217, 196, 255, 0.13), transparent 26%),
-    linear-gradient(180deg, rgba(183, 198, 216, 0.3), rgba(216, 202, 189, 0.26) 60%, rgba(240, 217, 167, 0.22) 100%);
+    radial-gradient(circle at 76% 22%, rgba(255, 238, 163, 0.34), transparent 22%),
+    radial-gradient(circle at 20% 76%, rgba(179, 191, 255, 0.3), transparent 26%),
+    linear-gradient(180deg, rgba(152, 169, 226, 0.48), rgba(191, 177, 229, 0.34) 58%, rgba(242, 205, 174, 0.28) 100%);
 }
 
 .presence-dialog--4 {
@@ -187,19 +194,19 @@
 }
 
 .presence-dialog__mist--a {
-  top: -30rpx;
-  right: 24rpx;
-  width: 220rpx;
-  height: 180rpx;
-  background: rgba(255, 255, 255, 0.08);
+  top: -28rpx;
+  right: 18rpx;
+  width: 280rpx;
+  height: 220rpx;
+  background: rgba(255, 255, 255, 0.12);
 }
 
 .presence-dialog__mist--b {
-  left: 28rpx;
-  bottom: 30rpx;
-  width: 240rpx;
-  height: 150rpx;
-  background: rgba(255, 214, 190, 0.06);
+  left: 36rpx;
+  bottom: 36rpx;
+  width: 340rpx;
+  height: 220rpx;
+  background: rgba(255, 214, 190, 0.1);
 }
 
 .presence-dialog__head {
@@ -211,16 +218,11 @@
   gap: 24rpx;
 }
 
-.presence-dialog__intro {
-  width: 260rpx;
-}
-
 .presence-dialog__role-row {
   display: flex;
   align-items: center;
   gap: 12rpx;
   flex-wrap: wrap;
-  margin-bottom: 12rpx;
 }
 
 .presence-dialog__role {
@@ -244,15 +246,17 @@
 .presence-dialog__title {
   display: block;
   color: #f3f1e7;
-  font-size: 26rpx;
-  line-height: 1.35;
+  font-size: 54rpx;
+  line-height: 1.18;
+  letter-spacing: -1.8rpx;
+  font-weight: 600;
 }
 
 .presence-dialog__meta {
   display: block;
-  margin-top: 10rpx;
-  color: rgba(243, 241, 231, 0.46);
-  font-size: 22rpx;
+  margin-top: 14rpx;
+  color: rgba(243, 241, 231, 0.74);
+  font-size: 28rpx;
   line-height: 1.5;
 }
 
@@ -270,10 +274,16 @@
   display: block;
   margin-top: 2rpx;
   color: #f3f1e7;
-  font-size: 84rpx;
+  font-size: 108rpx;
   line-height: 0.9;
   letter-spacing: -4rpx;
   font-weight: 300;
+}
+
+.presence-dialog__body {
+  position: relative;
+  z-index: 1;
+  margin-top: 332rpx;
 }
 
 .presence-dialog__status {
@@ -283,6 +293,7 @@
   align-items: center;
   gap: 14rpx;
   margin-top: 18rpx;
+  flex-wrap: wrap;
 }
 
 .presence-dialog__pill {
@@ -317,9 +328,10 @@
 }
 
 .presence-dialog__hint {
-  color: rgba(243, 241, 231, 0.62);
+  color: rgba(243, 241, 231, 0.74);
   font-size: 22rpx;
   line-height: 1.5;
+  max-width: 430rpx;
 }
 
 .presence-dialog__auto {
@@ -327,7 +339,7 @@
   z-index: 1;
   display: block;
   margin-top: 12rpx;
-  color: rgba(243, 241, 231, 0.34);
+  color: rgba(243, 241, 231, 0.56);
   font-size: 20rpx;
 }
 
@@ -355,8 +367,73 @@
 .presence-dialog__detail {
   position: relative;
   z-index: 1;
-  margin-top: 18rpx;
+  margin-top: 22rpx;
   animation: dialogDetailIn 240ms ease;
+}
+
+.presence-action-dock {
+  padding: 18rpx 18rpx 20rpx;
+  border-radius: 30rpx;
+  background:
+    radial-gradient(circle at 82% 18%, rgba(238, 228, 150, 0.1), transparent 24%),
+    linear-gradient(180deg, rgba(130, 132, 113, 0.34), rgba(106, 104, 91, 0.28));
+  border: 1rpx solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(16rpx);
+}
+
+.presence-dialog--0 .presence-action-dock {
+  background:
+    radial-gradient(circle at 82% 18%, rgba(238, 228, 150, 0.12), transparent 24%),
+    linear-gradient(180deg, rgba(146, 149, 129, 0.38), rgba(118, 114, 100, 0.3));
+}
+
+.presence-dialog--2 .presence-action-dock {
+  background:
+    radial-gradient(circle at 82% 18%, rgba(243, 216, 138, 0.12), transparent 24%),
+    linear-gradient(180deg, rgba(122, 103, 82, 0.36), rgba(112, 89, 70, 0.3));
+}
+
+.presence-dialog--3 .presence-action-dock {
+  background:
+    radial-gradient(circle at 82% 18%, rgba(241, 224, 149, 0.12), transparent 24%),
+    linear-gradient(180deg, rgba(133, 138, 121, 0.36), rgba(112, 109, 96, 0.3));
+}
+
+.presence-action-dock__hint {
+  display: block;
+  color: rgba(243, 241, 231, 0.52);
+  font-size: 20rpx;
+  line-height: 1.5;
+}
+
+.presence-action-dock__actions {
+  display: flex;
+  gap: 12rpx;
+  flex-wrap: wrap;
+  margin-top: 18rpx;
+}
+
+.presence-action-dock__ghost,
+.presence-action-dock__cta {
+  min-width: 126rpx;
+  height: 72rpx;
+  padding: 0 24rpx;
+  border-radius: 999rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22rpx;
+}
+
+.presence-action-dock__ghost {
+  background: rgba(255, 255, 255, 0.82);
+  color: #2a1d1a;
+}
+
+.presence-action-dock__cta {
+  background: rgba(33, 24, 23, 0.92);
+  color: #ffffff;
+  font-weight: 600;
 }
 
 .presence-mini-card {
@@ -364,8 +441,11 @@
   overflow: hidden;
   padding: 22rpx 24rpx;
   border-radius: 26rpx;
-  background: linear-gradient(180deg, rgba(225, 171, 146, 0.94), rgba(212, 167, 141, 0.94));
-  box-shadow: 0 18rpx 48rpx rgba(0, 0, 0, 0.22);
+  background:
+    radial-gradient(circle at 78% 18%, rgba(245, 232, 132, 0.12), transparent 24%),
+    linear-gradient(180deg, rgba(123, 129, 112, 0.48), rgba(96, 100, 89, 0.42));
+  border: 1rpx solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 18rpx 48rpx rgba(0, 0, 0, 0.16);
 }
 
 .presence-mini-card::before {
@@ -376,7 +456,7 @@
   width: 180rpx;
   height: 180rpx;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(244, 232, 132, 0.62), rgba(244, 232, 132, 0));
+  background: radial-gradient(circle, rgba(244, 232, 132, 0.3), rgba(244, 232, 132, 0));
   filter: blur(10rpx);
   pointer-events: none;
 }
@@ -389,7 +469,7 @@
   position: relative;
   z-index: 1;
   display: block;
-  color: #191211;
+  color: #f3f1e7;
   font-size: 28rpx;
   font-weight: 600;
 }
@@ -399,7 +479,7 @@
   z-index: 1;
   display: block;
   margin-top: 10rpx;
-  color: rgba(25, 18, 17, 0.68);
+  color: rgba(243, 241, 231, 0.66);
   font-size: 22rpx;
   line-height: 1.55;
 }
@@ -425,12 +505,12 @@
 }
 
 .presence-mini-card__button--ghost {
-  background: rgba(255, 246, 241, 0.54);
+  background: rgba(255, 255, 255, 0.86);
   color: #2a1d1a;
 }
 
 .presence-mini-card__button--cta {
-  background: #211817;
+  background: rgba(33, 24, 23, 0.92);
   color: #ffffff;
   font-weight: 600;
 }
@@ -440,88 +520,104 @@
 }
 
 .presence-chat__tabs {
-  margin-bottom: 20rpx;
+  margin-bottom: 18rpx;
 }
 
-.presence-chat__tabs-scroll {
-  width: 100%;
-  white-space: nowrap;
+.presence-chat__switcher {
+  position: relative;
 }
 
-.presence-chat__tabs-track {
-  display: inline-flex;
-  gap: 16rpx;
-  padding-right: 32rpx;
-}
-
-.presence-chat__tab {
-  width: 344rpx;
-  min-height: 140rpx;
-  padding: 20rpx 24rpx 22rpx;
-  box-sizing: border-box;
-  border-radius: 30rpx;
-  background:
-    radial-gradient(circle at 78% 20%, rgba(245, 232, 132, 0.1), transparent 24%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.02));
-  border: 1rpx solid rgba(255, 255, 255, 0.07);
-  box-shadow: inset 0 1rpx 0 rgba(255, 255, 255, 0.04);
-  opacity: 0.76;
-}
-
-.presence-chat__tab--active {
-  background:
-    radial-gradient(circle at 82% 18%, rgba(245, 232, 132, 0.18), transparent 26%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.028));
-  border-color: rgba(255, 255, 255, 0.14);
-  box-shadow:
-    0 18rpx 48rpx rgba(0, 0, 0, 0.18),
-    inset 0 1rpx 0 rgba(255, 255, 255, 0.08);
-  opacity: 1;
-}
-
-.presence-chat__tab-topline {
+.presence-chat__switcher-trigger {
   display: flex;
   align-items: center;
-  min-height: 28rpx;
+  justify-content: space-between;
+  gap: 18rpx;
+  padding: 20rpx 22rpx;
+  border-radius: 26rpx;
+  background:
+    radial-gradient(circle at 84% 18%, rgba(245, 232, 132, 0.14), transparent 24%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.02));
+  border: 1rpx solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    inset 0 1rpx 0 rgba(255, 255, 255, 0.04),
+    0 12rpx 28rpx rgba(0, 0, 0, 0.1);
 }
 
-.presence-chat__tab-badge {
-  color: rgba(243, 241, 231, 0.34);
-  font-size: 18rpx;
+.presence-chat__switcher-copy {
+  min-width: 0;
+  flex: 1;
+}
+
+.presence-chat__switcher-eyebrow {
+  display: block;
+  color: rgba(243, 241, 231, 0.36);
+  font-size: 16rpx;
   letter-spacing: 1.2rpx;
   text-transform: uppercase;
 }
 
-.presence-chat__tab--active .presence-chat__tab-badge {
-  color: rgba(243, 241, 231, 0.56);
-}
-
-.presence-chat__tab-title {
+.presence-chat__switcher-title {
   display: block;
-  margin-top: 12rpx;
-  height: 74rpx;
-  overflow: hidden;
+  margin-top: 10rpx;
   color: rgba(243, 241, 231, 0.94);
   font-size: 28rpx;
-  line-height: 1.32;
+  line-height: 1.2;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.presence-chat__switcher-chevron {
+  color: rgba(243, 241, 231, 0.42);
+  font-size: 28rpx;
+  line-height: 1;
+  transition: transform 180ms ease, color 180ms ease;
+}
+
+.presence-chat__switcher-chevron--active {
+  color: rgba(243, 241, 231, 0.62);
+  transform: rotate(180deg);
+}
+
+.presence-chat__picker {
+  margin-top: 12rpx;
+  padding: 10rpx;
+  border-radius: 24rpx;
+  background: rgba(12, 12, 16, 0.92);
+  border: 1rpx solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 18rpx 40rpx rgba(0, 0, 0, 0.18);
+}
+
+.presence-chat__picker-item {
+  padding: 16rpx 16rpx 18rpx;
+  border-radius: 18rpx;
+}
+
+.presence-chat__picker-item--active {
+  background:
+    radial-gradient(circle at 84% 18%, rgba(245, 232, 132, 0.16), transparent 24%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.024));
+}
+
+.presence-chat__picker-title {
+  display: block;
+  color: rgba(243, 241, 231, 0.92);
+  font-size: 24rpx;
+  line-height: 1.3;
   font-weight: 600;
 }
 
-.presence-chat__tab-meta {
+.presence-chat__picker-meta {
   display: block;
-  margin-top: 12rpx;
+  margin-top: 8rpx;
   color: rgba(243, 241, 231, 0.42);
-  font-size: 20rpx;
-  line-height: 1.4;
-}
-
-.presence-chat__tab--active .presence-chat__tab-meta {
-  color: rgba(243, 241, 231, 0.56);
+  font-size: 18rpx;
+  line-height: 1.35;
 }
 
 .presence-chat__panel {
   margin-top: 18rpx;
-  padding: 26rpx;
   min-height: 880rpx;
   box-sizing: border-box;
   display: flex;
@@ -530,11 +626,13 @@
   background: rgba(255, 255, 255, 0.04);
   border: 1rpx solid rgba(255, 255, 255, 0.06);
   backdrop-filter: blur(16rpx);
+  overflow: hidden;
 }
 
 .presence-chat__hero {
   display: flex;
   flex-direction: column;
+  padding: 26rpx 26rpx 0;
 }
 
 .presence-chat__eyebrow {
@@ -569,6 +667,7 @@
   flex-direction: column;
   gap: 14rpx;
   flex: 1;
+  padding: 0 18rpx;
 }
 
 .presence-chat__message {
@@ -632,11 +731,11 @@
 }
 
 .presence-chat__composer {
-  margin-top: 20rpx;
+  margin-top: auto;
   display: flex;
   align-items: center;
   gap: 16rpx;
-  padding-top: 18rpx;
+  padding: 18rpx 18rpx 20rpx;
   border-top: 1rpx solid rgba(255, 255, 255, 0.05);
 }
 
@@ -675,7 +774,7 @@
 }
 
 .presence-chat__recap {
-  margin-top: 18rpx;
+  margin: 18rpx 18rpx 20rpx;
   padding: 24rpx;
   border-radius: 28rpx;
   background: linear-gradient(180deg, rgba(225, 171, 146, 0.94), rgba(212, 167, 141, 0.94));
@@ -751,34 +850,130 @@
 
 .presence-ticket--compact {
   margin-top: 0;
-  min-height: 250rpx;
-  border-radius: 28rpx;
-  padding: 22rpx;
+  min-height: 680rpx;
+  padding: 28rpx;
+  border-radius: 38rpx;
+  background:
+    linear-gradient(180deg, rgba(175, 189, 196, 0.22), rgba(233, 205, 183, 0.16)),
+    rgba(255, 255, 255, 0.05);
+  border: 1rpx solid rgba(255, 255, 255, 0.1);
+  box-shadow:
+    0 32rpx 100rpx rgba(0, 0, 0, 0.24),
+    inset 0 1rpx 0 rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20rpx);
 }
 
 .presence-ticket--compact .presence-ticket__footer {
   display: block;
+  left: 28rpx;
+  right: 28rpx;
+  bottom: 28rpx;
 }
 
 .presence-ticket--compact .presence-ticket__hint {
   display: block;
   width: 100%;
+  max-width: 460rpx;
 }
 
 .presence-ticket--compact .presence-ticket__actions {
-  margin-top: 18rpx;
+  margin-top: 24rpx;
   justify-content: flex-start;
+}
+
+.presence-ticket__scene {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.presence-ticket__blur {
+  position: absolute;
+  filter: blur(42rpx);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.presence-ticket__blur--a {
+  width: 560rpx;
+  height: 340rpx;
+  left: 84rpx;
+  top: -26rpx;
+  background: rgba(185, 199, 206, 0.84);
+}
+
+.presence-ticket__blur--b {
+  width: 520rpx;
+  height: 320rpx;
+  right: -30rpx;
+  bottom: 84rpx;
+  background: rgba(220, 182, 150, 0.7);
+}
+
+.presence-ticket__blur--c {
+  width: 320rpx;
+  height: 220rpx;
+  right: 24rpx;
+  top: 120rpx;
+  background: rgba(248, 226, 150, 0.44);
+}
+
+.presence-ticket__grain {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(0, 0, 0, 0.08)),
+    radial-gradient(circle at 50% 100%, rgba(255, 236, 213, 0.22), transparent 42%);
 }
 
 .presence-ticket__glow {
   position: absolute;
-  top: 8rpx;
-  right: 24rpx;
-  width: 220rpx;
-  height: 220rpx;
+  top: 64rpx;
+  right: 48rpx;
+  width: 260rpx;
+  height: 260rpx;
   border-radius: 50%;
   background: radial-gradient(circle, rgba(244, 232, 132, 0.68), rgba(244, 232, 132, 0));
-  filter: blur(8rpx);
+  filter: blur(22rpx);
+}
+
+.presence-ticket__eyebrow {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  min-height: 42rpx;
+  padding: 0 16rpx;
+  border-radius: 999rpx;
+  background: rgba(255, 255, 255, 0.18);
+  color: rgba(243, 241, 231, 0.78);
+  font-size: 18rpx;
+  letter-spacing: 1rpx;
+}
+
+.presence-ticket__date {
+  position: absolute;
+  top: 26rpx;
+  right: 30rpx;
+  z-index: 1;
+  text-align: right;
+}
+
+.presence-ticket__date-month {
+  display: block;
+  color: rgba(243, 241, 231, 0.82);
+  font-size: 24rpx;
+  line-height: 1;
+}
+
+.presence-ticket__date-day {
+  display: block;
+  margin-top: 4rpx;
+  color: #f3f1e7;
+  font-size: 110rpx;
+  line-height: 0.88;
+  letter-spacing: -5rpx;
+  font-weight: 300;
 }
 
 .presence-ticket__main {
@@ -787,21 +982,23 @@
   gap: 20rpx;
   position: relative;
   z-index: 1;
+  margin-top: 360rpx;
 }
 
 .presence-ticket__label {
   display: block;
-  color: #191211;
-  font-size: 30rpx;
+  width: 470rpx;
+  color: #f3f1e7;
+  font-size: 48rpx;
   line-height: 1.35;
   font-weight: 600;
-  width: 360rpx;
+  letter-spacing: -1.2rpx;
 }
 
 .presence-ticket__meta {
   display: block;
   margin-top: 10rpx;
-  color: rgba(25, 18, 17, 0.56);
+  color: rgba(243, 241, 231, 0.62);
   font-size: 22rpx;
 }
 
@@ -811,8 +1008,8 @@
   height: 54rpx;
   padding: 0 18rpx;
   border-radius: 999rpx;
-  background: rgba(255, 255, 255, 0.46);
-  color: #3a2520;
+  background: rgba(255, 255, 255, 0.22);
+  color: #f3f1e7;
   font-size: 22rpx;
 }
 
@@ -830,7 +1027,7 @@
 
 .presence-ticket__hint {
   flex: 1;
-  color: rgba(25, 18, 17, 0.58);
+  color: rgba(243, 241, 231, 0.52);
   font-size: 20rpx;
   line-height: 1.6;
 }
@@ -840,6 +1037,29 @@
   gap: 12rpx;
   flex-wrap: wrap;
   justify-content: flex-end;
+}
+
+.presence-ticket__ghost,
+.presence-ticket__cta {
+  min-width: 126rpx;
+  height: 72rpx;
+  padding: 0 24rpx;
+  border-radius: 999rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22rpx;
+}
+
+.presence-ticket__ghost {
+  background: rgba(255, 255, 255, 0.16);
+  color: #f3f1e7;
+}
+
+.presence-ticket__cta {
+  background: rgba(18, 13, 12, 0.88);
+  color: #ffffff;
+  font-weight: 600;
 }
 
 .presence-ticket__ghost,

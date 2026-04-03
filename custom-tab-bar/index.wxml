@@ -1,15 +1,19 @@
 <view wx:if="{{!hidden}}" class="tab-bar">
   <view wx:if="{{composerOpen}}" class="tab-bar__mask" bindtap="closeComposer"></view>
   <view wx:if="{{composerOpen}}" class="tab-bar__composer">
-    <text class="tab-bar__composer-title">你想从哪里开始这次对话？</text>
-    <text class="tab-bar__composer-sub">从自己、一个明确的话题，或者上一场还没说完的相遇开始。</text>
+    <text class="tab-bar__composer-title">发起一场对话</text>
+    <text class="tab-bar__composer-sub">如果你还在整理自己，就从最近表达开始；如果你已经有题目了，就直接发起。</text>
     <view
       wx:for="{{quickActions}}"
       wx:key="key"
-      class="tab-bar__composer-card"
+      class="tab-bar__composer-card tab-bar__composer-card--{{item.key}}"
       data-url="{{item.url}}"
       bindtap="openQuickAction"
     >
+      <view class="tab-bar__composer-card-head">
+        <text class="tab-bar__composer-badge">{{item.key === 'self' ? '适合还没想完整' : '适合已经有题目'}}</text>
+        <text class="tab-bar__composer-arrow">→</text>
+      </view>
       <text class="tab-bar__composer-label">{{item.label}}</text>
       <text class="tab-bar__composer-copy">{{item.description}}</text>
     </view>
