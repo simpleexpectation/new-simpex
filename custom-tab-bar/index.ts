@@ -6,15 +6,9 @@ const tabs = [
 
 const quickActions = [
   {
-    key: 'self',
-    label: '从最近表达开始',
-    description: '上传近期表达，整理此刻的你',
-    url: '/pages/conversation-starter/index?entry=tab&mode=self'
-  },
-  {
-    key: 'direct',
-    label: '直接发起话题',
-    description: '带着一个想法，直接补全主题、时间和地点',
+    key: 'launch',
+    label: '发起对话',
+    description: '直接写，或先聊聊最近的状态',
     url: '/pages/direct-launch/index?entry=tab'
   }
 ]

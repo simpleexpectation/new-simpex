@@ -60,6 +60,116 @@
   padding-bottom: 40rpx;
 }
 
+.ai-entry-card {
+  position: relative;
+  overflow: hidden;
+  padding: 30rpx 28rpx 32rpx;
+  border-radius: 40rpx;
+  background:
+    radial-gradient(circle at 80% 18%, rgba(241, 230, 161, 0.22), transparent 22%),
+    radial-gradient(circle at 20% 82%, rgba(232, 148, 104, 0.16), transparent 26%),
+    linear-gradient(180deg, rgba(133, 165, 183, 0.22) 0%, rgba(180, 151, 135, 0.18) 48%, rgba(229, 190, 121, 0.16) 100%);
+  box-shadow:
+    0 20rpx 60rpx rgba(0, 0, 0, 0.18),
+    inset 0 0 0 1rpx rgba(255, 255, 255, 0.1);
+}
+
+.ai-entry-card__mist {
+  position: absolute;
+  border-radius: 999rpx;
+  pointer-events: none;
+  filter: blur(10rpx);
+}
+
+.ai-entry-card__mist--a {
+  top: -40rpx;
+  right: 56rpx;
+  width: 220rpx;
+  height: 220rpx;
+  background: radial-gradient(circle, rgba(245, 236, 184, 0.22) 0%, rgba(245, 236, 184, 0) 72%);
+}
+
+.ai-entry-card__mist--b {
+  left: -36rpx;
+  bottom: -54rpx;
+  width: 220rpx;
+  height: 220rpx;
+  background: radial-gradient(circle, rgba(245, 167, 132, 0.16) 0%, rgba(245, 167, 132, 0) 72%);
+}
+
+.ai-entry-card__head,
+.ai-entry-card__body,
+.ai-entry-card__footer {
+  position: relative;
+  z-index: 1;
+}
+
+.ai-entry-card__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20rpx;
+}
+
+.ai-entry-card__eyebrow {
+  font-size: 18rpx;
+  letter-spacing: 1.8rpx;
+  text-transform: uppercase;
+  color: rgba(243, 241, 231, 0.46);
+}
+
+.ai-entry-card__badge {
+  padding: 8rpx 18rpx;
+  border-radius: 999rpx;
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(243, 241, 231, 0.8);
+  font-size: 20rpx;
+  line-height: 1;
+}
+
+.ai-entry-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+  margin-top: 24rpx;
+}
+
+.ai-entry-card__title {
+  color: #f3f1e7;
+  font-size: 52rpx;
+  line-height: 1.08;
+  letter-spacing: -1rpx;
+  font-weight: 600;
+}
+
+.ai-entry-card__copy {
+  color: rgba(243, 241, 231, 0.72);
+  font-size: 28rpx;
+  line-height: 1.6;
+}
+
+.ai-entry-card__footer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20rpx;
+  margin-top: 28rpx;
+}
+
+.ai-entry-card__hint {
+  flex: 1;
+  color: rgba(243, 241, 231, 0.46);
+  font-size: 22rpx;
+  line-height: 1.5;
+}
+
+.ai-entry-card__action {
+  flex-shrink: 0;
+  color: #f3f1e7;
+  font-size: 24rpx;
+  line-height: 1;
+}
+
 .topic-calendar-panel {
   border-radius: 34rpx;
   padding: 14rpx 16rpx 12rpx;

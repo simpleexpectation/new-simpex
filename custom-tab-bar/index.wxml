@@ -2,7 +2,7 @@
   <view wx:if="{{composerOpen}}" class="tab-bar__mask" bindtap="closeComposer"></view>
   <view wx:if="{{composerOpen}}" class="tab-bar__composer">
     <text class="tab-bar__composer-title">发起一场对话</text>
-    <text class="tab-bar__composer-sub">如果你还在整理自己，就从最近表达开始；如果你已经有题目了，就直接发起。</text>
+    <text class="tab-bar__composer-sub">直接写，或者先聊聊最近的状态。</text>
     <view
       wx:for="{{quickActions}}"
       wx:key="key"
@@ -11,7 +11,7 @@
       bindtap="openQuickAction"
     >
       <view class="tab-bar__composer-card-head">
-        <text class="tab-bar__composer-badge">{{item.key === 'self' ? '适合还没想完整' : '适合已经有题目'}}</text>
+        <text class="tab-bar__composer-badge">一个入口，两种开始方式</text>
         <text class="tab-bar__composer-arrow">→</text>
       </view>
       <text class="tab-bar__composer-label">{{item.label}}</text>

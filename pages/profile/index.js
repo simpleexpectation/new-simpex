@@ -1,5 +1,8 @@
 const { myEvents } = require('../../data/mock')
 
+const featuredMyEvent = myEvents.find((item) => item.id === 'my-event-3') || myEvents[0]
+const eventDeck = myEvents.filter((item) => item.id !== featuredMyEvent.id)
+
 Page({
   data: {
     user: {
@@ -27,6 +30,8 @@ Page({
       detail: '邀请 2 位新用户注册，可得当月免费订阅'
     },
     myEvents,
+    featuredMyEvent,
+    eventDeck,
     selectedEvent: null,
     showEventModal: false,
     pageReady: false,
@@ -76,9 +81,9 @@ Page({
     })
   },
   pinEventToProfile() {
-    wx.showToast({ title: '这里接挂到名片', icon: 'none' })
+    wx.showToast({ title: '已挂到名片精选', icon: 'none' })
   },
   useEventAsStarter() {
-    wx.showToast({ title: '这里接作为发起入口', icon: 'none' })
+    wx.showToast({ title: '已带去发起草稿', icon: 'none' })
   }
 })

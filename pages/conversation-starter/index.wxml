@@ -22,10 +22,15 @@
   </view>
 
   <view wx:if="{{currentStep === 0}}" class="starter-section">
-    <view class="starter-hero">
+    <view class="starter-hero starter-hero--card">
       <text class="starter-hero__eyebrow">向内探索，向外发现</text>
-      <text class="starter-hero__title">用你最近的表达，快速整理此刻的你</text>
-      <text class="starter-hero__copy">先放进几张最近留下的内容。系统会据此帮你整理出一版可发起的草稿，而不是让你从空白开始。</text>
+      <text class="starter-hero__title">先放进一点最近的你</text>
+      <text class="starter-hero__copy">这里不是上传资料，而是让系统先接住你最近的表达，替你长出第一张对话卡的草稿。</text>
+      <view class="starter-hero__pills">
+        <text class="starter-hero__pill">最近状态</text>
+        <text class="starter-hero__pill">一句想法</text>
+        <text class="starter-hero__pill">一张截图</text>
+      </view>
     </view>
 
     <view class="upload-dropzone">
@@ -50,12 +55,12 @@
       </view>
     </view>
 
-    <view class="starter-note">
-      <text class="starter-note__title">系统会先替你做好这些</text>
+    <view class="starter-note starter-note--soft">
+      <text class="starter-note__title">接下来不会让你填很多东西</text>
       <view class="starter-note__row">
-        <text class="starter-note__pill">提炼关键词</text>
-        <text class="starter-note__pill">补轻量名片</text>
-        <text class="starter-note__pill">生成可发起话题</text>
+        <text class="starter-note__pill">先整理最近线索</text>
+        <text class="starter-note__pill">再长成一张卡</text>
+        <text class="starter-note__pill">最后只定时间和地点</text>
       </view>
     </view>
   </view>
@@ -63,8 +68,22 @@
   <view wx:if="{{currentStep === 1}}" class="starter-section">
     <view class="section-head">
       <text class="section-head__eyebrow">此刻的你</text>
-      <text class="section-head__title">我们先整理出一版可确认的自我线索</text>
-      <text class="section-head__copy">重点不是定义你，而是帮助你看见“最近的自己”。这些内容后续都可以编辑。</text>
+      <text class="section-head__title">这一页先长成“最近的你”</text>
+      <text class="section-head__copy">不是给你下判断，而是先把最近的状态、想法和表达倾向，整理成一张可以继续往前走的卡。</text>
+    </view>
+
+    <view class="identity-card">
+      <view class="identity-card__glow"></view>
+      <text class="identity-card__eyebrow">Recent self card</text>
+      <text class="identity-card__title">最近的你，像是在慢慢进入一个新的生活阶段。</text>
+      <text class="identity-card__copy">你在重新适应一个人和城市相处的节奏，也更在意什么样的空间、什么样的人，会让自己感觉靠近。</text>
+      <view class="identity-card__chips">
+        <text class="identity-card__chip">新城市</text>
+        <text class="identity-card__chip">独处</text>
+        <text class="identity-card__chip">散步</text>
+        <text class="identity-card__chip">节奏调整</text>
+        <text class="identity-card__chip">空间感</text>
+      </view>
     </view>
 
     <view class="insight-list">
@@ -78,8 +97,14 @@
   <view wx:if="{{currentStep === 2}}" class="starter-section">
     <view class="section-head">
       <text class="section-head__eyebrow">适合开启的话题</text>
-      <text class="section-head__title">这些推荐，已经被整理成接近真实可发起的对话卡片</text>
-      <text class="section-head__copy">这里不该只是建议列表，而应该直接长成你们产品里原本使用的对话卡片，让用户在这个阶段就感觉“已经快要发起了”。</text>
+      <text class="section-head__title">这些线索，已经开始长成对话卡</text>
+      <text class="section-head__copy">这里不再是建议列表，而是几张已经接近成品的发起卡。你只需要选一张最像现在自己的。</text>
+    </view>
+
+    <view class="starter-picked glass-panel">
+      <text class="starter-picked__eyebrow">当前方向</text>
+      <text class="starter-picked__title">{{selectedTopicTitle}}</text>
+      <text class="starter-picked__copy">{{selectedLaunchReason}}</text>
     </view>
 
     <view class="topic-stack">
@@ -124,6 +149,6 @@
 
   <view class="starter-footer">
     <view class="starter-footer__secondary" bindtap="goBack">{{currentStep === 0 ? '返回上一页' : '上一步'}}</view>
-    <view class="starter-footer__primary" bindtap="nextStep">{{currentStep === 2 ? '带着这个题去发起' : '继续下一步'}}</view>
+    <view class="starter-footer__primary" bindtap="nextStep">{{currentStep === 2 ? '带着这张卡去发起' : '继续生成这张卡'}}</view>
   </view>
 </view>

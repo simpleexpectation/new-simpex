@@ -86,6 +86,12 @@ Page({
   toggleCalendar() {
     this.setData({ showCalendar: !this.data.showCalendar })
   },
+  openAiEntry() {
+    this.setData({ pageLeaving: true })
+    setTimeout(() => {
+      wx.navigateTo({ url: '/pages/ai-entry/index' })
+    }, 180)
+  },
   selectCalendarDate(e: WechatMiniprogram.BaseEvent) {
     const { key } = e.currentTarget.dataset as any
     if (!key) return

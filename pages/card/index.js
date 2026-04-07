@@ -90,6 +90,12 @@ Page({
   toggleCalendar() {
     this.setData({ showCalendar: !this.data.showCalendar })
   },
+  openAiEntry() {
+    this.setData({ pageLeaving: true })
+    setTimeout(() => {
+      wx.navigateTo({ url: '/pages/ai-entry/index' })
+    }, 180)
+  },
   selectCalendarDate(e) {
     const { key } = e.currentTarget.dataset
     if (!key) return
@@ -120,5 +126,11 @@ Page({
     setTimeout(() => {
       wx.navigateTo({ url: `/pages/venue-detail/index?id=${id}` })
     }, 180)
+  },
+  openVenueRecommend() {
+    wx.showToast({
+      title: '下一步接入推荐空间提交流程',
+      icon: 'none'
+    })
   }
 })

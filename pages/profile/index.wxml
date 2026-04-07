@@ -16,23 +16,57 @@
   </view>
 
   <view class="moments-head">
-    <text class="moments-head__title">最近留下来的切片</text>
-    <text class="moments-head__action">轻点放大，不跳转</text>
+    <text class="moments-head__title">我的事件</text>
+    <text class="moments-head__action">不是回顾参加过什么，而是最近哪些真实发生正在慢慢代表你</text>
   </view>
 
-  <view class="moments-grid">
+  <view class="event-stage">
     <view
-      wx:for="{{myEvents}}"
-      wx:key="id"
-      class="moment-fragment moment-fragment--{{item.layout}} moment-fragment--{{item.previewMode}} moment-art--{{item.art}}"
-      style="{{item.previewMode === 'image' && item.photoUrl ? 'background-image: linear-gradient(180deg, rgba(0,0,0,0.08), rgba(0,0,0,0.42)), url(' + item.photoUrl + '); background-size: cover; background-position: center;' : ''}}"
-      data-id="{{item.id}}"
+      wx:if="{{featuredMyEvent}}"
+      class="event-stage__hero moment-art--{{featuredMyEvent.art}}"
+      data-id="{{featuredMyEvent.id}}"
       bindtap="openMyEvent"
     >
-      <view class="moment-fragment__body {{item.previewMode === 'text' ? 'moment-fragment__body--text' : ''}}">
-        <text class="moment-fragment__eyebrow">{{item.kindLabel}}</text>
-        <text class="moment-fragment__title">{{item.previewTitle}}</text>
-        <text class="moment-fragment__meta">{{item.previewText}}</text>
+      <view class="event-stage__hero-mist event-stage__hero-mist--a"></view>
+      <view class="event-stage__hero-mist event-stage__hero-mist--b"></view>
+      <view class="event-stage__hero-body">
+        <view class="event-stage__hero-top">
+          <text class="event-stage__hero-eyebrow">{{featuredMyEvent.previewEyebrow || featuredMyEvent.kindLabel}}</text>
+          <text class="event-stage__hero-stamp">{{featuredMyEvent.graphTag}}</text>
+        </view>
+        <view class="event-stage__hero-card">
+          <text class="event-stage__hero-title">{{featuredMyEvent.previewTitle}}</text>
+          <text class="event-stage__hero-copy">{{featuredMyEvent.previewText}}</text>
+          <view class="event-stage__hero-foot">
+            <text class="event-stage__hero-chip">{{featuredMyEvent.anchor}}</text>
+            <text class="event-stage__hero-note">{{featuredMyEvent.footnote}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="event-slice-list">
+      <view
+        wx:for="{{eventDeck}}"
+        wx:key="id"
+        class="event-slice event-slice--{{item.previewMode}} event-slice--{{item.layout}} moment-art--{{item.art}}"
+        data-id="{{item.id}}"
+        bindtap="openMyEvent"
+      >
+        <view class="event-slice__overlay {{item.previewMode === 'text' ? 'event-slice__overlay--text' : ''}}">
+          <view class="event-slice__top">
+            <text class="event-slice__eyebrow">{{item.previewEyebrow || item.kindLabel}}</text>
+            <text class="event-slice__stamp">{{item.graphTag}}</text>
+          </view>
+          <view class="event-slice__body">
+            <text wx:if="{{item.previewMode === 'text'}}" class="event-slice__quote">“</text>
+            <text class="event-slice__title">{{item.previewTitle}}</text>
+            <text class="event-slice__copy">{{item.previewText}}</text>
+          </view>
+          <view class="event-slice__foot">
+            <text class="event-slice__chip">{{item.anchor}}</text>
+          </view>
+        </view>
       </view>
     </view>
   </view>
@@ -72,7 +106,7 @@
         style="{{selectedEvent.previewMode === 'image' && selectedEvent.photoUrl ? 'background-image: linear-gradient(180deg, rgba(0,0,0,0.12), rgba(0,0,0,0.48)), url(' + selectedEvent.photoUrl + '); background-size: cover; background-position: center;' : ''}}"
       >
         <view class="event-modal__hero-card {{selectedEvent.previewMode === 'text' ? 'event-modal__hero-card--text' : ''}}">
-          <text class="event-modal__eyebrow">{{selectedEvent.kindLabel}} · {{selectedEvent.anchor}}</text>
+          <text class="event-modal__eyebrow">{{selectedEvent.kindLabel}} · {{selectedEvent.graphTag}}</text>
           <text class="event-modal__title">{{selectedEvent.previewTitle}}</text>
           <text class="event-modal__meta">{{selectedEvent.previewText}}</text>
         </view>
@@ -81,10 +115,17 @@
         <text class="event-modal__section-label">这条切片正在代表你什么</text>
         <text class="event-modal__section-copy">{{selectedEvent.identityLens}}</text>
       </view>
+      <view class="event-modal__section">
+        <text class="event-modal__section-label">它连接到的内在问题</text>
+        <text class="event-modal__section-copy">{{selectedEvent.innerQuestion}}</text>
+      </view>
+      <view class="event-modal__chips">
+        <text wx:for="{{selectedEvent.chips}}" wx:key="index" class="event-modal__chip">{{item}}</text>
+      </view>
       <view class="event-modal__actions">
         <view class="event-modal__button event-modal__button--primary" bindtap="pinEventToProfile">挂到名片</view>
-        <view class="event-modal__button" bindtap="useEventAsStarter">作为发起入口</view>
-        <view class="event-modal__button" bindtap="closeEventModal">继续保留</view>
+        <view class="event-modal__button" bindtap="useEventAsStarter">带去发起对话</view>
+        <view class="event-modal__button" bindtap="closeEventModal">先留在这里</view>
       </view>
     </view>
   </view>

@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/card/index",
+    "pages/ai-entry/index",
     "pages/conversation-starter/index",
     "pages/direct-launch/index",
     "pages/event-detail/index",

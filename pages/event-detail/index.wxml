@@ -36,7 +36,12 @@
 
     <view class="detail-block">
       <text class="detail-block__title">它怎样补足你是谁</text>
-      <text class="detail-block__copy">{{event.summary}}</text>
+      <text class="detail-block__copy">{{event.identityLens}}</text>
+    </view>
+
+    <view class="detail-block">
+      <text class="detail-block__title">它连接到的内在问题</text>
+      <text class="detail-block__copy">{{event.innerQuestion}}</text>
     </view>
 
     <view class="info-grid">
@@ -45,8 +50,8 @@
         <text class="info-card__value">{{event.chips[0]}} · {{event.chips[1]}}</text>
       </view>
       <view class="info-card">
-        <text class="info-card__label">留下方式</text>
-        <text class="info-card__value">{{event.anchor}}</text>
+        <text class="info-card__label">正在补足</text>
+        <text class="info-card__value">{{event.graphTag}}</text>
       </view>
     </view>
   </block>
