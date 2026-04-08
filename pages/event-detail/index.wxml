@@ -1,131 +1,122 @@
 <view class="page-shell event-detail-page {{pageReady ? 'page-ready' : ''}} {{pageLeaving ? 'page-leaving' : ''}}">
   <block wx:if="{{detailMode === 'profile'}}">
-    <view class="detail-hero detail-hero--{{event.heroTone}}" style="padding-top: {{statusBarHeight + 44}}px;">
-      <view class="detail-hero__mist detail-hero__mist--a"></view>
-      <view class="detail-hero__mist detail-hero__mist--b"></view>
-      <view class="detail-hero__body">
-        <view class="pill detail-hero__pill">{{event.anchor}}</view>
-        <text class="detail-hero__title">{{event.title}}</text>
-        <text class="detail-hero__desc">{{event.description}}</text>
+    <view class="event-reading" style="padding-top: {{statusBarHeight + 22}}px;">
+      <text class="event-reading__eyebrow">MY EVENT</text>
+      <view class="event-reading__head">
+        <view>
+          <text class="event-reading__title">事件详情</text>
+          <text class="event-reading__sub">这一条真实发生，正在怎样慢慢代表你</text>
+        </view>
       </view>
-    </view>
 
-    <view class="meta-list">
-      <view class="meta-row">
-        <text class="meta-row__label">时间</text>
-        <text class="meta-row__value">{{event.date}}</text>
+      <view class="event-reading__hero detail-hero--{{event.heroTone}} {{pageReady ? 'event-reading__hero--ready' : ''}}">
+        <view class="detail-hero__mist detail-hero__mist--a"></view>
+        <view class="detail-hero__mist detail-hero__mist--b"></view>
+        <view class="event-reading__hero-body">
+          <view class="event-reading__topline">
+            <text class="event-reading__tag">{{event.previewEyebrow || event.kindLabel}}</text>
+            <text class="event-reading__date">{{event.date}}</text>
+          </view>
+          <view class="event-reading__center">
+            <text class="event-reading__hero-title">{{event.previewTitle}}</text>
+          </view>
+          <view class="event-reading__bottomline">
+            <text class="event-reading__foot">{{event.graphTag}}</text>
+            <text class="event-reading__foot">{{event.venue}}</text>
+          </view>
+        </view>
       </view>
-      <view class="meta-row">
-        <text class="meta-row__label">地点</text>
-        <text class="meta-row__value">{{event.venue}}</text>
-      </view>
-      <view class="meta-row">
-        <text class="meta-row__label">形式</text>
-        <text class="meta-row__value">{{event.kindLabel}}</text>
-      </view>
-      <view class="meta-row">
-        <text class="meta-row__label">作用</text>
-        <text class="meta-row__value">补足你的个人画像</text>
-      </view>
-    </view>
 
-    <view class="detail-block">
-      <text class="detail-block__title">这次对话后，你留下的感受</text>
-      <text class="detail-block__copy">{{event.body}}</text>
-    </view>
-
-    <view class="detail-block">
-      <text class="detail-block__title">它怎样补足你是谁</text>
-      <text class="detail-block__copy">{{event.identityLens}}</text>
-    </view>
-
-    <view class="detail-block">
-      <text class="detail-block__title">它连接到的内在问题</text>
-      <text class="detail-block__copy">{{event.innerQuestion}}</text>
-    </view>
-
-    <view class="info-grid">
-      <view class="info-card">
-        <text class="info-card__label">事件标签</text>
-        <text class="info-card__value">{{event.chips[0]}} · {{event.chips[1]}}</text>
+      <view class="detail-block detail-block--soft {{pageReady ? 'detail-block--ready' : ''}}">
+        <text class="detail-block__title">它正在代表你什么</text>
+        <text class="detail-block__copy">{{event.identityLens}}</text>
       </view>
-      <view class="info-card">
-        <text class="info-card__label">正在补足</text>
-        <text class="info-card__value">{{event.graphTag}}</text>
+
+      <view class="detail-block detail-block--soft {{pageReady ? 'detail-block--ready detail-block--delay-a' : ''}}">
+        <text class="detail-block__title">它连接到的内在问题</text>
+        <text class="detail-block__copy">{{event.innerQuestion}}</text>
+      </view>
+
+      <view class="detail-block detail-block--soft {{pageReady ? 'detail-block--ready detail-block--delay-b' : ''}}">
+        <text class="detail-block__title">这一条留下来的原因</text>
+        <text class="detail-block__copy">{{event.body}}</text>
+      </view>
+
+      <view class="info-grid info-grid--profile {{pageReady ? 'info-grid--ready detail-block--delay-b' : ''}}">
+        <view class="info-card">
+          <text class="info-card__label">类型</text>
+          <text class="info-card__value">{{event.kindLabel}}</text>
+        </view>
+        <view class="info-card">
+          <text class="info-card__label">图谱节点</text>
+          <text class="info-card__value">{{event.graphTag}}</text>
+        </view>
       </view>
     </view>
   </block>
 
   <block wx:else>
+    <view class="detail-hero detail-hero--0 {{pageReady ? 'detail-hero--ready' : ''}}" style="padding-top: {{statusBarHeight + 44}}px;">
+      <view class="detail-hero__mist detail-hero__mist--a"></view>
+      <view class="detail-hero__mist detail-hero__mist--b"></view>
+      <view class="detail-hero__body">
+        <view class="pill detail-hero__pill">官方核心局</view>
+        <text class="detail-hero__title">{{event.title}}</text>
+        <text class="detail-hero__desc">{{event.description}}</text>
+      </view>
+    </view>
 
-  <!-- ── 渐变 Hero ── -->
-  <view class="detail-hero detail-hero--0" style="padding-top: {{statusBarHeight + 44}}px;">
-    <view class="detail-hero__mist detail-hero__mist--a"></view>
-    <view class="detail-hero__mist detail-hero__mist--b"></view>
-    <view class="detail-hero__body">
-      <view class="pill detail-hero__pill">官方核心局</view>
-      <text class="detail-hero__title">{{event.title}}</text>
-      <text class="detail-hero__desc">{{event.description}}</text>
+    <view class="meta-list {{pageReady ? 'meta-list--ready' : ''}}">
+      <view class="meta-row">
+        <text class="meta-row__label">时间</text>
+        <text class="meta-row__value">今晚 19:30 – 21:30</text>
+      </view>
+      <view class="meta-row">
+        <text class="meta-row__label">地点</text>
+        <text class="meta-row__value">泊光集 · 杭州天目里附近</text>
+      </view>
+      <view class="meta-row">
+        <text class="meta-row__label">引导人</text>
+        <text class="meta-row__value">Iris · 产品叙事研究</text>
+      </view>
+      <view class="meta-row">
+        <text class="meta-row__label">席位</text>
+        <text class="meta-row__value">{{event.status}} · 余 7 位（限额 20 人）</text>
+      </view>
     </view>
-  </view>
 
-  <!-- ── 元信息列表 ── -->
-  <view class="meta-list">
-    <view class="meta-row">
-      <text class="meta-row__label">时间</text>
-      <text class="meta-row__value">今晚 19:30 – 21:30</text>
+    <view class="detail-block {{pageReady ? 'detail-block--ready detail-block--delay-a' : ''}}">
+      <text class="detail-block__title">到场之后</text>
+      <text class="detail-block__copy">碰一碰进场，界面退到黑洞模式。你只会看到同场的人、他们的极简名片，以及轻触共鸣入口。</text>
     </view>
-    <view class="meta-row">
-      <text class="meta-row__label">地点</text>
-      <text class="meta-row__value">泊光集 · 杭州天目里附近</text>
-    </view>
-    <view class="meta-row">
-      <text class="meta-row__label">引导人</text>
-      <text class="meta-row__value">Iris · 产品叙事研究</text>
-    </view>
-    <view class="meta-row">
-      <text class="meta-row__label">席位</text>
-      <text class="meta-row__value">{{event.status}} · 余 7 位（限额 20 人）</text>
-    </view>
-  </view>
 
-  <!-- ── 到场之后 ── -->
-  <view class="detail-block">
-    <text class="detail-block__title">到场之后</text>
-    <text class="detail-block__copy">碰一碰进场，界面退到黑洞模式。你只会看到同场的人、他们的极简名片，以及轻触共鸣入口。</text>
-  </view>
-
-  <!-- ── 权益卡片 ── -->
-  <view class="info-grid">
-    <view class="info-card">
-      <text class="info-card__label">报名权益</text>
-      <text class="info-card__value">399 票可参加单领域全部场次</text>
+    <view class="info-grid {{pageReady ? 'info-grid--ready detail-block--delay-b' : ''}}">
+      <view class="info-card">
+        <text class="info-card__label">报名权益</text>
+        <text class="info-card__value">399 票可参加单领域全部场次</text>
+      </view>
+      <view class="info-card">
+        <text class="info-card__label">核销方式</text>
+        <text class="info-card__value">NFC 场地卡 + 二维码兜底</text>
+      </view>
     </view>
-    <view class="info-card">
-      <text class="info-card__label">核销方式</text>
-      <text class="info-card__value">NFC 场地卡 + 二维码兜底</text>
-    </view>
-  </view>
   </block>
-
 </view>
 
-<!-- ── 固定底部操作栏 ── -->
 <view class="detail-footer">
   <view class="detail-footer__rail">
-    <view class="detail-footer__back" bindtap="goBack">返回</view>
+    <view class="detail-footer__back {{pressedFooterAction === 'back' ? 'detail-footer__back--pressed' : ''}}" data-action="back" bindtouchstart="pressFooterAction" bindtouchend="releaseFooterAction" bindtouchcancel="releaseFooterAction" bindtap="goBack">返回</view>
     <block wx:if="{{detailMode === 'profile'}}">
-      <view class="detail-footer__cta" bindtap="goBack">回到我的</view>
-      <view class="detail-footer__ghost" bindtap="enterBlackhole">查看在场</view>
+      <view class="detail-footer__cta {{pressedFooterAction === 'primary' ? 'detail-footer__cta--pressed' : ''}}" data-action="primary" bindtouchstart="pressFooterAction" bindtouchend="releaseFooterAction" bindtouchcancel="releaseFooterAction" bindtap="goBack">回到我的</view>
+      <view class="detail-footer__ghost {{pressedFooterAction === 'ghost' ? 'detail-footer__ghost--pressed' : ''}}" data-action="ghost" bindtouchstart="pressFooterAction" bindtouchend="releaseFooterAction" bindtouchcancel="releaseFooterAction" bindtap="pinEventToCard">挂到名片</view>
     </block>
     <block wx:else>
-      <view class="detail-footer__cta" bindtap="openRsvpModal">实名预约</view>
-      <view class="detail-footer__ghost" bindtap="enterBlackhole">查看现场模式</view>
+      <view class="detail-footer__cta {{pressedFooterAction === 'primary' ? 'detail-footer__cta--pressed' : ''}}" data-action="primary" bindtouchstart="pressFooterAction" bindtouchend="releaseFooterAction" bindtouchcancel="releaseFooterAction" bindtap="openRsvpModal">实名预约</view>
+      <view class="detail-footer__ghost {{pressedFooterAction === 'ghost' ? 'detail-footer__ghost--pressed' : ''}}" data-action="ghost" bindtouchstart="pressFooterAction" bindtouchend="releaseFooterAction" bindtouchcancel="releaseFooterAction" bindtap="enterBlackhole">查看现场模式</view>
     </block>
   </view>
 </view>
 
-<!-- ── 预约弹窗 ── -->
 <view wx:if="{{showRsvpModal && detailMode !== 'profile'}}" class="rsvp-mask" bindtap="closeRsvpModal">
   <view class="rsvp-sheet" catchtap="">
     <view class="rsvp-sheet__handle"></view>

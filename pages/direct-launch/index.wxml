@@ -2,158 +2,124 @@
   <view class="direct-launch-page__glow direct-launch-page__glow--a"></view>
   <view class="direct-launch-page__glow direct-launch-page__glow--b"></view>
 
-  <nav-shell eyebrow="Direct launch">
+  <nav-shell eyebrow="Launch">
     <view class="direct-launch-nav">
       <view class="direct-launch-nav__back" bindtap="goBack">‹</view>
       <view class="direct-launch-nav__copy">
         <text class="direct-launch-nav__title">发起对话</text>
-        <text class="direct-launch-nav__sub">{{source === 'starter' ? '补全时间和地点后发起' : '直接写，或先聊聊最近的状态'}}</text>
+        <text class="direct-launch-nav__sub">自动填一版后，你只需要补足这张卡</text>
       </view>
     </view>
   </nav-shell>
 
-  <view class="direct-launch-hero">
-    <text class="direct-launch-hero__eyebrow">{{source === 'starter' ? '已帮你整理好题目' : '从一个真实想法开始'}}</text>
-    <text class="direct-launch-hero__title">{{source === 'starter' ? '这张卡已经差不多了' : '先做出一张可以发起的卡'}}</text>
-    <text class="direct-launch-hero__copy">{{source === 'starter' ? '现在只需要把它落到一个真实时间和地点里。' : '可以直接写，也可以先让 AI 帮你把最近的状态整理成几张草稿卡。'}}</text>
-  </view>
-
-  <view class="direct-launch-stage">
-    <view class="direct-launch-preview background-card" style="{{previewGradientStyle}}">
-      <view class="direct-launch-preview__top">
-        <text class="direct-launch-preview__venue">{{form.venue}}</text>
-        <text class="direct-launch-preview__time">{{form.time || '待定时间'}}</text>
-      </view>
-      <text class="direct-launch-preview__eyebrow">对话卡</text>
-      <text class="direct-launch-preview__title">{{form.topic}}</text>
-      <text class="direct-launch-preview__reason">{{form.reason}}</text>
-    </view>
-
-    <view class="direct-launch-stage__note glass-panel">
-      <text class="direct-launch-stage__title">{{source === 'starter' ? '现在不是继续填表' : '这里不是在写资料'}}</text>
-      <text class="direct-launch-stage__copy">{{source === 'starter' ? '上面那张卡已经带着主题和发起理由了。下面只是在替它定一个真实可发生的时间和地点。' : '先说一点最近的你，系统会先帮你长出几张卡，再从里面挑一张最像自己的。'}}</text>
+  <view class="launch-mode">
+    <view
+      wx:for="{{launchModes}}"
+      wx:key="key"
+      class="launch-mode__item {{launchMode === item.key ? 'launch-mode__item--active' : ''}}"
+      data-mode="{{item.key}}"
+      bindtap="switchLaunchMode"
+    >
+      <text class="launch-mode__label">{{item.label}}</text>
+      <text class="launch-mode__hint">{{item.hint}}</text>
     </view>
   </view>
 
-  <view class="direct-launch-form glass-panel">
-    <view wx:if="{{source !== 'starter'}}" class="voice-entry">
-      <view class="voice-entry__head">
-        <view class="voice-entry__copy">
-          <text class="voice-entry__title">聊聊自己最近的状态</text>
-          <text class="voice-entry__sub">一个思考，一份观察，接触的人群</text>
-        </view>
-        <view class="voice-entry__icon">◉</view>
-      </view>
-      <textarea
-        class="voice-entry__textarea"
-        value="{{voiceDraft}}"
-        bindinput="updateVoiceDraft"
-        maxlength="220"
-        auto-height
-        placeholder="比如：我最近总觉得自己在重新适应一个新的生活节奏，也更在意和什么样的人待在一起。"
-        placeholder-class="direct-launch-field__placeholder"
-      />
-      <view class="voice-entry__footer">
-        <text class="voice-entry__hint">系统会先帮你整理。</text>
-        <view class="voice-entry__button" bindtap="generateFromVoice">先帮我整理</view>
-      </view>
-    </view>
+  <view class="launch-card">
+    <view class="launch-card__mist launch-card__mist--a"></view>
+    <view class="launch-card__mist launch-card__mist--b"></view>
 
-    <view wx:if="{{source !== 'starter' && generatedTopics.length}}" class="generated-stack">
-      <view class="generated-stack__head">
-        <text class="generated-stack__title">先选一个最像你的</text>
-        <text class="generated-stack__action" bindtap="toggleManualFields">{{showManualFields ? '收起文字' : '改文字'}}</text>
+    <text class="launch-card__eyebrow">LAUNCH CARD</text>
+    <text class="launch-card__title">这张对话卡已经成形</text>
+    <text class="launch-card__copy">系统已经先替你起好一版。现在只要补足必要信息，就可以把它发出去。</text>
+
+    <view class="launch-card__grid">
+      <view class="launch-card__cell launch-card__cell--wide">
+        <text class="launch-card__label">话题</text>
+        <textarea
+          class="launch-card__textarea launch-card__textarea--title"
+          value="{{form.topic}}"
+          data-field="topic"
+          bindinput="updateField"
+          maxlength="80"
+          auto-height
+          placeholder="这次想聊什么"
+          placeholder-class="launch-card__placeholder"
+        />
       </view>
-      <view
-        wx:for="{{generatedTopics}}"
-        wx:key="id"
-        class="generated-card background-card {{selectedGeneratedId === item.id ? 'generated-card--active background-card--active' : ''}}"
-        style="{{item.style}}"
-        data-id="{{item.id}}"
-        bindtap="selectGeneratedTopic"
-      >
-        <text class="generated-card__title">{{item.title}}</text>
-        <text class="generated-card__reason">{{item.reason}}</text>
-        <text class="generated-card__cta">{{selectedGeneratedId === item.id ? '已填入下方' : '用这条'}}</text>
+
+      <view class="launch-card__cell launch-card__cell--wide">
+        <text class="launch-card__label">描述</text>
+        <textarea
+          class="launch-card__textarea"
+          value="{{form.reason}}"
+          data-field="reason"
+          bindinput="updateField"
+          maxlength="180"
+          auto-height
+          placeholder="为什么值得聊，别人为什么会想加入"
+          placeholder-class="launch-card__placeholder"
+        />
       </view>
-    </view>
 
-    <view wx:if="{{source !== 'starter' && !showManualFields && generatedTopics.length}}" class="direct-launch-summary">
-      <view class="direct-launch-summary__item">
-        <text class="direct-launch-summary__label">主题</text>
-        <text class="direct-launch-summary__value">{{form.topic}}</text>
+      <view class="launch-card__cell">
+        <text class="launch-card__label">时间</text>
+        <input
+          class="launch-card__input"
+          value="{{form.time}}"
+          data-field="time"
+          bindinput="updateField"
+          maxlength="40"
+          placeholder="周六下午"
+          placeholder-class="launch-card__placeholder"
+        />
       </view>
-      <view class="direct-launch-summary__item">
-        <text class="direct-launch-summary__label">介绍</text>
-        <text class="direct-launch-summary__value">{{form.reason}}</text>
+
+      <view wx:if="{{launchMode === 'offline'}}" class="launch-card__cell">
+        <text class="launch-card__label">地点</text>
+        <input
+          class="launch-card__input"
+          value="{{form.venue}}"
+          data-field="venue"
+          bindinput="updateField"
+          maxlength="40"
+          placeholder="杭州"
+          placeholder-class="launch-card__placeholder"
+        />
       </view>
-    </view>
 
-    <view wx:if="{{source !== 'starter' && showManualFields}}" class="direct-launch-field">
-      <text class="direct-launch-field__label">主题</text>
-      <textarea
-        class="direct-launch-field__textarea"
-        value="{{form.topic}}"
-        data-field="topic"
-        bindinput="updateField"
-        maxlength="80"
-        auto-height
-        placeholder="写下这次想聊的话题"
-        placeholder-class="direct-launch-field__placeholder"
-      />
-    </view>
+      <view wx:if="{{launchMode === 'offline'}}" class="launch-card__cell">
+        <text class="launch-card__label">人数</text>
+        <text class="launch-card__value">2 人</text>
+      </view>
 
-    <view wx:if="{{source !== 'starter' && showManualFields}}" class="direct-launch-field">
-      <text class="direct-launch-field__label">为什么发起</text>
-      <textarea
-        class="direct-launch-field__textarea direct-launch-field__textarea--long"
-        value="{{form.reason}}"
-        data-field="reason"
-        bindinput="updateField"
-        maxlength="180"
-        auto-height
-        placeholder="补一句你为什么想发起这次对话"
-        placeholder-class="direct-launch-field__placeholder"
-      />
-    </view>
+      <view wx:if="{{launchMode === 'online'}}" class="launch-card__cell">
+        <text class="launch-card__label">方式</text>
+        <input
+          class="launch-card__input"
+          value="{{form.platform}}"
+          data-field="platform"
+          bindinput="updateField"
+          maxlength="40"
+          placeholder="微信群 / 线上房间"
+          placeholder-class="launch-card__placeholder"
+        />
+      </view>
 
-    <view class="direct-launch-field">
-      <text class="direct-launch-field__label">时间</text>
-      <text wx:if="{{source === 'starter'}}" class="direct-launch-field__hint">把这场对话落到一个具体时间里就可以</text>
-      <input
-        class="direct-launch-field__input"
-        value="{{form.time}}"
-        data-field="time"
-        bindinput="updateField"
-        maxlength="40"
-        placeholder="比如：本周六 19:30 - 21:30"
-        placeholder-class="direct-launch-field__placeholder"
-      />
-    </view>
-
-    <view class="direct-launch-field">
-      <text class="direct-launch-field__label">地点</text>
-      <text class="direct-launch-field__hint">{{source === 'starter' ? '选一个适合这次对话的场' : '从系统提供的地点里选'}}</text>
-      <view class="venue-grid">
-        <view
-          wx:for="{{venueOptions}}"
-          wx:key="key"
-          class="venue-card {{form.venue === item.name ? 'venue-card--active' : ''}}"
-          data-value="{{item.name}}"
-          bindtap="selectVenue"
-        >
-          <view class="venue-card__top">
-            <text class="venue-card__name">{{item.name}}</text>
-            <text class="venue-card__slot">{{item.slot}}</text>
-          </view>
-          <text class="venue-card__mood">{{item.mood}}</text>
-        </view>
+      <view wx:if="{{launchMode === 'online'}}" class="launch-card__cell">
+        <text class="launch-card__label">加入</text>
+        <text class="launch-card__value">开放加入</text>
       </view>
     </view>
+  </view>
+
+  <view class="launch-note">
+    <text class="launch-note__label">如果你刚刚跳过了自动填充</text>
+    <text class="launch-note__copy">现在只要把上面 3 到 4 个位置补齐，也能直接发起。</text>
   </view>
 
   <view class="direct-launch-footer">
-    <view class="direct-launch-footer__ghost" bindtap="goBack">返回看看另一种方式</view>
-    <view class="direct-launch-footer__primary" bindtap="confirmLaunch">发起这张卡</view>
+    <view class="direct-launch-footer__ghost" bindtap="goBack">返回上一步</view>
+    <view class="direct-launch-footer__primary" bindtap="confirmLaunch">确认发起</view>
   </view>
 </view>

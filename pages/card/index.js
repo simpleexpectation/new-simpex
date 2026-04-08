@@ -10,6 +10,16 @@ const calendarDays = [
   { key: '2026-03-22', day: '22', weekday: '日', hasTopic: true }
 ]
 
+const nextWeekDays = [
+  { key: '2026-03-23', day: '23', weekday: '一', hasTopic: false },
+  { key: '2026-03-24', day: '24', weekday: '二', hasTopic: false },
+  { key: '2026-03-25', day: '25', weekday: '三', hasTopic: false },
+  { key: '2026-03-26', day: '26', weekday: '四', hasTopic: false },
+  { key: '2026-03-27', day: '27', weekday: '五', hasTopic: false },
+  { key: '2026-03-28', day: '28', weekday: '六', hasTopic: false },
+  { key: '2026-03-29', day: '29', weekday: '日', hasTopic: false }
+]
+
 const sortTopicsByDate = (selectedDateKey = '') => {
   const getDayValue = (dateKey) => new Date(dateKey).getTime()
   if (!selectedDateKey) {
@@ -55,9 +65,14 @@ Page({
     topics,
     visibleTopics: sortTopicsByDate('2026-03-20'),
     calendarDays,
+    nextWeekDays,
     activeTab: 'topics',
     showCalendar: false,
     selectedDateKey: '2026-03-20',
+    pressedDateKey: '',
+    pressedTopicId: '',
+    pressedJoinId: '',
+    pressedToggle: false,
     pageReady: false,
     pageLeaving: false
   },
@@ -90,15 +105,44 @@ Page({
   toggleCalendar() {
     this.setData({ showCalendar: !this.data.showCalendar })
   },
-  openAiEntry() {
-    this.setData({ pageLeaving: true })
-    setTimeout(() => {
-      wx.navigateTo({ url: '/pages/ai-entry/index' })
-    }, 180)
+  pressCalendarDate(e) {
+    const { key } = e.currentTarget.dataset
+    if (!key) return
+    this.setData({ pressedDateKey: key })
+  },
+  releaseCalendarDate() {
+    if (!this.data.pressedDateKey) return
+    this.setData({ pressedDateKey: '' })
+  },
+  pressCalendarToggle() {
+    this.setData({ pressedToggle: true })
+  },
+  releaseCalendarToggle() {
+    if (!this.data.pressedToggle) return
+    this.setData({ pressedToggle: false })
+  },
+  pressTopicCard(e) {
+    const { id } = e.currentTarget.dataset
+    if (!id) return
+    this.setData({ pressedTopicId: id })
+  },
+  releaseTopicCard() {
+    if (!this.data.pressedTopicId) return
+    this.setData({ pressedTopicId: '' })
+  },
+  pressJoinButton(e) {
+    const { id } = e.currentTarget.dataset
+    if (!id) return
+    this.setData({ pressedJoinId: id })
+  },
+  releaseJoinButton() {
+    if (!this.data.pressedJoinId) return
+    this.setData({ pressedJoinId: '' })
   },
   selectCalendarDate(e) {
     const { key } = e.currentTarget.dataset
     if (!key) return
+    this.releaseCalendarDate()
     const selectedDateKey = this.data.selectedDateKey === key ? '' : key
     const visibleTopics = sortTopicsByDate(selectedDateKey)
     this.setData({
@@ -108,6 +152,7 @@ Page({
   },
   goTopicDetail(e) {
     const { id } = e.currentTarget.dataset
+    this.releaseTopicCard()
     this.setData({ pageLeaving: true })
     setTimeout(() => {
       wx.navigateTo({ url: `/pages/topic-detail/index?id=${id}` })
@@ -115,6 +160,8 @@ Page({
   },
   joinTopic(e) {
     const { id } = e.currentTarget.dataset
+    this.releaseJoinButton()
+    this.releaseTopicCard()
     this.setData({ pageLeaving: true })
     setTimeout(() => {
       wx.navigateTo({ url: `/pages/topic-detail/index?id=${id}` })

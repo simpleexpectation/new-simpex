@@ -24,30 +24,16 @@
 
   <!-- ── 话题列表 ── -->
   <view wx:if="{{activeTab === 'topics'}}" class="topic-list">
-    <view class="ai-entry-card" bindtap="openAiEntry">
-      <view class="ai-entry-card__mist ai-entry-card__mist--a"></view>
-      <view class="ai-entry-card__mist ai-entry-card__mist--b"></view>
-      <view class="ai-entry-card__head">
-        <text class="ai-entry-card__eyebrow">First conversation with AI</text>
-        <text class="ai-entry-card__badge">轻入场</text>
-      </view>
-      <view class="ai-entry-card__body">
-        <text class="ai-entry-card__title">先说一点最近的你</text>
-        <text class="ai-entry-card__copy">不用先填资料。先用几句近况、一个想法，做出你的第一张对话卡。</text>
-      </view>
-      <view class="ai-entry-card__footer">
-        <text class="ai-entry-card__hint">支持 3 个问题回答，也可以直接语音说给我听</text>
-        <view class="ai-entry-card__action">进入这条轻入场流程 →</view>
-      </view>
-    </view>
-
     <view class="topic-calendar-panel glass-panel">
       <view class="topic-calendar-strip">
         <view
           wx:for="{{calendarDays}}"
           wx:key="key"
-          class="topic-calendar-strip__dot {{selectedDateKey === item.key ? 'topic-calendar-strip__dot--active' : ''}} {{item.hasTopic ? 'topic-calendar-strip__dot--enabled' : ''}}"
+          class="topic-calendar-strip__dot {{selectedDateKey === item.key ? 'topic-calendar-strip__dot--active' : ''}} {{item.hasTopic ? 'topic-calendar-strip__dot--enabled' : ''}} {{pressedDateKey === item.key ? 'topic-calendar-strip__dot--pressed' : ''}}"
           data-key="{{item.key}}"
+          bindtouchstart="pressCalendarDate"
+          bindtouchend="releaseCalendarDate"
+          bindtouchcancel="releaseCalendarDate"
           bindtap="selectCalendarDate"
         >
           <text class="topic-calendar-strip__weekday">{{item.weekday}}</text>
@@ -55,17 +41,16 @@
         </view>
       </view>
 
-      <view class="topic-calendar-panel__mini-toggle" bindtap="toggleCalendar">
-        <view class="topic-calendar-panel__mini-icon"></view>
-      </view>
-
       <view wx:if="{{showCalendar}}" class="topic-calendar-panel__sheet">
         <view class="topic-calendar-panel__grid">
           <view
-            wx:for="{{calendarDays}}"
+            wx:for="{{nextWeekDays}}"
             wx:key="key"
-            class="topic-calendar-panel__cell {{selectedDateKey === item.key ? 'topic-calendar-panel__cell--active' : ''}} {{item.hasTopic ? 'topic-calendar-panel__cell--enabled' : ''}}"
+            class="topic-calendar-panel__cell {{selectedDateKey === item.key ? 'topic-calendar-panel__cell--active' : ''}} {{item.hasTopic ? 'topic-calendar-panel__cell--enabled' : ''}} {{pressedDateKey === item.key ? 'topic-calendar-panel__cell--pressed' : ''}}"
             data-key="{{item.key}}"
+            bindtouchstart="pressCalendarDate"
+            bindtouchend="releaseCalendarDate"
+            bindtouchcancel="releaseCalendarDate"
             bindtap="selectCalendarDate"
           >
             <text class="topic-calendar-panel__weekday">{{item.weekday}}</text>
@@ -73,13 +58,20 @@
           </view>
         </view>
       </view>
+
+      <view class="topic-calendar-panel__mini-toggle {{pressedToggle ? 'topic-calendar-panel__mini-toggle--pressed' : ''}}" bindtap="toggleCalendar" bindtouchstart="pressCalendarToggle" bindtouchend="releaseCalendarToggle" bindtouchcancel="releaseCalendarToggle">
+        <view class="topic-calendar-panel__mini-icon {{showCalendar ? 'topic-calendar-panel__mini-icon--expanded' : ''}}"></view>
+      </view>
     </view>
 
     <view
       wx:for="{{visibleTopics}}"
       wx:key="id"
-      class="topic-card topic-card--{{index % 9}}"
+      class="topic-card topic-card--{{index % 9}} {{pressedTopicId === item.id ? 'topic-card--pressed' : ''}}"
       data-id="{{item.id}}"
+      bindtouchstart="pressTopicCard"
+      bindtouchend="releaseTopicCard"
+      bindtouchcancel="releaseTopicCard"
       bindtap="goTopicDetail"
     >
       <view class="topic-card__mist topic-card__mist--a"></view>
@@ -106,7 +98,7 @@
 
       <view class="topic-card__footer">
         <text class="topic-card__rules">{{item.rules}}</text>
-        <view class="topic-join-btn" catchtap="joinTopic" data-id="{{item.id}}">申请加入 →</view>
+        <view class="topic-join-btn {{pressedJoinId === item.id ? 'topic-join-btn--pressed' : ''}}" catchtap="joinTopic" bindtouchstart="pressJoinButton" bindtouchend="releaseJoinButton" bindtouchcancel="releaseJoinButton" data-id="{{item.id}}">申请加入 →</view>
       </view>
     </view>
 

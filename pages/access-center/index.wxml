@@ -1,0 +1,63 @@
+<view class="page-shell invite-page {{pageReady ? 'page-ready' : ''}} {{pageLeaving ? 'page-leaving' : ''}}">
+  <view class="invite-page__glow invite-page__glow--a"></view>
+  <view class="invite-page__glow invite-page__glow--b"></view>
+
+  <view class="detail-topbar" style="padding-top: {{statusBarHeight + 14}}px;">
+    <view class="detail-topbar__back" bindtap="goBack">← 返回</view>
+  </view>
+
+  <block wx:if="{{mode === 'unlock'}}">
+    <view class="detail-section">
+      <text class="detail-page__title">会员权益</text>
+
+      <view class="hero-card">
+        <text class="hero-card__eyebrow">MONTHLY ACCESS</text>
+        <text class="hero-card__title">真实发生月卡</text>
+        <view class="hero-card__price-row">
+          <text class="hero-card__currency">¥</text>
+          <text class="hero-card__price">99</text>
+          <text class="hero-card__billing">/ 月</text>
+        </view>
+        <text class="hero-card__copy">到期前 3 天提醒，随时可取消续费</text>
+        <view class="hero-card__badge">限时免费名额仅剩 {{quota.remaining}}/{{quota.total}}</view>
+      </view>
+
+      <text class="section-label">月卡权益</text>
+      <view class="benefit-list">
+        <view wx:for="{{membershipBenefits}}" wx:key="title" class="benefit-item">
+          <view class="benefit-item__icon">{{item.icon}}</view>
+          <text class="benefit-item__text">{{item.title}}</text>
+        </view>
+      </view>
+
+      <view class="detail-actions">
+        <view class="primary-action" bindtap="startMembershipPurchase">立即购买月卡 ¥99</view>
+        <view class="ghost-action" bindtap="openInviteFriends">邀请好友免费获得 →</view>
+      </view>
+    </view>
+  </block>
+
+  <block wx:else>
+    <view class="detail-section">
+      <text class="detail-page__title">共建计划</text>
+      <text class="detail-page__desc">邀请更多同频的人进入 Simpex，一起共建真实发生。面向已被验证的高质量参与者、发起者与 KOL 开放。</text>
+
+      <view class="hero-card hero-card--cobuild">
+        <text class="hero-card__eyebrow">CO-BUILD PLAN</text>
+        <text class="hero-card__title">持续邀请同频的人，一起把真实发生带进来</text>
+        <text class="hero-card__copy hero-card__copy--wide">每成功邀请一位同频新朋友完成月度订阅，你会获得25%对应的持续关键回馈。</text>
+        <view class="hero-card__badge">审核开放席位 {{quota.remaining}}/{{quota.total}}</view>
+      </view>
+
+      <text class="section-label">共建机制</text>
+      <view class="benefit-list">
+        <view wx:for="{{cobuildBenefits}}" wx:key="title" class="benefit-item">
+          <view class="benefit-item__icon">{{item.icon}}</view>
+          <text class="benefit-item__text">{{item.title}}</text>
+        </view>
+      </view>
+
+      <view class="primary-action primary-action--bottom" bindtap="inviteFriend" data-index="{{0}}">开始共建邀请</view>
+    </view>
+  </block>
+</view>

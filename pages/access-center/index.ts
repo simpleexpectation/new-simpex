@@ -1,15 +1,3 @@
-const unlockSlots = [
-  { key: 'self', label: '你自己', status: '已点亮', active: true },
-  { key: 'friend-a', label: '好友 #1', status: '等待中', active: false },
-  { key: 'friend-b', label: '好友 #2', status: '等待中', active: false }
-]
-
-const cobuildSlots = [
-  { key: 'self', label: '你自己', status: '已验证', active: true },
-  { key: 'friend-a', label: '共建伙伴 #1', status: '待加入', active: false },
-  { key: 'friend-b', label: '共建伙伴 #2', status: '待加入', active: false }
-]
-
 Page({
   data: {
     source: 'profile',
@@ -34,19 +22,9 @@ Page({
       { icon: '✦', title: '每成功邀请一位完成月度订阅，你会获得25%对应的持续关键回馈' },
       { icon: '◈', title: '共建者可获得月卡权益与长期共建身份标识' },
       { icon: '⌖', title: '面向已被验证的高质量参与者、发起者与 KOL 开放' }
-    ],
-    unlockSlots,
-    cobuildSlots,
-    unlockFriends: [
-      { initial: 'M', name: 'Mia', note: '你们上次在「城市游牧」话题中相遇' },
-      { initial: 'A', name: 'Aki', note: '她最近也在关注如何把焦虑说完整' }
-    ],
-    cobuildFriends: [
-      { initial: 'W', name: 'Waytoagi 社群主理人', note: '适合共同带入高质量 AI 学习与分享人群' },
-      { initial: 'L', name: '良渚在地发起者', note: '适合一起把良渚区域里的同频关系带进来' }
     ]
   },
-  onLoad(query) {
+  onLoad(query: Record<string, string>) {
     const systemInfo = wx.getSystemInfoSync()
     this.setData({
       source: query.source || 'profile',
@@ -75,11 +53,11 @@ Page({
       icon: 'none'
     })
   },
-  jumpToInviteSection() {
-    wx.pageScrollTo({
-      selector: '#invite-section',
-      duration: 280
-    })
+  openInviteFriends() {
+    this.setData({ pageLeaving: true })
+    setTimeout(() => {
+      wx.navigateTo({ url: '/pages/invite-friends/index?source=access-center' })
+    }, 180)
   },
   inviteFriend() {
     wx.showToast({

@@ -1,7 +1,13 @@
 const { myEvents } = require('../../data/mock')
 
-const featuredMyEvent = myEvents.find((item) => item.id === 'my-event-3') || myEvents[0]
-const eventDeck = myEvents.filter((item) => item.id !== featuredMyEvent.id)
+const eventSlides = [...myEvents]
+  .sort((a, b) => (a.date < b.date ? 1 : -1))
+  .map((item, index) => ({
+    ...item,
+    relativeTime: ['17 天前', '12 天前', '8 天前', '5 天前', '3 天前'][index] || `${index + 1} 周前`,
+    venueShort: item.venue.replace('某', '').slice(0, 4) || item.venue,
+    indexLabel: `${String(index + 1).padStart(2, '0')} / ${String(myEvents.length).padStart(2, '0')}`
+  }))
 
 Page({
   data: {
@@ -12,28 +18,25 @@ Page({
       location: '中国 · 杭州',
       tags: ['创作者']
     },
-    benefitsHub: {
-      eyebrow: 'Access',
-      title: '权益中心',
-      summary: '两种方式，同样进入',
-      intro: '你可以选择开通会员，或者邀请 2 位朋友加入，免费解锁当月体验。',
-      tip: '发起活动时可额外邀请 1 位站外好友参与，具体规则可分别进入查看。'
+    unlockEntry: {
+      badge: 'Invite to unlock',
+      title: '邀请解锁',
+      detail: '邀请 2 位同频好友，解锁本月完整权益',
+      cta: '去邀请'
     },
-    membership: {
-      badge: '订阅进入',
-      plan: '99 / 月会员',
-      renewal: '2026.04.21'
+    coBuildEntry: {
+      badge: 'Co-build plan',
+      title: '共建计划',
+      detail: '邀请同频新朋友完成订阅，获得持续关键回馈',
+      cta: '查看计划'
     },
-    inviteSummary: {
-      badge: '邀请进入',
-      title: '邀请 2 人免费解锁',
-      detail: '邀请 2 位新用户注册，可得当月免费订阅'
-    },
-    myEvents,
-    featuredMyEvent,
-    eventDeck,
-    selectedEvent: null,
+    eventSlides,
+    eventCurrent: 0,
+    selectedEvent: eventSlides[0],
     showEventModal: false,
+    pressedEventId: '',
+    pressedEntry: '',
+    pressedModalAction: '',
     pageReady: false,
     pageLeaving: false
   },
@@ -53,37 +56,70 @@ Page({
       tabBar.sync('/pages/profile/index', false)
     }
   },
-  openMembership() {
+  onEventSwiperChange(e) {
+    this.setData({ eventCurrent: e.detail.current })
+  },
+  pressEventCard(e) {
+    const { id } = e.currentTarget.dataset
+    if (!id) return
+    this.setData({ pressedEventId: id })
+  },
+  releaseEventCard() {
+    if (!this.data.pressedEventId) return
+    this.setData({ pressedEventId: '' })
+  },
+  pressModalAction(e) {
+    const { action } = e.currentTarget.dataset
+    if (!action) return
+    this.setData({ pressedModalAction: action })
+  },
+  releaseModalAction() {
+    if (!this.data.pressedModalAction) return
+    this.setData({ pressedModalAction: '' })
+  },
+  pressEntryCard(e) {
+    const { entry } = e.currentTarget.dataset
+    if (!entry) return
+    this.setData({ pressedEntry: entry })
+  },
+  releaseEntryCard() {
+    if (!this.data.pressedEntry) return
+    this.setData({ pressedEntry: '' })
+  },
+  openInviteUnlock() {
+    this.releaseEntryCard()
     this.setData({ pageLeaving: true })
     setTimeout(() => {
-      wx.navigateTo({ url: '/pages/membership/index' })
+      wx.navigateTo({ url: '/pages/access-center/index?source=profile&mode=unlock' })
     }, 180)
   },
-  openInviteCenter() {
+  openCoBuildPlan() {
+    this.releaseEntryCard()
     this.setData({ pageLeaving: true })
     setTimeout(() => {
-      wx.navigateTo({ url: '/pages/invite-unlock/index?source=profile' })
+      wx.navigateTo({ url: '/pages/access-center/index?source=profile&mode=cobuild' })
     }, 180)
   },
   openMyEvent(e) {
     const { id } = e.currentTarget.dataset
     if (!id) return
-    const selectedEvent = this.data.myEvents.find((item) => item.id === id) || null
+    const selectedEvent = this.data.eventSlides.find((item) => item.id === id) || this.data.eventSlides[0]
+    this.releaseEventCard()
     this.setData({
       selectedEvent,
-      showEventModal: !!selectedEvent
+      showEventModal: true
     })
   },
   closeEventModal() {
-    this.setData({
-      selectedEvent: null,
-      showEventModal: false
-    })
+    this.releaseModalAction()
+    this.setData({ showEventModal: false })
   },
-  pinEventToProfile() {
-    wx.showToast({ title: '已挂到名片精选', icon: 'none' })
+  pinEventToCard() {
+    this.releaseModalAction()
+    wx.showToast({ title: '已挂到名片', icon: 'none' })
   },
-  useEventAsStarter() {
-    wx.showToast({ title: '已带去发起草稿', icon: 'none' })
+  useEventAsPrompt() {
+    this.releaseModalAction()
+    wx.showToast({ title: '已设为发起入口', icon: 'none' })
   }
 })

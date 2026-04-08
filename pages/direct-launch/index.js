@@ -7,6 +7,11 @@ const venueOptions = [
   { key: 'banana', name: '香蕉小院', mood: '适合松弛表达', slot: '下午到黄昏' }
 ]
 
+const launchModes = [
+  { key: 'online', label: '线上', hint: '更轻、更快，适合先发起一个开放话题' },
+  { key: 'offline', label: '线下', hint: '更在场，适合把这张卡落到真实空间里' }
+]
+
 const gradientFamilies = [
   { h: 14, s: 42, l: 72, accent: 48 },
   { h: 208, s: 30, l: 76, accent: 50 },
@@ -75,6 +80,7 @@ Page({
   data: {
     entry: 'tab',
     source: 'direct',
+    launchMode: 'online',
     voiceDraft: '',
     generatedTopics: [],
     selectedGeneratedId: '',
@@ -84,8 +90,11 @@ Page({
       topic: '最近这段时间，有没有一件小事让你慢慢觉得自己开始进入新生活了？',
       reason: '我想从一个最近真实发生的小片段开始，和几个人认真聊一聊。',
       time: '',
-      venue: venueOptions[0].name
+      venue: venueOptions[0].name,
+      platform: '微信群 / 线上房间',
+      joinHint: '发起后自动带出加入方式'
     },
+    launchModes,
     venueOptions,
     pageReady: false,
     pageLeaving: false
@@ -94,17 +103,26 @@ Page({
     const source = query.source || 'direct'
     const topic = query.topic ? decodeURIComponent(query.topic) : ''
     const reason = query.reason ? decodeURIComponent(query.reason) : ''
+    const time = query.time ? decodeURIComponent(query.time) : ''
+    const mode = query.mode ? decodeURIComponent(query.mode) : 'online'
+    const venue = query.venue ? decodeURIComponent(query.venue) : ''
+    const platform = query.platform ? decodeURIComponent(query.platform) : ''
+    const joinHint = query.joinHint ? decodeURIComponent(query.joinHint) : ''
     const previewGradientStyle = createGradientStyle(`${topic} ${reason}`)
     this.setData({
       entry: query.entry || 'tab',
       source,
+      launchMode: mode,
       showManualFields: source !== 'starter',
       previewGradientStyle,
       form: {
         ...this.data.form,
         topic: topic || this.data.form.topic,
         reason: reason || this.data.form.reason,
-        time: source === 'starter' ? '' : this.data.form.time
+        time: source === 'starter' ? time : this.data.form.time,
+        venue: venue || this.data.form.venue,
+        platform: platform || this.data.form.platform,
+        joinHint: joinHint || this.data.form.joinHint
       }
     })
   },
@@ -193,6 +211,11 @@ Page({
     this.setData({
       'form.venue': value
     })
+  },
+  switchLaunchMode(e) {
+    const { mode } = e.currentTarget.dataset
+    if (!mode || mode === this.data.launchMode) return
+    this.setData({ launchMode: mode })
   },
   confirmLaunch() {
     wx.showToast({

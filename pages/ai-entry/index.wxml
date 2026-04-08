@@ -2,115 +2,76 @@
   <view class="ai-entry-page__glow ai-entry-page__glow--a"></view>
   <view class="ai-entry-page__glow ai-entry-page__glow--b"></view>
 
-  <nav-shell eyebrow="AI onboarding">
+  <nav-shell eyebrow="Launch entry">
     <view class="ai-entry-nav">
       <view class="ai-entry-nav__back" bindtap="goBack">‹</view>
       <view class="ai-entry-nav__copy">
-        <text class="ai-entry-nav__title">先说一点最近的你</text>
-        <text class="ai-entry-nav__sub">不需要先填手机号或资料，我们先一起做出第一张卡</text>
+        <text class="ai-entry-nav__title">分享一点最近的状态</text>
+        <text class="ai-entry-nav__sub">写、说，或者跳过</text>
       </view>
     </view>
   </nav-shell>
 
   <view class="ai-entry-hero">
     <text class="ai-entry-hero__eyebrow">向内探索，向外发现</text>
-    <text class="ai-entry-hero__title">用一次表达，代替传统注册</text>
-    <text class="ai-entry-hero__copy">你可以回答 3 个轻问题，也可以直接说给我听。系统会帮你整理出一张值得发起的对话卡，并推荐更适合的人。</text>
+    <text class="ai-entry-hero__title">给我一点线索，我替你起卡</text>
+    <text class="ai-entry-hero__copy">你只要说一点最近的状态或想法，系统会自动帮你填一版。</text>
   </view>
 
-  <view class="ai-entry-mode">
-    <view
-      class="ai-entry-mode__item {{mode === 'questions' ? 'ai-entry-mode__item--active' : ''}}"
-      data-mode="questions"
-      bindtap="switchMode"
-    >
-      回答 3 个问题
-    </view>
-    <view
-      class="ai-entry-mode__item {{mode === 'voice' ? 'ai-entry-mode__item--active' : ''}}"
-      data-mode="voice"
-      bindtap="switchMode"
-    >
-      直接说给我听
-    </view>
-  </view>
+  <view class="ai-entry-composer">
+    <view class="ai-entry-composer__mist ai-entry-composer__mist--a"></view>
+    <view class="ai-entry-composer__mist ai-entry-composer__mist--b"></view>
 
-  <view wx:if="{{mode === 'questions'}}" class="ai-entry-question-list">
-    <view wx:for="{{questionCards}}" wx:key="key" wx:for-item="question" class="ai-entry-question-card">
-      <text class="ai-entry-question-card__eyebrow">{{question.eyebrow}}</text>
-      <text class="ai-entry-question-card__title">{{question.title}}</text>
-      <text class="ai-entry-question-card__hint">{{question.hint}}</text>
-      <textarea
-        class="ai-entry-question-card__textarea"
-        value="{{question.value}}"
-        data-key="{{question.key}}"
-        bindinput="updateAnswer"
-        auto-height
-        maxlength="180"
-        placeholder="{{question.placeholder}}"
-        placeholder-class="ai-entry-question-card__placeholder"
-      />
-      <view class="ai-entry-question-card__chips">
-        <view
-          wx:for="{{question.suggestions}}"
-          wx:key="index"
-          wx:for-item="suggestion"
-          class="ai-entry-question-card__chip"
-          data-key="{{question.key}}"
-          data-value="{{suggestion}}"
-          bindtap="fillSuggestion"
-        >
-          {{suggestion}}
-        </view>
+    <view class="ai-entry-composer__head">
+      <view class="ai-entry-composer__copy">
+        <text class="ai-entry-composer__title">写一点，也可以直接说</text>
+        <text class="ai-entry-composer__sub">一个方向、一个问题，或者一种感受。</text>
       </view>
+      <view class="ai-entry-composer__record">◉</view>
     </view>
-  </view>
 
-  <view wx:if="{{mode === 'voice'}}" class="ai-entry-voice-card">
-    <view class="ai-entry-voice-card__head">
-      <view>
-        <text class="ai-entry-voice-card__title">直接说给我听</text>
-        <text class="ai-entry-voice-card__sub">像发一段语音给一个理解你的人。你说得越自然，系统越容易帮你生成一张真的像你的卡。</text>
-      </view>
-      <view class="ai-entry-voice-card__orb">◉</view>
-    </view>
     <textarea
-      class="ai-entry-voice-card__textarea"
+      class="ai-entry-composer__textarea"
       value="{{voiceDraft}}"
       bindinput="updateVoiceDraft"
       auto-height
-      maxlength="240"
-      placeholder="比如：我最近总觉得自己在慢慢进入新的生活方式，也更想靠近能认真回应的人。"
-      placeholder-class="ai-entry-question-card__placeholder"
+      maxlength="280"
+      placeholder="比如：我最近想聊聊 AI 为什么一边让人更高效，一边也更疲惫。"
+      placeholder-class="ai-entry-composer__placeholder"
     />
-    <view class="ai-entry-voice-card__footer">
-      <text class="ai-entry-voice-card__hint">后面可以接语音录入，这里先用转写后的文本展示。</text>
-      <view class="ai-entry-voice-card__button" bindtap="generateCard">先帮我整理</view>
-    </view>
-  </view>
 
-  <view wx:if="{{cardReady}}" class="ai-entry-result">
-    <view class="ai-entry-result__mist ai-entry-result__mist--a"></view>
-    <view class="ai-entry-result__mist ai-entry-result__mist--b"></view>
-    <text class="ai-entry-result__eyebrow">{{generatedCard.eyebrow}}</text>
-    <text class="ai-entry-result__title">{{generatedCard.title}}</text>
-    <text class="ai-entry-result__summary">{{generatedCard.summary}}</text>
-
-    <view class="ai-entry-result__block">
-      <text class="ai-entry-result__label">为什么适合你现在发起</text>
-      <text class="ai-entry-result__copy">{{generatedCard.launchReason}}</text>
-    </view>
-
-    <view class="ai-entry-result__block">
-      <text class="ai-entry-result__label">系统会优先推荐给这些人</text>
-      <view class="ai-entry-result__people">
-        <text wx:for="{{generatedCard.people}}" wx:key="index" class="ai-entry-result__person">{{item}}</text>
+    <view class="ai-entry-composer__chips">
+      <view wx:for="{{promptChips}}" wx:key="index" class="ai-entry-composer__chip" data-value="{{item}}" bindtap="appendPrompt">
+        {{item}}
       </view>
     </view>
   </view>
 
-  <view class="ai-entry-footer">
-    <view class="ai-entry-footer__secondary" bindtap="continueOptimize">继续优化卡片</view>
-    <view class="ai-entry-footer__primary" bindtap="subscribeLaunch">加入订阅并发起</view>
+  <view class="ai-entry-actions">
+    <view class="ai-entry-actions__secondary" bindtap="skipEntry">跳过，直接填写</view>
+    <view class="ai-entry-actions__primary" bindtap="generateCard">帮我自动填一版</view>
+  </view>
+
+  <view wx:if="{{processing}}" class="ai-entry-processing">
+    <view class="ai-entry-processing__panel">
+      <view class="ai-entry-processing__glow"></view>
+      <text class="ai-entry-processing__eyebrow">AUTOFILLING YOUR CARD</text>
+      <text class="ai-entry-processing__title">正在替你自动填充对话卡</text>
+      <text class="ai-entry-processing__copy">{{processingMode === 'skip' ? '你选择了直接进入，我们先打开卡片供你自己填写。' : '系统正在根据你刚刚的状态，补一版主题、描述和发起信息。'}}</text>
+      <view class="ai-entry-processing__steps">
+        <view class="ai-entry-processing__step">
+          <text class="ai-entry-processing__step-label">主题</text>
+          <view class="ai-entry-processing__step-bar"></view>
+        </view>
+        <view class="ai-entry-processing__step">
+          <text class="ai-entry-processing__step-label">描述</text>
+          <view class="ai-entry-processing__step-bar"></view>
+        </view>
+        <view class="ai-entry-processing__step">
+          <text class="ai-entry-processing__step-label">时间与方式</text>
+          <view class="ai-entry-processing__step-bar"></view>
+        </view>
+      </view>
+    </view>
   </view>
 </view>

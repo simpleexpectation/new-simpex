@@ -1,25 +1,45 @@
 <view wx:if="{{!hidden}}" class="tab-bar">
-  <view wx:if="{{composerOpen}}" class="tab-bar__mask" bindtap="closeComposer"></view>
-  <view wx:if="{{composerOpen}}" class="tab-bar__composer">
-    <text class="tab-bar__composer-title">发起一场对话</text>
-    <text class="tab-bar__composer-sub">直接写，或者先聊聊最近的状态。</text>
-    <view
-      wx:for="{{quickActions}}"
-      wx:key="key"
-      class="tab-bar__composer-card tab-bar__composer-card--{{item.key}}"
-      data-url="{{item.url}}"
-      bindtap="openQuickAction"
-    >
-      <view class="tab-bar__composer-card-head">
-        <text class="tab-bar__composer-badge">一个入口，两种开始方式</text>
-        <text class="tab-bar__composer-arrow">→</text>
+  <view wx:if="{{composerOpen}}" class="tab-bar__mask" bindtap="closeComposer" catchtouchmove="noop"></view>
+
+  <view wx:if="{{composerOpen}}" class="tab-bar__composer" catchtap="noop" catchtouchmove="noop">
+    <view class="tab-bar__composer-head">
+      <view>
+        <text class="tab-bar__composer-title">分享一点最近的状态</text>
       </view>
-      <text class="tab-bar__composer-label">{{item.label}}</text>
-      <text class="tab-bar__composer-copy">{{item.description}}</text>
+      <view class="tab-bar__composer-close" catchtap="closeComposer">×</view>
+    </view>
+
+    <view class="tab-bar__composer-body">
+      <view class="tab-bar__composer-input-head">
+        <view class="tab-bar__composer-voice" catchtap="startVoiceInput">◉</view>
+      </view>
+      <textarea
+        class="tab-bar__composer-textarea"
+        value="{{draft}}"
+        bindinput="updateDraft"
+        maxlength="220"
+        auto-height="{{false}}"
+        show-confirm-bar="{{false}}"
+        hold-keyboard="{{true}}"
+        disable-default-padding="{{true}}"
+        placeholder="比如：我最近想聊聊 AI 为什么一边让人更高效，一边也更疲惫。"
+        placeholder-class="tab-bar__composer-placeholder"
+      />
+      <view class="tab-bar__composer-chips">
+        <view wx:for="{{promptChips}}" wx:key="index" class="tab-bar__composer-chip" data-value="{{item}}" catchtap="appendPrompt">
+          {{item}}
+        </view>
+      </view>
+    </view>
+
+    <view class="tab-bar__composer-actions">
+      <button class="tab-bar__composer-secondary" hover-class="none" catchtap="skipEntry">跳过</button>
+      <button class="tab-bar__composer-primary" hover-class="none" catchtap="startAutofill">整理成卡片</button>
     </view>
   </view>
-  <view wx:if="{{showFab}}" class="tab-bar__fab {{composerOpen ? 'tab-bar__fab--active' : ''}}" bindtap="toggleComposer">
-    <text class="tab-bar__fab-icon">{{composerOpen ? '×' : '+'}}</text>
+
+  <view wx:if="{{showFab}}" class="tab-bar__fab" bindtap="toggleComposer">
+    <text class="tab-bar__fab-icon">+</text>
   </view>
   <view class="tab-bar__rail">
     <view

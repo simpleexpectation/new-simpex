@@ -7,6 +7,7 @@ Page({
     noShowCount: 2,
     showRsvpModal: false,
     statusBarHeight: 0,
+    pressedFooterAction: '',
     pageReady: false,
     pageLeaving: false
   },
@@ -28,10 +29,21 @@ Page({
     this.setData({ pageLeaving: false, pageReady: false })
     setTimeout(() => { this.setData({ pageReady: true }) }, 20)
   },
+  pressFooterAction(e) {
+    const { action } = e.currentTarget.dataset
+    if (!action) return
+    this.setData({ pressedFooterAction: action })
+  },
+  releaseFooterAction() {
+    if (!this.data.pressedFooterAction) return
+    this.setData({ pressedFooterAction: '' })
+  },
   goBack() {
+    this.releaseFooterAction()
     wx.navigateBack()
   },
   openRsvpModal() {
+    this.releaseFooterAction()
     this.setData({ showRsvpModal: true })
   },
   closeRsvpModal() {
@@ -41,7 +53,12 @@ Page({
     this.setData({ showRsvpModal: false })
     wx.showToast({ title: '预约成功', icon: 'success', duration: 1800 })
   },
+  pinEventToCard() {
+    this.releaseFooterAction()
+    wx.showToast({ title: '已挂到名片', icon: 'none' })
+  },
   enterBlackhole() {
+    this.releaseFooterAction()
     this.setData({ pageLeaving: true })
     setTimeout(() => {
       wx.switchTab({ url: '/pages/blackhole/index' })
