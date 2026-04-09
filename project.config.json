@@ -1,7 +1,40 @@
 {
   "description": "Simpex mini program frontend prototype",
   "packOptions": {
-    "ignore": [],
+    "ignore": [
+      {
+        "type": "folder",
+        "value": "exports"
+      },
+      {
+        "type": "folder",
+        "value": "notes-browser"
+      },
+      {
+        "type": "folder",
+        "value": "scripts"
+      },
+      {
+        "type": "folder",
+        "value": ".git"
+      },
+      {
+        "type": "folder",
+        "value": ".gstack"
+      },
+      {
+        "type": "folder",
+        "value": ".vscode"
+      },
+      {
+        "type": "file",
+        "value": "WORKING_RULES.md"
+      },
+      {
+        "type": "file",
+        "value": ".DS_Store"
+      }
+    ],
     "include": []
   },
   "setting": {
@@ -41,6 +74,7 @@
   },
   "compileType": "miniprogram",
   "miniprogramRoot": "./",
+  "cloudfunctionRoot": "cloudfunctions/",
   "libVersion": "3.14.2",
   "appid": "wxdb455394e846f5a7",
   "projectname": "simpex-miniprogram",

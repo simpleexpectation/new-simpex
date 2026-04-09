@@ -1,0 +1,9 @@
+{
+  "name": "simpex-api",
+  "version": "1.0.0",
+  "description": "Simpex cloud function backend",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "latest"
+  }
+}

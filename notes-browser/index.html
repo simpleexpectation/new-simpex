@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>个人备忘录浏览器</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <aside class="sidebar">
+        <div class="brand-card">
+          <div class="brand-card__eyebrow">Personal Notes</div>
+          <h1>个人备忘录浏览器</h1>
+          <p>先把你导出的 Apple Notes 变成一个可搜索、可浏览、可筛选的个人网页。</p>
+        </div>
+
+        <button id="about-button" class="about-button">
+          <span class="about-button__eyebrow">Portrait</span>
+          <strong>我是怎样的一个人</strong>
+          <span>把这次关于你的分析，沉淀成一张可长期查看的页面。</span>
+        </button>
+
+        <button id="adjustment-button" class="about-button">
+          <span class="about-button__eyebrow">Adjustment</span>
+          <strong>我为什么总会把事情做重</strong>
+          <span>把“看得深、推进得重”这件事拆开，沉淀成一张可反复回看的调整页。</span>
+        </button>
+
+        <div class="stats-grid" id="stats-grid"></div>
+
+        <div class="sidebar-section">
+          <div class="sidebar-section__title">搜索</div>
+          <input id="search-input" class="search-input" type="text" placeholder="搜标题、正文、关键词" />
+        </div>
+
+        <div class="sidebar-section">
+          <div class="sidebar-section__title">文件夹</div>
+          <div class="folder-list" id="folder-list"></div>
+        </div>
+      </aside>
+
+      <main class="main-panel">
+        <section class="list-panel">
+          <div class="collections-panel">
+            <div class="collections-head">
+              <div class="panel-head__eyebrow">Wiki Entrypoints</div>
+              <h2>先从结构开始看</h2>
+              <p>这不是完整 wiki，但已经先把你的备忘录长成四个入口：主题、问题、地点、时间线。</p>
+            </div>
+            <div id="collections-grid" class="collections-grid"></div>
+          </div>
+
+          <div id="collection-spotlight" class="collection-spotlight hidden">
+            <div class="collection-spotlight__meta">
+              <span id="spotlight-type" class="meta-pill"></span>
+              <span id="spotlight-count" class="meta-pill"></span>
+            </div>
+            <h2 id="spotlight-title"></h2>
+            <p id="spotlight-summary" class="collection-spotlight__summary"></p>
+            <ul id="spotlight-highlights" class="collection-spotlight__highlights"></ul>
+            <div>
+              <div class="collection-spotlight__label">代表笔记</div>
+              <div id="spotlight-notes" class="spotlight-notes"></div>
+            </div>
+          </div>
+
+          <div class="panel-head">
+            <div>
+              <div class="panel-head__eyebrow">Browse</div>
+              <h2 id="list-title">全部备忘录</h2>
+            </div>
+            <div class="panel-head__count" id="result-count"></div>
+          </div>
+          <div id="notes-list" class="notes-list"></div>
+        </section>
+
+        <section class="reader-panel">
+          <div id="reader-empty" class="reader-empty">
+            <div class="reader-empty__eyebrow">Reader</div>
+            <h2>先从左边选一条笔记</h2>
+            <p>这一版先解决浏览体验。你已经可以搜索、按文件夹筛选、点开阅读全文，之后我们再把它升级成真正的个人 wiki。</p>
+          </div>
+
+          <article id="reader-card" class="reader-card hidden">
+            <div class="reader-card__meta">
+              <span id="reader-account" class="meta-pill"></span>
+              <span id="reader-folder" class="meta-pill"></span>
+            </div>
+            <h2 id="reader-title"></h2>
+            <div id="reader-summary" class="reader-summary hidden">
+              <p id="reader-summary-text" class="reader-summary__text"></p>
+              <ul id="reader-highlights" class="reader-highlights"></ul>
+            </div>
+            <div id="reader-essay" class="reader-essay hidden"></div>
+            <div id="reader-body" class="reader-body"></div>
+            <div class="reader-footer">
+              <span class="reader-footer__label">原始文件</span>
+              <code id="reader-path"></code>
+            </div>
+          </article>
+        </section>
+      </main>
+    </div>
+
+    <script src="./data.js"></script>
+    <script src="./app.js"></script>
+  </body>
+  </html>

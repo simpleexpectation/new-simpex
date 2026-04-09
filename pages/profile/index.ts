@@ -1,13 +1,4 @@
-import { myEvents } from '../../data/mock'
-
-const eventSlides = [...myEvents]
-  .sort((a, b) => (a.date < b.date ? 1 : -1))
-  .map((item, index) => ({
-    ...item,
-    relativeTime: ['17 天前', '12 天前', '8 天前', '5 天前', '3 天前'][index] || `${index + 1} 周前`,
-    venueShort: item.venue.replace('某', '').slice(0, 4) || item.venue,
-    indexLabel: `${String(index + 1).padStart(2, '0')} / ${String(myEvents.length).padStart(2, '0')}`
-  }))
+const backend = require('../../lib/backend/index') as typeof import('../../lib/backend/index')
 
 Page({
   data: {
@@ -30,19 +21,32 @@ Page({
       detail: '邀请同频新朋友完成订阅，获得持续关键回馈',
       cta: '查看计划'
     },
-    eventSlides,
+    eventSlides: [],
     eventCurrent: 0,
-    selectedEvent: eventSlides[0],
+    selectedEvent: null as any,
     showEventModal: false,
     pressedEventId: '',
     pressedEntry: '',
     pressedModalAction: '',
+    backendMode: 'mock',
     pageReady: false,
     pageLeaving: false
   },
-  onShow() {
+  async onShow() {
     this.showTabBar()
+    await this.loadProfileHome()
     this.enterPage()
+  },
+  async loadProfileHome() {
+    const result = await backend.fetchProfileHome()
+    this.setData({
+      user: result.user,
+      unlockEntry: result.unlockEntry,
+      coBuildEntry: result.coBuildEntry,
+      eventSlides: result.eventSlides,
+      selectedEvent: result.eventSlides[0] || null,
+      backendMode: result.mode
+    })
   },
   enterPage() {
     this.setData({ pageLeaving: false, pageReady: false })

@@ -1,18 +1,20 @@
-const { topics } = require('../../data/mock')
+const backend = require('../../lib/backend/index')
 
 Page({
   data: {
     topic: null,
     statusBarHeight: 0,
+    isSubmitting: false,
+    backendMode: 'mock',
     pageReady: false,
     pageLeaving: false
   },
-  onLoad(options) {
+  async onLoad(options) {
     const info = wx.getWindowInfo ? wx.getWindowInfo() : wx.getSystemInfoSync()
-    const id = options.id
-    const topic = topics.find(function (t) { return t.id === id }) || topics[0]
+    const result = await backend.fetchTopicDetail(options.id)
     this.setData({
-      topic: topic,
+      topic: result.topic,
+      backendMode: result.mode,
       statusBarHeight: info.statusBarHeight || 0
     })
   },
@@ -22,6 +24,17 @@ Page({
   },
   goBack() {
     wx.navigateBack()
+  },
+  async applyToJoin() {
+    const topicId = this.data.topic && this.data.topic.id
+    if (!topicId || this.data.isSubmitting) return
+    this.setData({ isSubmitting: true })
+    try {
+      const result = await backend.applyToTopic(topicId)
+      wx.showToast({ title: result.message, icon: 'none' })
+    } finally {
+      this.setData({ isSubmitting: false })
+    }
   },
   goMemberCard(e) {
     const { id } = e.currentTarget.dataset

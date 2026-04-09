@@ -1,20 +1,22 @@
-const { memberProfiles, myEvents } = require('../../data/mock')
-
-const fallbackPerson = memberProfiles[0]
+const backend = require('../../lib/backend/index')
 
 Page({
   data: {
-    person: fallbackPerson,
-    visibleEvents: myEvents.filter((item) => fallbackPerson.eventIds.includes(item.id)),
+    person: null,
+    visibleEvents: [],
     selectedEvent: null,
     showEventModal: false,
+    backendMode: 'mock',
     pageReady: false,
     pageLeaving: false
   },
-  onLoad(options) {
-    const person = memberProfiles.find((item) => item.id === options.id) || fallbackPerson
-    const visibleEvents = myEvents.filter((item) => person.eventIds.includes(item.id))
-    this.setData({ person, visibleEvents })
+  async onLoad(options) {
+    const result = await backend.fetchPersonProfile(options.id)
+    this.setData({
+      person: result.person,
+      visibleEvents: result.visibleEvents,
+      backendMode: result.mode
+    })
   },
   onShow() {
     this.enterPage()

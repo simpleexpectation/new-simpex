@@ -64,7 +64,7 @@
 <view class="detail-footer">
   <view class="detail-footer__rail">
     <view class="detail-footer__back" bindtap="goBack">返回</view>
-    <view class="detail-footer__cta">申请加入</view>
+    <view class="detail-footer__cta" bindtap="applyToJoin">{{isSubmitting ? '提交中...' : '申请加入'}}</view>
     <view class="detail-footer__ghost">分享话题</view>
   </view>
 </view>

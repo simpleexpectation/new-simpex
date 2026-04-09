@@ -1,26 +1,6 @@
-import { venues, topics } from '../../data/mock'
+const backend = require('../../lib/backend/index') as typeof import('../../lib/backend/index')
 
-const calendarDays = [
-  { key: '2026-03-16', day: '16', weekday: '一', hasTopic: false },
-  { key: '2026-03-17', day: '17', weekday: '二', hasTopic: false },
-  { key: '2026-03-18', day: '18', weekday: '三', hasTopic: false },
-  { key: '2026-03-19', day: '19', weekday: '四', hasTopic: false },
-  { key: '2026-03-20', day: '20', weekday: '五', hasTopic: true },
-  { key: '2026-03-21', day: '21', weekday: '六', hasTopic: true },
-  { key: '2026-03-22', day: '22', weekday: '日', hasTopic: true }
-]
-
-const nextWeekDays = [
-  { key: '2026-03-23', day: '23', weekday: '一', hasTopic: false },
-  { key: '2026-03-24', day: '24', weekday: '二', hasTopic: false },
-  { key: '2026-03-25', day: '25', weekday: '三', hasTopic: false },
-  { key: '2026-03-26', day: '26', weekday: '四', hasTopic: false },
-  { key: '2026-03-27', day: '27', weekday: '五', hasTopic: false },
-  { key: '2026-03-28', day: '28', weekday: '六', hasTopic: false },
-  { key: '2026-03-29', day: '29', weekday: '日', hasTopic: false }
-]
-
-const sortTopicsByDate = (selectedDateKey = '') => {
+const sortTopicsByDate = (topics: any[], selectedDateKey = '') => {
   const getDayValue = (dateKey: string) => new Date(dateKey).getTime()
   if (!selectedDateKey) {
     return [...topics].sort((a, b) => getDayValue(a.dateKey) - getDayValue(b.dateKey))
@@ -43,7 +23,7 @@ const sortTopicsByDate = (selectedDateKey = '') => {
 
 const weekdayLabels = ['日', '一', '二', '三', '四', '五', '六']
 
-const buildVenueCards = () => {
+const buildVenueCards = (venues: any[]) => {
   const now = new Date()
   const monthLabel = `${now.getMonth() + 1}月`
   const dayLabel = `${now.getDate()}`
@@ -57,34 +37,67 @@ const buildVenueCards = () => {
   }))
 }
 
+const buildCalendarDays = (topics: any[]) => {
+  const topicDateSet = new Set(topics.map((item) => item.dateKey))
+  const allDates = [...topicDateSet].sort()
+  const sourceDates = allDates.length ? allDates : [new Date().toISOString().slice(0, 10)]
+
+  return sourceDates.map((dateKey) => {
+    const date = new Date(dateKey)
+    return {
+      key: dateKey,
+      day: `${date.getDate()}`,
+      weekday: weekdayLabels[date.getDay()],
+      hasTopic: topicDateSet.has(dateKey)
+    }
+  })
+}
+
 Page({
   data: {
-    venues: buildVenueCards(),
+    venues: [],
     venueMonthLabel: '',
     venueDayLabel: '',
-    topics,
-    visibleTopics: sortTopicsByDate('2026-03-20'),
-    calendarDays,
-    nextWeekDays,
+    topics: [],
+    visibleTopics: [],
+    calendarDays: [],
+    nextWeekDays: [],
     activeTab: 'topics',
     showCalendar: false,
-    selectedDateKey: '2026-03-20',
+    selectedDateKey: '',
     pressedDateKey: '',
     pressedTopicId: '',
     pressedJoinId: '',
     pressedToggle: false,
+    backendMode: 'mock',
+    isLoading: true,
     pageReady: false,
     pageLeaving: false
   },
-  onShow() {
+  async onShow() {
     this.showTabBar()
-    const now = new Date()
-    this.setData({
-      venues: buildVenueCards(),
-      venueMonthLabel: `${now.getMonth() + 1}月`,
-      venueDayLabel: `${now.getDate()}`
-    })
+    await this.loadDiscoveryFeed()
     this.enterPage()
+  },
+  async loadDiscoveryFeed() {
+    const now = new Date()
+    const result = await backend.fetchDiscoveryFeed()
+    const calendarDays = buildCalendarDays(result.topics)
+    const selectedDateKey = this.data.selectedDateKey || calendarDays[0]?.key || ''
+    const visibleTopics = sortTopicsByDate(result.topics, selectedDateKey)
+
+    this.setData({
+      venues: buildVenueCards(result.venues),
+      venueMonthLabel: `${now.getMonth() + 1}月`,
+      venueDayLabel: `${now.getDate()}`,
+      topics: result.topics,
+      visibleTopics,
+      calendarDays: calendarDays.slice(0, 7),
+      nextWeekDays: calendarDays.slice(7),
+      selectedDateKey,
+      backendMode: result.mode,
+      isLoading: false
+    })
   },
   enterPage() {
     this.setData({ pageLeaving: false, pageReady: false })
@@ -140,7 +153,7 @@ Page({
     if (!key) return
     this.releaseCalendarDate()
     const selectedDateKey = this.data.selectedDateKey === key ? '' : key
-    const visibleTopics = sortTopicsByDate(selectedDateKey)
+    const visibleTopics = sortTopicsByDate(this.data.topics, selectedDateKey)
     this.setData({
       selectedDateKey,
       visibleTopics

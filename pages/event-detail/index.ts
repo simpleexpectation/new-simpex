@@ -1,26 +1,29 @@
-import { featuredEvent, myEvents } from '../../data/mock'
+const backend = require('../../lib/backend/index') as typeof import('../../lib/backend/index')
 
 Page({
   data: {
-    event: featuredEvent,
+    event: null as any,
     detailMode: 'official',
     noShowCount: 2,
     showRsvpModal: false,
     statusBarHeight: 0,
     pressedFooterAction: '',
+    backendMode: 'mock',
     pageReady: false,
     pageLeaving: false
   },
-  onLoad(options: Record<string, string>) {
+  async onLoad(options: Record<string, string>) {
     const info = wx.getWindowInfo ? wx.getWindowInfo() : wx.getSystemInfoSync()
-    this.setData({ statusBarHeight: info.statusBarHeight || 0 })
-    if (options.source === 'profile' && options.id) {
-      const event = myEvents.find((item) => item.id === options.id) || myEvents[0]
-      this.setData({
-        event,
-        detailMode: 'profile'
-      })
-    }
+    const result = await backend.fetchEventDetail({
+      id: options.id,
+      source: options.source
+    })
+    this.setData({
+      event: result.event,
+      detailMode: result.detailMode,
+      statusBarHeight: info.statusBarHeight || 0,
+      backendMode: result.mode
+    })
   },
   onShow() {
     this.enterPage()
