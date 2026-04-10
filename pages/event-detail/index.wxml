@@ -69,19 +69,19 @@
     <view class="meta-list {{pageReady ? 'meta-list--ready' : ''}}">
       <view class="meta-row">
         <text class="meta-row__label">时间</text>
-        <text class="meta-row__value">今晚 19:30 – 21:30</text>
+        <text class="meta-row__value">{{event.schedule}}</text>
       </view>
       <view class="meta-row">
         <text class="meta-row__label">地点</text>
-        <text class="meta-row__value">泊光集 · 杭州天目里附近</text>
+        <text class="meta-row__value">{{event.location}}</text>
       </view>
       <view class="meta-row">
         <text class="meta-row__label">引导人</text>
-        <text class="meta-row__value">Iris · 产品叙事研究</text>
+        <text class="meta-row__value">{{event.guide || event.host}}</text>
       </view>
       <view class="meta-row">
         <text class="meta-row__label">席位</text>
-        <text class="meta-row__value">{{event.status}} · 余 7 位（限额 20 人）</text>
+        <text class="meta-row__value">{{event.seatsText || event.status}}</text>
       </view>
     </view>
 

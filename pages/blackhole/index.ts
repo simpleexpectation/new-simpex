@@ -1,4 +1,4 @@
-import { attendeeCards, presenceConversations, presenceEvent } from '../../data/mock'
+import { attendeeCards, presenceConversations, presenceEvent, venues } from '../../data/mock'
 
 const buildGlyphs = (text: string, step = 0.12) =>
   Array.from(text).map((glyph, index) => ({
@@ -6,6 +6,12 @@ const buildGlyphs = (text: string, step = 0.12) =>
     isSpace: glyph === ' ',
     delay: `${(index * step).toFixed(2)}s`
   }))
+
+const isHorizontalSwipe = (startX: number, startY: number, endX: number, endY) => {
+  const dx = endX - startX
+  const dy = endY - startY
+  return Math.abs(dx) > 72 && Math.abs(dx) > Math.abs(dy) * 1.35
+}
 
 const sortPresenceConversations = (conversations: any[]) => {
   const recap = conversations.filter((item) => item.status === 'recap')
@@ -62,7 +68,10 @@ const qrMatrix = [
 Page({
   data: {
     statusBarHeight: 44,
+    activeTopTab: 'presence',
+    activeTopTabIndex: 0,
     presenceEvent,
+    venues,
     presenceConversations: initialPresenceConversations,
     attendeeCards,
     immersiveCopyCn: buildGlyphs('此刻只需要慢慢在场', 0.1),
@@ -93,6 +102,49 @@ Page({
     })
     this.syncTabBar(this.data.presencePhase)
     setTimeout(() => { this.setData({ pageReady: true }) }, 20)
+  },
+  switchTopTab(e: WechatMiniprogram.BaseEvent) {
+    const { tab } = e.currentTarget.dataset as any
+    if (!tab) return
+    this.setData({
+      activeTopTab: tab,
+      activeTopTabIndex: tab === 'spaces' ? 1 : 0
+    })
+  },
+  onTopTabSectionChange(e: WechatMiniprogram.SwiperChange) {
+    const index = e.detail.current
+    this.setData({
+      activeTopTabIndex: index,
+      activeTopTab: index === 1 ? 'spaces' : 'presence'
+    })
+  },
+  startTopTabSwipe(e: WechatMiniprogram.TouchEvent) {
+    if (this.data.presencePhase === 'during' || this.data.showPassSheet || this.data.showRosterSheet) return
+    const touch = e.touches[0]
+    if (!touch) return
+    ;(this as any).topTabSwipeStart = {
+      x: touch.clientX,
+      y: touch.clientY
+    }
+  },
+  endTopTabSwipe(e: WechatMiniprogram.TouchEvent) {
+    const start = (this as any).topTabSwipeStart
+    const touch = e.changedTouches[0]
+    ;(this as any).topTabSwipeStart = null
+    if (!start || !touch) return
+
+    if (!isHorizontalSwipe(start.x, start.y, touch.clientX, touch.clientY)) return
+    const dx = touch.clientX - start.x
+    if (dx < 0 && this.data.activeTopTab === 'presence') {
+      this.setData({ activeTopTab: 'spaces' })
+      return
+    }
+    if (dx > 0 && this.data.activeTopTab === 'spaces') {
+      this.setData({ activeTopTab: 'presence' })
+    }
+  },
+  cancelTopTabSwipe() {
+    ;(this as any).topTabSwipeStart = null
   },
   enterImmersive(e: WechatMiniprogram.BaseEvent) {
     if (this.data.enteringImmersive) return
@@ -207,5 +259,16 @@ Page({
   },
   createMoment() {
     wx.showToast({ title: '下一步接入“自我事件”', icon: 'none' })
+  },
+  goVenueDetail(e: WechatMiniprogram.BaseEvent) {
+    const { id } = e.currentTarget.dataset as any
+    if (!id) return
+    this.setData({ pageLeaving: true })
+    setTimeout(() => {
+      wx.navigateTo({ url: `/pages/venue-detail/index?id=${id}` })
+    }, 180)
+  },
+  openVenueRecommend() {
+    wx.showToast({ title: '下一步接入推荐空间提交流程', icon: 'none' })
   }
 })

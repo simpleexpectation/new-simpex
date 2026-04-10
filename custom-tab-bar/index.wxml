@@ -1,18 +1,16 @@
 <view wx:if="{{!hidden}}" class="tab-bar">
-  <view wx:if="{{composerOpen}}" class="tab-bar__mask" bindtap="closeComposer" catchtouchmove="noop"></view>
+  <view wx:if="{{composerOpen || launchSheetOpen}}" class="tab-bar__mask" bindtap="closeOverlay" catchtouchmove="noop"></view>
 
   <view wx:if="{{composerOpen}}" class="tab-bar__composer" catchtap="noop" catchtouchmove="noop">
     <view class="tab-bar__composer-head">
-      <view>
+      <view class="tab-bar__composer-copy">
         <text class="tab-bar__composer-title">分享一点最近的状态</text>
+        <text class="tab-bar__composer-sub">先给一句线索，我们把它收成一张可以发起的对话卡。</text>
       </view>
       <view class="tab-bar__composer-close" catchtap="closeComposer">×</view>
     </view>
 
     <view class="tab-bar__composer-body">
-      <view class="tab-bar__composer-input-head">
-        <view class="tab-bar__composer-voice" catchtap="startVoiceInput">◉</view>
-      </view>
       <textarea
         class="tab-bar__composer-textarea"
         value="{{draft}}"
@@ -25,16 +23,93 @@
         placeholder="比如：我最近想聊聊 AI 为什么一边让人更高效，一边也更疲惫。"
         placeholder-class="tab-bar__composer-placeholder"
       />
-      <view class="tab-bar__composer-chips">
-        <view wx:for="{{promptChips}}" wx:key="index" class="tab-bar__composer-chip" data-value="{{item}}" catchtap="appendPrompt">
-          {{item}}
-        </view>
-      </view>
     </view>
 
     <view class="tab-bar__composer-actions">
       <button class="tab-bar__composer-secondary" hover-class="none" catchtap="skipEntry">跳过</button>
       <button class="tab-bar__composer-primary" hover-class="none" catchtap="startAutofill">整理成卡片</button>
+    </view>
+  </view>
+
+  <view wx:if="{{launchSheetOpen}}" class="tab-bar__launch-sheet" catchtap="noop" catchtouchmove="noop">
+    <view class="tab-bar__launch-sheet-head">
+      <view class="tab-bar__launch-sheet-copy">
+        <text class="tab-bar__launch-sheet-eyebrow">Launch Card</text>
+        <text class="tab-bar__launch-sheet-title">这张对话卡已经成形</text>
+        <text class="tab-bar__launch-sheet-sub">现在只要补几个必要信息，就可以发出去。</text>
+      </view>
+      <view class="tab-bar__launch-sheet-close" catchtap="closeLaunchSheet">×</view>
+    </view>
+
+    <view class="tab-bar__launch-sheet-card">
+      <view class="tab-bar__launch-sheet-glow tab-bar__launch-sheet-glow--a"></view>
+      <view class="tab-bar__launch-sheet-glow tab-bar__launch-sheet-glow--b"></view>
+
+      <view class="tab-bar__launch-sheet-grid">
+        <view class="tab-bar__launch-cell tab-bar__launch-cell--wide">
+          <text class="tab-bar__launch-label">话题</text>
+          <textarea
+            class="tab-bar__launch-textarea tab-bar__launch-textarea--title"
+            value="{{launchForm.topic}}"
+            data-field="topic"
+            bindinput="updateLaunchField"
+            maxlength="80"
+            auto-height
+            placeholder="这次想聊什么"
+            placeholder-class="tab-bar__launch-placeholder"
+          />
+        </view>
+
+        <view class="tab-bar__launch-cell tab-bar__launch-cell--wide">
+          <text class="tab-bar__launch-label">描述</text>
+          <textarea
+            class="tab-bar__launch-textarea"
+            value="{{launchForm.reason}}"
+            data-field="reason"
+            bindinput="updateLaunchField"
+            maxlength="180"
+            auto-height
+            placeholder="为什么值得聊，别人为什么会想加入"
+            placeholder-class="tab-bar__launch-placeholder"
+          />
+        </view>
+
+        <view class="tab-bar__launch-cell">
+          <text class="tab-bar__launch-label">时间</text>
+          <input
+            class="tab-bar__launch-input"
+            value="{{launchForm.time}}"
+            data-field="time"
+            bindinput="updateLaunchField"
+            maxlength="40"
+            placeholder="本周内"
+            placeholder-class="tab-bar__launch-placeholder"
+          />
+        </view>
+
+        <view class="tab-bar__launch-cell">
+          <text class="tab-bar__launch-label">{{launchModeLabel}}</text>
+          <input
+            class="tab-bar__launch-input"
+            value="{{launchModeValue}}"
+            data-field="{{launchModeField}}"
+            bindinput="updateLaunchField"
+            maxlength="40"
+            placeholder="{{launchModePlaceholder}}"
+            placeholder-class="tab-bar__launch-placeholder"
+          />
+        </view>
+
+        <view class="tab-bar__launch-cell">
+          <text class="tab-bar__launch-label">加入</text>
+          <text class="tab-bar__launch-value">{{launchJoinCopy}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="tab-bar__launch-actions">
+      <view class="tab-bar__launch-secondary" catchtap="backToComposer">返回修改</view>
+      <view class="tab-bar__launch-primary" catchtap="confirmLaunch">确认发起</view>
     </view>
   </view>
 

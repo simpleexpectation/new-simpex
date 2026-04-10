@@ -51,6 +51,15 @@
   color: rgba(243, 241, 231, 0.56);
 }
 
+.topic-section-swiper {
+  height: calc(100vh - 180rpx);
+}
+
+.topic-section-scroll {
+  height: 100%;
+  box-sizing: border-box;
+}
+
 /* ── 话题卡片（同活动卡片风格）── */
 .topic-list {
   display: flex;
@@ -227,6 +236,198 @@
   flex-direction: column;
   transform: translateY(0) scale(1);
   transition: transform 180ms ease, box-shadow 220ms ease, filter 220ms ease;
+}
+
+.reality-page {
+  margin: 10rpx -32rpx 0;
+  padding-bottom: calc(150rpx + env(safe-area-inset-bottom));
+}
+
+.reality-swiper {
+  height: calc(100vh - 330rpx - env(safe-area-inset-bottom));
+  min-height: 1080rpx;
+  max-height: 1220rpx;
+  margin-top: 0;
+}
+
+.reality-slide {
+  height: 100%;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.reality-card {
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  border-radius: 46rpx;
+  padding: 40rpx 38rpx 64rpx;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transform: translateY(0) scale(1);
+  box-shadow:
+    0 28rpx 84rpx rgba(0, 0, 0, 0.2),
+    inset 0 0 0 2rpx rgba(255, 255, 255, 0.06);
+  transition: transform 180ms ease, box-shadow 220ms ease;
+}
+
+.reality-card--pressed {
+  transform: translateY(8rpx) scale(0.985);
+}
+
+.reality-card--0 {
+  background:
+    radial-gradient(circle at 78% 16%, rgba(255,245,186,0.22), transparent 20%),
+    radial-gradient(circle at 70% 70%, rgba(224, 180, 134, 0.3), transparent 22%),
+    linear-gradient(180deg, #687985 0%, #7a8891 56%, #c4aa90 100%);
+}
+
+.reality-card--1 {
+  background:
+    radial-gradient(circle at 82% 12%, rgba(253,231,182,0.2), transparent 18%),
+    radial-gradient(circle at 44% 72%, rgba(148, 92, 47, 0.28), transparent 24%),
+    linear-gradient(180deg, #2d231d 0%, #6d3516 52%, #c17a35 100%);
+}
+
+.reality-card--2 {
+  background:
+    radial-gradient(circle at 80% 14%, rgba(255, 241, 204, 0.18), transparent 20%),
+    radial-gradient(circle at 24% 76%, rgba(234, 188, 153, 0.2), transparent 22%),
+    linear-gradient(180deg, #6f665f 0%, #aa8f7d 52%, #d9bea4 100%);
+}
+
+.reality-card--3 {
+  background:
+    radial-gradient(circle at 82% 16%, rgba(255,229,176,0.2), transparent 18%),
+    radial-gradient(circle at 38% 78%, rgba(182, 127, 84, 0.24), transparent 20%),
+    linear-gradient(180deg, #5d4a44 0%, #99786e 56%, #d0b08e 100%);
+}
+
+.reality-card--4 {
+  background:
+    radial-gradient(circle at 82% 14%, rgba(255,245,186,0.18), transparent 18%),
+    radial-gradient(circle at 26% 76%, rgba(200, 143, 121, 0.24), transparent 20%),
+    linear-gradient(180deg, #66655d 0%, #8d867e 52%, #c1a78c 100%);
+}
+
+.reality-card__mist {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(56rpx);
+  pointer-events: none;
+}
+
+.reality-card__mist--a {
+  right: 12rpx;
+  bottom: 168rpx;
+  width: 360rpx;
+  height: 360rpx;
+  background: rgba(255, 224, 196, 0.3);
+}
+
+.reality-card__mist--b {
+  left: 28rpx;
+  top: 240rpx;
+  width: 300rpx;
+  height: 300rpx;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.reality-card__chip {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  min-height: 48rpx;
+  padding: 0 22rpx;
+  border-radius: 999rpx;
+  background: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 22rpx;
+}
+
+.reality-card__body {
+  position: relative;
+  z-index: 1;
+  margin-top: auto;
+  padding-top: 0;
+  transform: translateY(-96rpx);
+}
+
+.reality-card__title {
+  display: block;
+  margin-top: 0;
+  color: #ffffff;
+  font-size: 54rpx;
+  line-height: 1.12;
+  font-weight: 500;
+  letter-spacing: -0.8rpx;
+  text-shadow: 0 8rpx 24rpx rgba(0, 0, 0, 0.12);
+}
+
+.reality-card__meta,
+.reality-card__place {
+  display: block;
+  margin-top: 12rpx;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 24rpx;
+  line-height: 1.64;
+  font-weight: 400;
+  letter-spacing: 0.2rpx;
+}
+
+.reality-card__actions {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0;
+  padding-bottom: 0;
+  transform: translateY(-70rpx);
+}
+
+.reality-card__primary-btn {
+  min-width: 174rpx;
+  height: 80rpx;
+  padding: 0 30rpx;
+  border-radius: 999rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.9);
+  color: #171312;
+  font-size: 28rpx;
+  font-weight: 600;
+}
+
+.reality-card__dismiss {
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 25rpx;
+  line-height: 1;
+}
+
+.reality-dots {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12rpx;
+  margin-top: 12rpx;
+}
+
+.reality-dot {
+  width: 12rpx;
+  height: 12rpx;
+  border-radius: 50%;
+  background: rgba(243, 241, 231, 0.18);
+  transition: transform 180ms ease, background 180ms ease;
+}
+
+.reality-dot--active {
+  background: rgba(243, 241, 231, 0.86);
+  transform: scale(1.45);
 }
 
 .topic-card--pressed {

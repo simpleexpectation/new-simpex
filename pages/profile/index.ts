@@ -1,5 +1,16 @@
 const backend = require('../../lib/backend/index') as typeof import('../../lib/backend/index')
 
+function decorateEvent(item: any) {
+  if (!item) return item
+  return {
+    ...item,
+    coreTopic: item.innerQuestion || item.title,
+    coreTopicHint: item.identityLens,
+    expandChips: (item.chips || []).slice(0, 3),
+    expandHint: item.summary || item.footnote || ''
+  }
+}
+
 Page({
   data: {
     user: {
@@ -28,6 +39,7 @@ Page({
     pressedEventId: '',
     pressedEntry: '',
     pressedModalAction: '',
+    pressedProfileAction: '',
     backendMode: 'mock',
     pageReady: false,
     pageLeaving: false
@@ -44,7 +56,7 @@ Page({
       unlockEntry: result.unlockEntry,
       coBuildEntry: result.coBuildEntry,
       eventSlides: result.eventSlides,
-      selectedEvent: result.eventSlides[0] || null,
+      selectedEvent: decorateEvent(result.eventSlides[0] || null),
       backendMode: result.mode
     })
   },
@@ -86,6 +98,15 @@ Page({
     if (!this.data.pressedEntry) return
     this.setData({ pressedEntry: '' })
   },
+  pressProfileAction(e: WechatMiniprogram.BaseEvent) {
+    const action = e.currentTarget.dataset.action as string
+    if (!action) return
+    this.setData({ pressedProfileAction: action })
+  },
+  releaseProfileAction() {
+    if (!this.data.pressedProfileAction) return
+    this.setData({ pressedProfileAction: '' })
+  },
   openInviteUnlock() {
     this.releaseEntryCard()
     this.setData({ pageLeaving: true })
@@ -106,7 +127,7 @@ Page({
     const selectedEvent = this.data.eventSlides.find((item: any) => item.id === id) || this.data.eventSlides[0]
     this.releaseEventCard()
     this.setData({
-      selectedEvent,
+      selectedEvent: decorateEvent(selectedEvent),
       showEventModal: true
     })
   },
@@ -121,5 +142,9 @@ Page({
   useEventAsPrompt() {
     this.releaseModalAction()
     wx.showToast({ title: '已设为发起入口', icon: 'none' })
+  },
+  editProfile() {
+    this.releaseProfileAction()
+    wx.showToast({ title: '下一步接入编辑资料页', icon: 'none' })
   }
 })

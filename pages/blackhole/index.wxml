@@ -4,13 +4,20 @@
     <view class="presence-shell__glow presence-shell__glow--b"></view>
     <view class="presence-top-offset" style="height: {{statusBarHeight + 24}}px;"></view>
     <view class="presence-subtabs">
-      <view class="presence-subtabs__item presence-subtabs__item--active">
+      <view class="presence-subtabs__item {{activeTopTab === 'presence' ? 'presence-subtabs__item--active' : ''}}" data-tab="presence" bindtap="switchTopTab">
         <text class="presence-subtabs__eyebrow">Presence</text>
         <text class="presence-subtabs__label">在场</text>
       </view>
+      <view class="presence-subtabs__item {{activeTopTab === 'spaces' ? 'presence-subtabs__item--active' : ''}}" data-tab="spaces" bindtap="switchTopTab">
+        <text class="presence-subtabs__eyebrow">Spaces</text>
+        <text class="presence-subtabs__label">空间</text>
+      </view>
     </view>
-    <view class="presence-before">
-      <view class="presence-conversation-list">
+    <swiper class="presence-section-swiper" current="{{activeTopTabIndex}}" duration="360" bindchange="onTopTabSectionChange">
+      <swiper-item>
+        <scroll-view scroll-y class="presence-section-scroll">
+          <view class="presence-before">
+            <view class="presence-conversation-list">
         <view
           wx:for="{{presenceConversations}}"
           wx:key="id"
@@ -88,8 +95,59 @@
             </view>
           </view>
         </view>
-      </view>
-    </view>
+            </view>
+          </view>
+        </scroll-view>
+      </swiper-item>
+
+      <swiper-item>
+        <scroll-view scroll-y class="presence-section-scroll">
+          <view class="presence-spaces">
+            <view class="venue-page-head venue-page-head--presence">
+              <text class="venue-page-head__eyebrow">Today in spaces</text>
+            </view>
+
+            <view class="venue-list">
+              <view
+                wx:for="{{venues}}"
+                wx:key="id"
+                class="venue-stage"
+                data-id="{{item.id}}"
+                bindtap="goVenueDetail"
+              >
+                <view class="venue-stage__head">
+                  <text class="venue-stage__caption">{{item.caption}}</text>
+                </view>
+
+          <view class="venue-stage__card venue-stage__card--{{index}}">
+            <view class="venue-stage__glow"></view>
+            <view class="venue-stage__body">
+              <text class="venue-stage__eyebrow">{{item.dateCopy}}</text>
+              <text class="venue-stage__title">{{item.name}}</text>
+              <text class="venue-stage__copy">{{item.mood}}</text>
+              <view class="venue-stage__meta">
+                <text class="venue-stage__meta-pill">{{item.discount}}</text>
+                <text class="venue-stage__meta-pill">{{item.presence}}</text>
+              </view>
+            </view>
+          </view>
+        </view>
+
+        <view class="venue-recommend-entry" bindtap="openVenueRecommend">
+          <view class="venue-recommend-entry__glow"></view>
+          <text class="venue-recommend-entry__eyebrow">Co-create a space</text>
+          <text class="venue-recommend-entry__title">推荐空间</text>
+          <text class="venue-recommend-entry__copy">如果你知道一个适合真实对话发生的地方，也可以推荐给我们。通过官方审核后，它会进入正式空间列表。</text>
+          <view class="venue-recommend-entry__footer">
+            <text class="venue-recommend-entry__meta">用户推荐 · 官方审核后上线</text>
+            <view class="venue-recommend-entry__action">去推荐 →</view>
+          </view>
+              </view>
+            </view>
+          </view>
+        </scroll-view>
+      </swiper-item>
+    </swiper>
   </view>
 
   <view wx:if="{{presencePhase === 'during'}}" class="immersive-scene">

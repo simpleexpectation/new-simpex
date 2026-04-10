@@ -36,9 +36,24 @@ Component({
     hidden: false,
     showFab: true,
     composerOpen: false,
+    launchSheetOpen: false,
     promptChips,
     draft: defaultDraft,
-    launching: false
+    launching: false,
+    launchMode: 'online',
+    launchForm: {
+      topic: '',
+      reason: '',
+      time: '',
+      venue: '',
+      platform: '',
+      joinHint: ''
+    },
+    launchModeLabel: '方式',
+    launchModeField: 'platform',
+    launchModeValue: '',
+    launchModePlaceholder: '微信群 / 线上房间',
+    launchJoinCopy: '开放加入'
   },
   methods: {
     noop() {},
@@ -49,17 +64,30 @@ Component({
         selected: selected >= 0 ? selected : 0,
         hidden: !!hidden,
         showFab: currentRoute === '/pages/card/index',
-        composerOpen: false
+        composerOpen: false,
+        launchSheetOpen: false
       })
     },
     setHidden(hidden: boolean) {
       this.setData({ hidden: !!hidden })
     },
     toggleComposer() {
-      this.setData({ composerOpen: !this.data.composerOpen })
+      this.setData({
+        composerOpen: !this.data.composerOpen,
+        launchSheetOpen: false
+      })
     },
     closeComposer() {
       this.setData({ composerOpen: false })
+    },
+    closeLaunchSheet() {
+      this.setData({ launchSheetOpen: false })
+    },
+    closeOverlay() {
+      this.setData({
+        composerOpen: false,
+        launchSheetOpen: false
+      })
     },
     updateDraft(e: WechatMiniprogram.Input) {
       this.setData({ draft: e.detail.value })
@@ -80,8 +108,7 @@ Component({
         icon: 'none'
       })
     },
-    goToLaunch(withAutofill: boolean) {
-      if (this.data.launching) return
+    openLaunchSheet(withAutofill: boolean) {
       const payload = withAutofill ? buildAutofillPayload(this.data.draft) : {
         topic: '',
         reason: '',
@@ -91,46 +118,68 @@ Component({
         platform: '',
         joinHint: ''
       }
-      const params = [
-        'entry=tab',
-        'source=starter',
-        `autofill=${withAutofill ? '1' : '0'}`,
-        `topic=${encodeURIComponent(payload.topic)}`,
-        `reason=${encodeURIComponent(payload.reason)}`,
-        `time=${encodeURIComponent(payload.time)}`,
-        `mode=${encodeURIComponent(payload.launchMode)}`,
-        `venue=${encodeURIComponent(payload.venue)}`,
-        `platform=${encodeURIComponent(payload.platform)}`,
-        `joinHint=${encodeURIComponent(payload.joinHint)}`
-      ].join('&')
 
-      this.setData({ launching: true })
-      wx.navigateTo({
-        url: `/pages/direct-launch/index?${params}`,
-        success: () => {
-          this.setData({
-            composerOpen: false,
-            launching: false
-          })
+      const isOnline = payload.launchMode === 'online'
+      this.setData({
+        composerOpen: false,
+        launchSheetOpen: true,
+        launchMode: payload.launchMode,
+        launchForm: {
+          topic: payload.topic,
+          reason: payload.reason,
+          time: payload.time,
+          venue: payload.venue,
+          platform: payload.platform,
+          joinHint: payload.joinHint
         },
-        fail: () => {
-          this.setData({ launching: false })
-          wx.showToast({
-            title: '跳转失败，请重试',
-            icon: 'none'
-          })
-        }
+        launchModeLabel: isOnline ? '方式' : '地点',
+        launchModeField: isOnline ? 'platform' : 'venue',
+        launchModeValue: isOnline ? payload.platform : payload.venue,
+        launchModePlaceholder: isOnline ? '微信群 / 线上房间' : '杭州',
+        launchJoinCopy: '开放加入'
+      })
+    },
+    updateLaunchField(e: WechatMiniprogram.Input) {
+      const { field } = e.currentTarget.dataset as { field?: string }
+      if (!field) return
+      const value = e.detail.value
+      this.setData({
+        [`launchForm.${field}`]: value
+      })
+      if (field === this.data.launchModeField) {
+        this.setData({ launchModeValue: value })
+      }
+    },
+    backToComposer() {
+      this.setData({
+        launchSheetOpen: false,
+        composerOpen: true
       })
     },
     startAutofill() {
-      this.goToLaunch(true)
+      this.openLaunchSheet(true)
     },
     skipEntry() {
-      this.goToLaunch(false)
+      this.openLaunchSheet(false)
+    },
+    confirmLaunch() {
+      wx.showToast({
+        title: '这里接直接发起提交流程',
+        icon: 'none'
+      })
+      this.setData({
+        composerOpen: false,
+        launchSheetOpen: false
+      })
     },
     switchTab(e: WechatMiniprogram.BaseEvent) {
       const { path, index } = e.currentTarget.dataset
-      this.setData({ selected: index, showFab: path === '/pages/card/index', composerOpen: false })
+      this.setData({
+        selected: index,
+        showFab: path === '/pages/card/index',
+        composerOpen: false,
+        launchSheetOpen: false
+      })
       wx.switchTab({ url: path })
     }
   },

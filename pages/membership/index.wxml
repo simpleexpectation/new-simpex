@@ -7,19 +7,39 @@
   </nav-shell>
 
   <view class="membership-hero">
-    <text class="membership-hero__eyebrow">Monthly access</text>
-    <text class="membership-hero__plan">{{membership.plan}}</text>
-    <view class="membership-hero__price-row">
-      <text class="membership-hero__currency">¥</text>
-      <text class="membership-hero__price">{{membership.price}}</text>
-      <text class="membership-hero__billing">/ 月</text>
+    <text class="membership-hero__eyebrow">Membership options</text>
+    <text class="membership-hero__plan">先给第一次进入的人一个更轻的选择</text>
+    <text class="membership-hero__intro">除了月卡，我们新增了 49 元周卡。先试一周，再决定要不要持续进入。</text>
+  </view>
+
+  <view class="membership-plan-grid">
+    <view
+      wx:for="{{planOptions}}"
+      wx:key="key"
+      class="membership-plan-card {{selectedPlanKey === item.key ? 'membership-plan-card--active' : ''}}"
+      data-key="{{item.key}}"
+      bindtap="selectPlan"
+    >
+      <text class="membership-plan-card__badge">{{item.badge}}</text>
+      <text class="membership-plan-card__title">{{item.plan}}</text>
+      <view class="membership-plan-card__price-row">
+        <text class="membership-plan-card__currency">¥</text>
+        <text class="membership-plan-card__price">{{item.price}}</text>
+        <text class="membership-plan-card__billing">{{item.billing}}</text>
+      </view>
+      <text class="membership-plan-card__renewal">{{item.renewal}}</text>
     </view>
-    <text class="membership-hero__renewal">{{membership.renewal}}</text>
   </view>
 
   <view class="membership-actions">
+    <view class="membership-hero__price-row">
+      <text class="membership-hero__currency">¥</text>
+      <text class="membership-hero__price">{{activePlan.price}}</text>
+      <text class="membership-hero__billing">{{activePlan.billing}}</text>
+    </view>
+    <text class="membership-hero__renewal">{{activePlan.renewal}}</text>
     <view class="purchase-button" bindtap="startMembershipPurchase">
-      <text class="purchase-button__price">立即购买月卡 ¥{{membership.price}}</text>
+      <text class="purchase-button__price">{{activePlan.cta}}</text>
     </view>
     <view class="invite-entry-button" bindtap="startInviteUnlock">
       <text class="invite-entry-button__text">邀请好友免费获得 →</text>
@@ -33,16 +53,16 @@
     <text class="invite-panel__description">{{inviteProgram.description}}</text>
   </view>
 
-  <view class="membership-perks-head">月卡权益</view>
+  <view class="membership-perks-head">{{selectedPlanKey === 'week' ? '周卡权益' : '月卡权益'}}</view>
   <view class="membership-list">
-    <view wx:for="{{membership.perks}}" wx:key="*this" class="membership-item">
+    <view wx:for="{{activePlan.perks}}" wx:key="*this" class="membership-item">
       <text>{{item}}</text>
     </view>
   </view>
 
   <view class="membership-footer">
     <view class="purchase-button" bindtap="startMembershipPurchase">
-      <text class="purchase-button__price">立即购买月卡 ¥{{membership.price}}</text>
+      <text class="purchase-button__price">{{activePlan.cta}}</text>
     </view>
   </view>
 </view>

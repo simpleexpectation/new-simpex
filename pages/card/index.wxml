@@ -4,27 +4,29 @@
   <nav-shell>
     <view class="tab-switch">
       <view
-        class="tab-switch__item {{activeTab === 'topics' ? 'tab-switch__item--active' : ''}}"
+        class="tab-switch__item {{activeTab === 'online' ? 'tab-switch__item--active' : ''}}"
         bindtap="switchTab"
-        data-tab="topics"
+        data-tab="online"
       >
-        <text class="tab-switch__eyebrow">Conversations</text>
-        <text class="tab-switch__label">对话</text>
+        <text class="tab-switch__eyebrow">Online</text>
+        <text class="tab-switch__label">线上</text>
       </view>
       <view
-        class="tab-switch__item {{activeTab === 'venues' ? 'tab-switch__item--active' : ''}}"
+        class="tab-switch__item {{activeTab === 'reality' ? 'tab-switch__item--active' : ''}}"
         bindtap="switchTab"
-        data-tab="venues"
+        data-tab="reality"
       >
-        <text class="tab-switch__eyebrow">Spaces</text>
-        <text class="tab-switch__label">空间</text>
+        <text class="tab-switch__eyebrow">Reality</text>
+        <text class="tab-switch__label">现实</text>
       </view>
     </view>
   </nav-shell>
 
-  <!-- ── 话题列表 ── -->
-  <view wx:if="{{activeTab === 'topics'}}" class="topic-list">
-    <view class="topic-calendar-panel glass-panel">
+  <swiper class="topic-section-swiper topic-section-swiper--{{activeTab}}" current="{{activeTabIndex}}" duration="360" bindchange="onTopicSectionChange">
+    <swiper-item>
+      <scroll-view scroll-y class="topic-section-scroll">
+        <view class="topic-list">
+          <view class="topic-calendar-panel glass-panel">
       <view class="topic-calendar-strip">
         <view
           wx:for="{{calendarDays}}"
@@ -62,94 +64,91 @@
       <view class="topic-calendar-panel__mini-toggle {{pressedToggle ? 'topic-calendar-panel__mini-toggle--pressed' : ''}}" bindtap="toggleCalendar" bindtouchstart="pressCalendarToggle" bindtouchend="releaseCalendarToggle" bindtouchcancel="releaseCalendarToggle">
         <view class="topic-calendar-panel__mini-icon {{showCalendar ? 'topic-calendar-panel__mini-icon--expanded' : ''}}"></view>
       </view>
-    </view>
+          </view>
 
-    <view
-      wx:for="{{visibleTopics}}"
-      wx:key="id"
-      class="topic-card topic-card--{{index % 9}} {{pressedTopicId === item.id ? 'topic-card--pressed' : ''}}"
-      data-id="{{item.id}}"
-      bindtouchstart="pressTopicCard"
-      bindtouchend="releaseTopicCard"
-      bindtouchcancel="releaseTopicCard"
-      bindtap="goTopicDetail"
-    >
-      <view class="topic-card__mist topic-card__mist--a"></view>
-      <view class="topic-card__mist topic-card__mist--b"></view>
+          <view
+            wx:for="{{visibleTopics}}"
+            wx:key="id"
+            class="topic-card topic-card--{{index % 9}} {{pressedTopicId === item.id ? 'topic-card--pressed' : ''}}"
+            data-id="{{item.id}}"
+            bindtouchstart="pressTopicCard"
+            bindtouchend="releaseTopicCard"
+            bindtouchcancel="releaseTopicCard"
+            bindtap="goTopicDetail"
+          >
+            <view class="topic-card__mist topic-card__mist--a"></view>
+            <view class="topic-card__mist topic-card__mist--b"></view>
 
-      <view class="topic-card__header">
-        <view class="topic-card__status">
-          <view class="topic-card__dot topic-card__dot--{{item.status}}"></view>
-          <text class="topic-card__status-label">{{item.statusLabel}}{{item.status === 'live' ? ' · LIVE' : ''}}</text>
-        </view>
-        <text class="topic-card__seat">{{item.current}}/{{item.total}} 余 {{item.total - item.current}} 位</text>
-      </view>
+            <view class="topic-card__header">
+              <view class="topic-card__status">
+                <view class="topic-card__dot topic-card__dot--{{item.status}}"></view>
+                <text class="topic-card__status-label">{{item.statusLabel}}{{item.status === 'live' ? ' · LIVE' : ''}}</text>
+              </view>
+              <text class="topic-card__seat">{{item.current}}/{{item.total}} 余 {{item.total - item.current}} 位</text>
+            </view>
 
-      <view class="topic-card__body">
-        <text class="topic-card__title">{{item.title}}</text>
-        <view class="topic-card__meta-row">
-          <text class="topic-card__initiator">{{item.initiator}}</text>
-          <text class="topic-card__meta"> 发起 · {{item.time}} · {{item.location}}</text>
-        </view>
-        <view class="topic-card__tags">
-          <view wx:for="{{item.tags}}" wx:key="index" wx:for-item="tag" class="pill topic-card__pill">{{tag}}</view>
-        </view>
-      </view>
+            <view class="topic-card__body">
+              <text class="topic-card__title">{{item.title}}</text>
+              <view class="topic-card__meta-row">
+                <text class="topic-card__initiator">{{item.initiator}}</text>
+                <text class="topic-card__meta"> 发起 · {{item.time}} · {{item.location}}</text>
+              </view>
+              <view class="topic-card__tags">
+                <view wx:for="{{item.tags}}" wx:key="index" wx:for-item="tag" class="pill topic-card__pill">{{tag}}</view>
+              </view>
+            </view>
 
-      <view class="topic-card__footer">
-        <text class="topic-card__rules">{{item.rules}}</text>
-        <view class="topic-join-btn {{pressedJoinId === item.id ? 'topic-join-btn--pressed' : ''}}" catchtap="joinTopic" bindtouchstart="pressJoinButton" bindtouchend="releaseJoinButton" bindtouchcancel="releaseJoinButton" data-id="{{item.id}}">申请加入 →</view>
-      </view>
-    </view>
-
-  </view>
-
-  <!-- ── 空间列表 ── -->
-  <view wx:if="{{activeTab === 'venues'}}">
-    <view class="venue-page-head">
-      <text class="venue-page-head__eyebrow">Today in spaces</text>
-      <view class="venue-page-head__date">
-        <text class="venue-page-head__month">{{venueMonthLabel}}</text>
-        <text class="venue-page-head__day">{{venueDayLabel}}日</text>
-      </view>
-    </view>
-
-    <view class="venue-list">
-      <view
-        wx:for="{{venues}}"
-        wx:key="id"
-        class="venue-stage"
-        data-id="{{item.id}}"
-        bindtap="goVenueDetail"
-      >
-        <view class="venue-stage__head">
-          <text class="venue-stage__caption">{{item.caption}}</text>
-        </view>
-
-        <view class="venue-stage__card venue-stage__card--{{index}}">
-          <view class="venue-stage__glow"></view>
-          <view class="venue-stage__body">
-            <text class="venue-stage__eyebrow">{{item.dateCopy}}</text>
-            <text class="venue-stage__title">{{item.name}}</text>
-            <text class="venue-stage__copy">{{item.mood}}</text>
-            <view class="venue-stage__meta">
-              <text class="venue-stage__meta-pill">{{item.discount}}</text>
-              <text class="venue-stage__meta-pill">{{item.presence}}</text>
+            <view class="topic-card__footer">
+              <text class="topic-card__rules">{{item.rules}}</text>
+              <view class="topic-join-btn {{pressedJoinId === item.id ? 'topic-join-btn--pressed' : ''}}" catchtap="joinTopic" bindtouchstart="pressJoinButton" bindtouchend="releaseJoinButton" bindtouchcancel="releaseJoinButton" data-id="{{item.id}}">申请加入 →</view>
             </view>
           </view>
         </view>
-      </view>
+      </scroll-view>
+    </swiper-item>
 
-      <view class="venue-recommend-entry" bindtap="openVenueRecommend">
-        <view class="venue-recommend-entry__glow"></view>
-        <text class="venue-recommend-entry__eyebrow">Co-create a space</text>
-        <text class="venue-recommend-entry__title">推荐空间</text>
-        <text class="venue-recommend-entry__copy">如果你知道一个适合真实对话发生的地方，也可以推荐给我们。通过官方审核后，它会进入正式空间列表。</text>
-        <view class="venue-recommend-entry__footer">
-          <text class="venue-recommend-entry__meta">用户推荐 · 官方审核后上线</text>
-          <view class="venue-recommend-entry__action">去推荐 →</view>
+    <swiper-item>
+      <view class="topic-section-scroll">
+        <view class="reality-page">
+          <swiper
+            class="reality-swiper"
+            current="{{realityCurrent}}"
+            vertical
+            circular
+            bindchange="onRealitySwiperChange"
+          >
+            <swiper-item wx:for="{{recommendedTopics}}" wx:key="id">
+              <view class="reality-slide">
+                <view
+                  class="reality-card reality-card--{{index % 5}} {{pressedTopicId === item.id ? 'reality-card--pressed' : ''}}"
+                  data-id="{{item.id}}"
+                  bindtouchstart="pressTopicCard"
+                  bindtouchend="releaseTopicCard"
+                  bindtouchcancel="releaseTopicCard"
+                  bindtap="goTopicDetail"
+                >
+                  <view class="reality-card__mist reality-card__mist--a"></view>
+                  <view class="reality-card__mist reality-card__mist--b"></view>
+                  <view class="reality-card__chip">{{item.statusLabel}}</view>
+                  <view class="reality-card__body">
+                    <text class="reality-card__title">{{item.title}}</text>
+                    <text class="reality-card__meta">{{item.initiator}} 发起 · {{item.time}}</text>
+                    <text class="reality-card__place">{{item.location}}</text>
+                  </view>
+                  <view class="reality-card__actions">
+                    <view class="reality-card__primary-btn">详情</view>
+                    <text class="reality-card__dismiss">不感兴趣</text>
+                  </view>
+                </view>
+              </view>
+            </swiper-item>
+          </swiper>
+
+          <view class="reality-dots">
+            <view wx:for="{{recommendedTopics}}" wx:key="id" class="reality-dot {{index === realityCurrent ? 'reality-dot--active' : ''}}"></view>
+          </view>
         </view>
       </view>
-    </view>
-  </view>
+    </swiper-item>
+  </swiper>
 </view>

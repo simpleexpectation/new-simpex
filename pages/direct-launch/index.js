@@ -42,11 +42,11 @@ const createGradientStyle = (input) => {
   const shift = seed % 12
   const h1 = family.h
   const h2 = (family.h + 18 + shift) % 360
-  const l1 = family.l
-  const l2 = family.l + 8
-  const glowAlpha = 0.26 + (seed % 8) * 0.01
+  const l1 = family.l + 6
+  const l2 = family.l + 14
+  const glowAlpha = 0.14 + (seed % 6) * 0.008
   return [
-    `background: radial-gradient(circle at 82% 18%, hsla(${family.accent}, 88%, 74%, ${glowAlpha}), transparent 22%), linear-gradient(135deg, hsl(${h1}, ${family.s}%, ${l1}%), hsl(${h2}, ${Math.max(18, family.s - 4)}%, ${l2}%))`,
+    `background: radial-gradient(circle at 82% 18%, hsla(${family.accent}, 82%, 78%, ${glowAlpha}), transparent 24%), radial-gradient(circle at 20% 84%, hsla(${(family.accent + 18) % 360}, 56%, 82%, 0.08), transparent 26%), linear-gradient(180deg, hsl(${h1}, ${Math.max(16, family.s - 10)}%, ${l1}%), hsl(${h2}, ${Math.max(14, family.s - 12)}%, ${l2}%))`,
     'border: 1rpx solid rgba(255,255,255,0.08)'
   ].join(';')
 }

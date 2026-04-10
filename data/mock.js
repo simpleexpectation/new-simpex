@@ -196,6 +196,38 @@ const venues = [
     dateCopy: '常驻空间'
   }
 ]
+const onlineEvents = [
+  {
+    id: 'online-1',
+    title: 'AI 时代下，我们还需要怎样的真实对话？',
+    schedule: '周三 20:00 · 腾讯会议',
+    format: '线上圆桌',
+    seats: '限 12 人 · 余 5 位',
+    host: 'Iris · Simpex Host',
+    summary: '先在线上听一轮真实观点碰撞，再决定要不要进入线下。',
+    tags: ['AI', '判断', '反对意见']
+  },
+  {
+    id: 'online-2',
+    title: '第一次来 Simpex，先在线上认识一下',
+    schedule: '周四 19:30 · 语音同行房',
+    format: '新人预热场',
+    seats: '限 8 人 · 余 3 位',
+    host: 'Momo · 社区引导',
+    summary: '给第一次接近真实对话的人一个低压力入口，先建立信任感。',
+    tags: ['新人入口', '建立信任', '低压力']
+  },
+  {
+    id: 'online-3',
+    title: '这一周，你最想继续想下去的问题是什么？',
+    schedule: '周日 21:00 · 在线共思',
+    format: '周末收束场',
+    seats: '限 10 人 · 余 4 位',
+    host: 'Nora · 播客观察',
+    summary: '适合把这一周没想完的问题先放在线上，再决定是否线下继续。',
+    tags: ['周复盘', '共思', '表达']
+  }
+]
 
 const bubbles = [
   { id: 'bubble-1', name: '青原', initial: '青', role: '研究哲学的程序员', x: 22, y: 24, size: 188, floatDelay: '0', driftX: '14rpx', driftY: '22rpx', accentA: '#FFD9AE', accentB: '#F3A8C7', accentC: '#B6D7FF' },
@@ -632,6 +664,7 @@ module.exports = {
   officialEvents,
   myEvents,
   venues,
+  onlineEvents,
   bubbles,
   presencePhases,
   presenceEvent,

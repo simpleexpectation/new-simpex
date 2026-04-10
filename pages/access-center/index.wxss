@@ -76,6 +76,13 @@
   box-sizing: border-box;
 }
 
+.hero-card--active {
+  box-shadow:
+    0 20rpx 50rpx rgba(0, 0, 0, 0.32),
+    inset 0 0 0 2rpx rgba(255, 255, 255, 0.12),
+    0 0 0 2rpx rgba(243, 241, 231, 0.08);
+}
+
 .hero-card--cobuild {
   background:
     radial-gradient(circle at 84% 18%, rgba(245, 233, 183, 0.28), transparent 28%),

@@ -5,7 +5,12 @@
     <view class="profile-avatar">
       <text class="profile-avatar__initial">{{user.initial}}</text>
     </view>
-    <text class="profile-name">{{user.name}}</text>
+    <view class="profile-heading">
+      <text class="profile-name">{{user.name}}</text>
+      <view class="profile-edit {{pressedProfileAction === 'edit' ? 'profile-edit--pressed' : ''}}" data-action="edit" bindtouchstart="pressProfileAction" bindtouchend="releaseProfileAction" bindtouchcancel="releaseProfileAction" bindtap="editProfile">
+        编辑资料
+      </view>
+    </view>
     <view class="profile-bio-lines">
       <text class="profile-bio-line">◈  {{user.bio}}</text>
       <text class="profile-bio-line">⌖  {{user.location}}</text>
@@ -89,6 +94,7 @@
         <view class="event-modal-card__center">
           <text class="event-modal-card__title">{{selectedEvent.previewTitle}}</text>
           <text class="event-modal-card__text">{{selectedEvent.previewText}}</text>
+          <text class="event-modal-card__anchor">{{selectedEvent.description}}</text>
         </view>
         <view class="event-card__footer">
           <view class="event-card__footer-meta">
@@ -100,14 +106,12 @@
       </view>
     </view>
 
-    <view class="event-modal-copy">
-      <text class="event-modal-copy__eyebrow">它正在代表的你</text>
-      <text class="event-modal-copy__text">{{selectedEvent.identityLens}}</text>
-    </view>
-
-    <view class="event-modal-meta">
-      <text class="event-modal-meta__item">{{selectedEvent.summary}}</text>
-      <text class="event-modal-meta__item">{{selectedEvent.footnote}}</text>
+    <view class="event-modal-panels">
+      <view class="event-modal-panel event-modal-panel--single">
+        <text class="event-modal-panel__eyebrow">想聊的话题</text>
+        <text class="event-modal-panel__text">{{selectedEvent.coreTopic}}</text>
+        <text class="event-modal-panel__sub">{{selectedEvent.coreTopicHint}}</text>
+      </view>
     </view>
 
     <view class="event-modal-actions">

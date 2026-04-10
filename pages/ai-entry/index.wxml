@@ -7,16 +7,10 @@
       <view class="ai-entry-nav__back" bindtap="goBack">‹</view>
       <view class="ai-entry-nav__copy">
         <text class="ai-entry-nav__title">分享一点最近的状态</text>
-        <text class="ai-entry-nav__sub">写、说，或者跳过</text>
+        <text class="ai-entry-nav__sub">给我一点线索，我替你起卡</text>
       </view>
     </view>
   </nav-shell>
-
-  <view class="ai-entry-hero">
-    <text class="ai-entry-hero__eyebrow">向内探索，向外发现</text>
-    <text class="ai-entry-hero__title">给我一点线索，我替你起卡</text>
-    <text class="ai-entry-hero__copy">你只要说一点最近的状态或想法，系统会自动帮你填一版。</text>
-  </view>
 
   <view class="ai-entry-composer">
     <view class="ai-entry-composer__mist ai-entry-composer__mist--a"></view>
@@ -24,8 +18,8 @@
 
     <view class="ai-entry-composer__head">
       <view class="ai-entry-composer__copy">
-        <text class="ai-entry-composer__title">写一点，也可以直接说</text>
-        <text class="ai-entry-composer__sub">一个方向、一个问题，或者一种感受。</text>
+        <text class="ai-entry-composer__title">从一句最近的想法开始</text>
+        <text class="ai-entry-composer__sub">一个方向、一个问题，或者今天 lingering 的感受。</text>
       </view>
       <view class="ai-entry-composer__record">◉</view>
     </view>

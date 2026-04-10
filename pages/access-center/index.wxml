@@ -10,28 +10,28 @@
     <view class="detail-section">
       <text class="detail-page__title">会员权益</text>
 
-      <view class="hero-card">
-        <text class="hero-card__eyebrow">MONTHLY ACCESS</text>
-        <text class="hero-card__title">真实发生月卡</text>
+      <view wx:for="{{planOptions}}" wx:key="key" class="hero-card {{selectedPlanKey === item.key ? 'hero-card--active' : ''}}" data-key="{{item.key}}" bindtap="selectPlan">
+        <text class="hero-card__eyebrow">{{item.badge}}</text>
+        <text class="hero-card__title">{{item.title}}</text>
         <view class="hero-card__price-row">
           <text class="hero-card__currency">¥</text>
-          <text class="hero-card__price">99</text>
-          <text class="hero-card__billing">/ 月</text>
+          <text class="hero-card__price">{{item.price}}</text>
+          <text class="hero-card__billing">{{item.billing}}</text>
         </view>
-        <text class="hero-card__copy">到期前 3 天提醒，随时可取消续费</text>
-        <view class="hero-card__badge">限时免费名额仅剩 {{quota.remaining}}/{{quota.total}}</view>
+        <text class="hero-card__copy">{{item.copy}}</text>
+        <view class="hero-card__badge">{{selectedPlanKey === item.key ? '当前已选' : '点按切换方案'}}</view>
       </view>
 
-      <text class="section-label">月卡权益</text>
+      <text class="section-label">{{selectedPlanKey === 'week' ? '周卡权益' : '月卡权益'}}</text>
       <view class="benefit-list">
-        <view wx:for="{{membershipBenefits}}" wx:key="title" class="benefit-item">
+        <view wx:for="{{activeBenefits}}" wx:key="title" class="benefit-item">
           <view class="benefit-item__icon">{{item.icon}}</view>
           <text class="benefit-item__text">{{item.title}}</text>
         </view>
       </view>
 
       <view class="detail-actions">
-        <view class="primary-action" bindtap="startMembershipPurchase">立即购买月卡 ¥99</view>
+        <view class="primary-action" bindtap="startMembershipPurchase">{{selectedPlanKey === 'week' ? '立即购买周卡 ¥49' : '立即购买月卡 ¥99'}}</view>
         <view class="ghost-action" bindtap="openInviteFriends">邀请好友免费获得 →</view>
       </view>
     </view>
